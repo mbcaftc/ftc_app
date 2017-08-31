@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 
-@TeleOp (name = "test-NeveRest40")
+@TeleOp (name = "test-1xNeveRest40")
 
 public class test_RevExpansionHub extends OpMode {
     DcMotor neveRest40_1;
