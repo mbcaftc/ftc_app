@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.challengeVortex.duval.subClasses.LauncherC
  */
 
 @Autonomous(name = "Wall - StopAtLaunch Black Battery")
+@Disabled
 
 public class AutonomousWallStopAtLaunchBlackBattery extends LinearOpMode {
 

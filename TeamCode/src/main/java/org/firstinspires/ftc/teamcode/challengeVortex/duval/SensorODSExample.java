@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.duval;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
  * Created by johnduval on 12/27/16.
  */
 @TeleOp(name = "ODS EXAMPLE", group = "Sensor")
+@Disabled
 
 public class SensorODSExample extends LinearOpMode {
 

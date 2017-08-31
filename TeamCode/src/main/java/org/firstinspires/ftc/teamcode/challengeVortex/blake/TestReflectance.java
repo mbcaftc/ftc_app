@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
  */
 
 @TeleOp(name = "Test Reflectance")
+@Disabled
 
 public class TestReflectance extends OpMode {
 

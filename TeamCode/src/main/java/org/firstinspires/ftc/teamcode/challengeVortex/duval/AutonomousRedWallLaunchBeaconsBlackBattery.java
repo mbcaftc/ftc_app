@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.challengeVortex.duval.subClasses.LauncherC
  * Created by mbca on 2/2/17.
  */
 @Autonomous(name = "Red Wall + Launch + Beacons - Black Battery")
+@Disabled
 
 public class AutonomousRedWallLaunchBeaconsBlackBattery extends LinearOpMode {
 

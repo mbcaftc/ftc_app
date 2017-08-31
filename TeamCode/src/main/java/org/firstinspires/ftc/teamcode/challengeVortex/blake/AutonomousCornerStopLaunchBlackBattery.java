@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.challengeVortex.duval.subClasses.LauncherC
  * Created by mbca on 1/25/17.
  */
 @Autonomous(name = "Corner + Stop Launch  - Black Battery")
+@Disabled
 
 public class AutonomousCornerStopLaunchBlackBattery extends LinearOpMode {
 

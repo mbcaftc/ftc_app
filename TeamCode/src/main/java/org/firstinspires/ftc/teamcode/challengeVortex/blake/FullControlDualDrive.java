@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "Full Control - Dual Controls")
+@Disabled
 
 public class FullControlDualDrive extends OpMode {
 

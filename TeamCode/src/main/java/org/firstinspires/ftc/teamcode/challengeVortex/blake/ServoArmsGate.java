@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "Servo Arms Gate")
+@Disabled
 
 public class ServoArmsGate extends OpMode { // DOn't forget that after you perfect all of the values, etc. in this code, the same things need to be changed accordingly in the FullControl program
 

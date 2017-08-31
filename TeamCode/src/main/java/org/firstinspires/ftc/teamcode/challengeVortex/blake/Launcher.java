@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by johnduval on 10/26/16.
  */
 @TeleOp(name = "Launcher")
+@Disabled
 
 
 public class Launcher extends OpMode {

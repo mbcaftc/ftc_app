@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.challengeVortex.blake;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.challengeVortex.duval.subClasses.LauncherC
  * Created by mbca on 1/21/17.
  */
 @Autonomous(name = "Blue Corner + Yoga Ball - Black Battery")
+@Disabled
 
 public class AutonomousBlueCornerYogaBallBlackBattery extends LinearOpMode {
 
