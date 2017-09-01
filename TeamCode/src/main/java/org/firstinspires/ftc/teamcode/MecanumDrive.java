@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by blake_shafer on 8/23/17.
  */
 
-@TeleOp(name = "Mecanum Drive")
+@TeleOp(name = "Mecanum Drive Encoders")
 
 // Crazy encoder action
 
