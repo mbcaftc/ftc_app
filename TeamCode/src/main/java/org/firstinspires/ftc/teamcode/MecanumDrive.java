@@ -11,9 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Mecanum Drive")
 
-// Plan to apply encoder clicks per second to motors rather than power (power varies with battery voltage)
-// Encoder clicks per second will not vary with battery voltage (potential maximum encoder clicks per second will decrease as battery voltage decreases)
-// Encoder clicks per second will allow rotation of motors to be controlled extremely precisely
+// Crazy encoder action
 
 public class MecanumDrive extends OpMode {
 
