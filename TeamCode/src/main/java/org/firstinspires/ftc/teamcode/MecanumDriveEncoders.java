@@ -85,10 +85,10 @@ public class MecanumDriveEncoders extends OpMode {
 
         // Telemetry
 
-        telemetry.addData("val", "L stick: " + String.format("%.2f", leftStickVal));
-        telemetry.addData("val", "R stick: " + String.format("%.2f", rightStickVal));
-        telemetry.addData("val", "L trigger: " + String.format("%.2f", leftTriggerVal));
-        telemetry.addData("val", "R trigger: " + String.format("%.2f", rightTriggerVal));
+        telemetry.addData("val", "L stck: " + String.format("%.2f", leftStickVal));
+        telemetry.addData("val", "R stck: " + String.format("%.2f", rightStickVal));
+        telemetry.addData("val", "L trgr: " + String.format("%.2f", leftTriggerVal));
+        telemetry.addData("val", "R trgr: " + String.format("%.2f", rightTriggerVal));
 
         telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", frontLeftSpeed));
         telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", frontRightSpeed));
