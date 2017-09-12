@@ -11,9 +11,11 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Mecanum Drive Encoders")
 
-// Crazy encoder action
-
 public class MecanumDriveEncoders extends OpMode {
+
+    // left stick y axis controls forward/backward rotation of left motors
+    // right stick y axis controls forward/backward rotation of right motors (tank drive)
+    // left/right triggers control strafing left/right
 
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
@@ -30,6 +32,8 @@ public class MecanumDriveEncoders extends OpMode {
     double frontRightSpeed;
     double rearLeftSpeed;
     double rearRightSpeed;
+
+    double speedLimiterFactor = 0.8;
 
     @Override
     public void init() {
@@ -55,10 +59,6 @@ public class MecanumDriveEncoders extends OpMode {
     @Override
     public void loop() {
 
-        // left stick y axis controls forward/backward rotation of left motors
-        // right stick y axis controls forward/backward rotation of right motors (tank drive)
-        // left/right triggers control strafing left/right
-
         leftStickVal = -gamepad1.left_stick_y;
         leftStickVal = Range.clip(leftStickVal, -1, 1);
         rightStickVal = -gamepad1.right_stick_y;
@@ -78,10 +78,10 @@ public class MecanumDriveEncoders extends OpMode {
         rearRightSpeed = rightStickVal + rightTriggerVal;
         rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
-        frontLeftMotor.setPower(frontLeftSpeed);
-        frontRightMotor.setPower(frontRightSpeed);
-        rearLeftMotor.setPower(rearLeftSpeed);
-        rearRightMotor.setPower(rearRightSpeed);
+        frontLeftMotor.setPower(frontLeftSpeed * speedLimiterFactor);
+        frontRightMotor.setPower(frontRightSpeed * speedLimiterFactor);
+        rearLeftMotor.setPower(rearLeftSpeed * speedLimiterFactor);
+        rearRightMotor.setPower(rearRightSpeed * speedLimiterFactor);
 
         // Telemetry
 
