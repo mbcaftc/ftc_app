@@ -42,7 +42,6 @@ public class MecanumDrive extends OpMode {
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
     }
-
     @Override
     public void loop() {
 
