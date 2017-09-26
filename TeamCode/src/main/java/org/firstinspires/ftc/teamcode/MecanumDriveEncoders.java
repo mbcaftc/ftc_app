@@ -37,7 +37,6 @@ public class MecanumDriveEncoders extends OpMode {
 
     @Override
     public void init() {
-
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
