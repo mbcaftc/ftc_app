@@ -37,13 +37,14 @@ public class MecanumDriveEncoders extends OpMode {
 
     @Override
     public void init() {
+
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
 
-        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-        rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -68,14 +69,19 @@ public class MecanumDriveEncoders extends OpMode {
         rightTriggerVal = gamepad1.right_trigger;
         rightTriggerVal = Range.clip(rightTriggerVal, 0, 1);
 
-        frontLeftSpeed = leftStickVal - leftTriggerVal;
+
+        frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
         frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
-        frontRightSpeed = rightStickVal - rightTriggerVal;
+
+        frontRightSpeed = rightStickVal - rightTriggerVal + leftTriggerVal;
         frontRightSpeed = Range.clip(frontRightSpeed, -1, 1);
-        rearLeftSpeed = leftStickVal + leftTriggerVal;
+
+        rearLeftSpeed = leftStickVal + leftTriggerVal - rightTriggerVal;
         rearLeftSpeed = Range.clip(rearLeftSpeed, -1, 1);
-        rearRightSpeed = rightStickVal + rightTriggerVal;
+
+        rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
         rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
+
 
         frontLeftMotor.setPower(frontLeftSpeed * speedLimiterFactor);
         frontRightMotor.setPower(frontRightSpeed * speedLimiterFactor);
