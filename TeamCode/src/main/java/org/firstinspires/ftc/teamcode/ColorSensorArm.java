@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
+import android.view.View;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -14,36 +18,48 @@ public class ColorSensorArm extends OpMode {
 
     Servo colorSensorArm;
 
-    double upPosition;
-    double downPosition;
+    ColorSensor colorSensor;
 
-    boolean armDown;
+    double upPosition = 1;
+    double downPosition = 0.4;
+
+    boolean armState; // Up = false, down = true
 
     @Override
     public void init() {
 
         colorSensorArm = hardwareMap.servo.get("color_sensor_arm");
 
-        colorSensorArm.setPosition(0); // Set to up position
+        colorSensorArm.setPosition(upPosition); // Set to up position
+
+        float hsvValues[] = {0F,0F,0F};
+        final float values[] = hsvValues;
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
+
+        boolean ledState = false;
+
+        //colorSensor = hardwareMap.colorSensor.get("color_sensor");
+
+        //colorSensor.enableLed(ledState);
     }
 
     @Override
     public void loop() {
 
         if (gamepad2.x) {
-            armDown = true; // Arm is down
+            armState = true; // Arm is down
         }
 
         else if (gamepad2.y) {
-            armDown = false; // Arm is up
+            armState = false; // Arm is up
         }
 
-        if (!armDown) {
-            colorSensorArm.setPosition(0);
+        if (!armState) {
+            colorSensorArm.setPosition(upPosition);
         }
 
         else {
-            colorSensorArm.setPosition(1);
+            colorSensorArm.setPosition(downPosition);
         }
     }
 }
