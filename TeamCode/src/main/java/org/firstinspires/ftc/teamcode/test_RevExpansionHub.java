@@ -26,7 +26,8 @@ public class test_RevExpansionHub extends OpMode {
 
     @Override
     public void loop() {
-        int i = 11;
+        int i = 14;
+        int ii = 22;
         rightStickDriveValue = -gamepad1.right_stick_y;
         leftStickDriveValue = -gamepad1.left_stick_y;
         rightSquaredDriveValue = rightStickDriveValue * rightStickDriveValue;
