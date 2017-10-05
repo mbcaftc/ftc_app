@@ -53,12 +53,12 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 
 /*
-LED ON
-  RED:
-  BLUE:
+LED ON @ 1/2"
+  RED: 10
+  BLUE: 10
 LED OFF
-  RED:
-  BLUE:
+  RED: 0-1
+  BLUE: 0
  */
 
 
@@ -88,7 +88,7 @@ public class SensorMRColor extends LinearOpMode {
     boolean bCurrState = false;
 
     // bLedOn represents the state of the LED.
-    boolean bLedOn = true;
+    boolean bLedOn = false;
 
     // get a reference to our ColorSensor object.
     colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
