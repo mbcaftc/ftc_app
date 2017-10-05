@@ -20,8 +20,8 @@ public class ColorSensorArm extends OpMode {
 
     ColorSensor colorSensor;
 
-    double upPosition = 1;
-    double downPosition = 0.4;
+    double upPosition = 0.325;
+    double downPosition = 1.1;
 
     boolean armState; // Up = false, down = true
 
@@ -61,5 +61,10 @@ public class ColorSensorArm extends OpMode {
         else {
             colorSensorArm.setPosition(downPosition);
         }
+
+        telemetry.addData("Servo", "Position: " + String.format("%.3f", colorSensorArm.getPosition()));
+        telemetry.update();
+
+
     }
 }
