@@ -24,7 +24,7 @@ public class Aut_Red1 extends LinearOpMode {
     ColorSensor colorSensor;
     Servo colorSensorArm;
     double upPosition = 0.325;
-    double downPosition = 1.0;
+    double downPosition = 0.8;
 
     boolean armState; // Up = false, down = true
 
@@ -97,24 +97,28 @@ public class Aut_Red1 extends LinearOpMode {
                 case 0:
                     //SET GLYPH ARMS TO CLOSE POSITION
                     colorSensorArm.setPosition(downPosition);
+                    sleep(1000);
                     movement ++;
                     break;
                 case 1: //detecting jewel and knocking off & centering
-                    wait(1000); //wait to be sure color sensor is working
+                    sleep (1000); //wait to be sure color sensor is working
                     if (colorSensor.red() > redThreshold) {
                         //ROTATE 25 CLOCKWISE
-                        wait(100);
+                        sleep(100);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 COUNTERCLOCKWISE
                     }
                     else if (colorSensor.blue() > blueThreshold) {
                         //ROTATE 25 COUNTERCLOCKWISE
-                        wait(100);
+                        sleep(100);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 CLOCKWISE
                     }
+                    else { //in case color sensor doesn't detect any color thresholds
+                        colorSensorArm.setPosition(upPosition);
+                    }
                     //OR IS IT BETTER NOT TO REVERSE THE TURNS AND JUST CENTER BACK TO 0 DEGREES?
-                    wait(100);
+                    sleep(1000);
                     movement ++;
                     break;
                 case 2: //STRAFE LEFT
@@ -130,6 +134,8 @@ public class Aut_Red1 extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //RELEASE BLOCK WITH SERVOS
+                    //left servo OPEN
+                    //right servo OPEN
                     movement ++;
                     break;
                 case 5:
@@ -137,6 +143,8 @@ public class Aut_Red1 extends LinearOpMode {
                     frontRightMotor.setPower(0);
                     rearLeftMotor.setPower(0);
                     rearRightMotor.setPower(0);
+                    bLedOn = false;
+                    colorSensor.enableLed(bLedOn);
                     requestOpModeStop();
                     break;
             }
