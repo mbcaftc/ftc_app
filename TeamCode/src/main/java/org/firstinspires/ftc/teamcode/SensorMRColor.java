@@ -63,7 +63,7 @@ LED OFF
 
 
 @TeleOp(name = "Sensor: MR Color", group = "Sensor")
-//@Disabled
+@Disabled
 public class SensorMRColor extends LinearOpMode {
 
   ColorSensor colorSensor;    // Hardware Device Object

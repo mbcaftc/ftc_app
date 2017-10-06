@@ -25,8 +25,8 @@ public class ColorSensorArm extends OpMode {
 
     double upPosition = 0.325;
     double downPositionPause1 = 0.75;
-    double downPositionPause2 = 0.84;
-    double downPositionFinal = 0.87;
+    double downPositionPause2 = 0.86;
+    double downPositionFinal = 0.90;
 
     boolean armState; // Up = false, down = true
 
@@ -59,6 +59,8 @@ public class ColorSensorArm extends OpMode {
 
         else if (gamepad2.y) {
             armState = false; // Arm is up
+            downPositionPause1 = 0.75;
+            downPositionPause2 = 0.87;
         }
 
         if (!armState) {

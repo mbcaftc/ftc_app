@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp (name = "test-1xNeveRest40")
-
+@Disabled
 public class test_RevExpansionHub extends OpMode {
     DcMotor neveRest40_1;
     double rightStickDriveValue;

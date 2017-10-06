@@ -24,8 +24,9 @@ public class Aut_Red1 extends LinearOpMode {
     ColorSensor colorSensor;
     Servo colorSensorArm;
     double upPosition = 0.325;
-    double downPosition = 0.8;
-
+    double downPositionPause1 = 0.75;
+    double downPositionPause2 = 0.86;
+    double downPositionFinal = 0.90;
     boolean armState; // Up = false, down = true
 
     DcMotor frontLeftMotor;
@@ -90,27 +91,29 @@ public class Aut_Red1 extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            //
-
             //STARTING GYRO AT 0 degrees
             switch (movement) {
-                case 0:
+                case 0: //SET GLYPH ARMS TO CLOSE POSITION
                     //SET GLYPH ARMS TO CLOSE POSITION
-                    colorSensorArm.setPosition(downPosition);
-                    sleep(1000);
+                    //LOWER COLOR SENSOR ARM
+                    colorSensorArm.setPosition(downPositionPause1);
+                    sleep(500);
+                    colorSensorArm.setPosition(downPositionPause2);
+                    sleep(500);
+                    colorSensorArm.setPosition(downPositionFinal);
                     movement ++;
                     break;
                 case 1: //detecting jewel and knocking off & centering
-                    sleep (1000); //wait to be sure color sensor is working
+                    sleep (2000); //wait to be sure color sensor is working
                     if (colorSensor.red() > redThreshold) {
                         //ROTATE 25 CLOCKWISE
-                        sleep(100);
+                        sleep(200);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 COUNTERCLOCKWISE
                     }
                     else if (colorSensor.blue() > blueThreshold) {
                         //ROTATE 25 COUNTERCLOCKWISE
-                        sleep(100);
+                        sleep(200);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 CLOCKWISE
                     }

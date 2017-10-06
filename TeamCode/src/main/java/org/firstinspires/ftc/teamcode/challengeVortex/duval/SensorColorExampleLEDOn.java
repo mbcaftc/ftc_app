@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Created by johnduval on 12/16/16.
  */
 @TeleOp(name = "COLOR EXAMPLE LED ON", group = "SENSOR")
-//@Disabled
+@Disabled
 
 public class SensorColorExampleLEDOn extends LinearOpMode {
 

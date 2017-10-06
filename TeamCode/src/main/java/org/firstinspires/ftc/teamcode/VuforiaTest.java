@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -66,9 +67,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Concept: VuMark Id", group ="Concept")
+@Autonomous(name="VuMark Testing", group ="Concept")
 //@Disabled
 public class VuforiaTest extends LinearOpMode {
+
+    Servo colorSensorArm;
+
+    double upPosition = 0.325;
+    double leftPosition = 0.75;
+    double centerPosition = 0.5;
+    double rightPosition = 0.1;
+
+    boolean armState; // Up = false, down = true
 
     public static final String TAG = "Vuforia VuMark Sample";
 
@@ -81,7 +91,8 @@ public class VuforiaTest extends LinearOpMode {
     VuforiaLocalizer vuforia;
 
     @Override public void runOpMode() {
-
+        colorSensorArm = hardwareMap.servo.get("color_sensor_arm");
+        colorSensorArm.setPosition(upPosition);
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
          * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
@@ -150,7 +161,7 @@ public class VuforiaTest extends LinearOpMode {
                  * it is perhaps unlikely that you will actually need to act on this pose information, but
                  * we illustrate it nevertheless, for completeness. */
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-                telemetry.addData("Pose", format(pose));
+                //telemetry.addData("Pose", format(pose));
 
                 /* We further illustrate how to decompose the pose into useful rotational and
                  * translational components */
@@ -173,6 +184,25 @@ public class VuforiaTest extends LinearOpMode {
                 telemetry.addData("VuMark", "not visible");
             }
 
+            switch (vuMark) {
+                case LEFT:
+                    colorSensorArm.setPosition(leftPosition);
+                    telemetry.addData("LEFT SWITCH", "");
+                    break;
+                case CENTER:
+                    colorSensorArm.setPosition(centerPosition);
+                    telemetry.addData("CENTER SWITCH", "");
+                    break;
+                case RIGHT:
+                    colorSensorArm.setPosition(rightPosition);
+                    telemetry.addData("RIGHT SWITCH", "");
+                    break;
+                default:
+                    colorSensorArm.setPosition(upPosition);
+                    telemetry.addData("DEFAULT SWITCH", " N/A");
+                    break;
+            }
+            telemetry.addData("color sensor arm pos: ", colorSensorArm.getPosition());
             telemetry.update();
         }
     }
