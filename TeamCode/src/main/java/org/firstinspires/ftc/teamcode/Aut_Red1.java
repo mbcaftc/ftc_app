@@ -105,6 +105,10 @@ public class Aut_Red1 extends LinearOpMode {
                     break;
                 case 1: //detecting jewel and knocking off & centering
                     sleep (2000); //wait to be sure color sensor is working
+                    telemetry.addData("Servo", "Position: " + String.format("%.3f", colorSensorArm.getPosition()));
+                    telemetry.addData("BLUE: ", colorSensor.blue());
+                    telemetry.addData("RED: ", colorSensor.red());
+                    telemetry.update();
                     if (colorSensor.red() > redThreshold) {
                         //ROTATE 25 CLOCKWISE
                         sleep(200);
@@ -152,8 +156,6 @@ public class Aut_Red1 extends LinearOpMode {
                     break;
             }
             telemetry.addData("Servo", "Position: " + String.format("%.3f", colorSensorArm.getPosition()));
-            telemetry.addData("BLUE: ", colorSensor.blue());
-            telemetry.addData("RED: ", colorSensor.red());
             telemetry.update();
         }
     }
