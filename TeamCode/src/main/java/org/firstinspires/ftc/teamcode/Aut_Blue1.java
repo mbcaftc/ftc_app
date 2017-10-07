@@ -17,15 +17,23 @@ import org.firstinspires.ftc.teamcode.subClasses.colorSensorArmAuto;
 
 public class Aut_Blue1 extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
-    int redThreshold = 4;
-    int blueThreshold = 4;
 
     ColorSensor colorSensor;
     Servo colorSensorArm;
 
+    colorSensorArmAuto myColorSensorArm;
+    mechDriveAuto myMechDrive;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        colorSensorArm = hardwareMap.servo.get("color_sensor_arm");
+        myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        //myColorSensorArm.colorSensorSetup();
 
+        myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
+
+        waitForStart();
+        while (opModeIsActive()) {
+
+        }
     }
 }
