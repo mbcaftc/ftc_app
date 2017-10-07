@@ -18,8 +18,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Aut_Red1 extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movementt
-    int redThreshold = 8;
-    int blueThreshold = 8;
+    int redThreshold = 4;
+    int blueThreshold = 4;
 
     ColorSensor colorSensor;
     Servo colorSensorArm;
@@ -113,22 +113,22 @@ public class Aut_Red1 extends LinearOpMode {
                     if (colorSensor.red() > redThreshold) {
                         //ROTATE 25 CLOCKWISE
                         sleep(2000);
-                        encoderDrive(3, 3, 0.75);
-                        sleep(200);
+                        encoderDrive(3, 3, 1);
+                        sleep(500);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 COUNTERCLOCKWISE
                         sleep(200);
-                        encoderDrive(3, 4, 0.75);
+                        encoderDrive(3, 4, 1);
                     }
                     else if (colorSensor.blue() > blueThreshold) {
                         sleep(2000);
                         //ROTATE 25 COUNTERCLOCKWISE
-                        encoderDrive(3, 4, 0.75);
-                        sleep(200);
+                        encoderDrive(3, 4, 1);
+                        sleep(500);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 CLOCKWISE
                         sleep(200);
-                        encoderDrive(3, 3, 0.75);
+                        encoderDrive(3, 3, 1);
                     }
                     else { //in case color sensor doesn't detect any color thresholds
                         colorSensorArm.setPosition(upPosition);
