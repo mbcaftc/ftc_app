@@ -18,8 +18,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Aut_Red1 extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movementt
-    int redThreshold = 5;
-    int blueThreshold = 5;
+    int redThreshold = 8;
+    int blueThreshold = 8;
 
     ColorSensor colorSensor;
     Servo colorSensorArm;
@@ -60,10 +60,10 @@ public class Aut_Red1 extends LinearOpMode {
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F,0F,0F};
@@ -92,34 +92,43 @@ public class Aut_Red1 extends LinearOpMode {
 
         while (opModeIsActive()) {
             //STARTING GYRO AT 0 degrees
+
             switch (movement) {
                 case 0: //SET GLYPH ARMS TO CLOSE POSITION
                     //SET GLYPH ARMS TO CLOSE POSITION
                     //LOWER COLOR SENSOR ARM
                     colorSensorArm.setPosition(downPositionPause1);
-                    sleep(500);
+                    sleep(200);
                     colorSensorArm.setPosition(downPositionPause2);
-                    sleep(500);
+                    sleep(200);
                     colorSensorArm.setPosition(downPositionFinal);
                     movement ++;
                     break;
                 case 1: //detecting jewel and knocking off & centering
-                    sleep (2000); //wait to be sure color sensor is working
+                    sleep (1000); //wait to be sure color sensor is working
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", colorSensor.blue());
                     telemetry.addData("RED: ", colorSensor.red());
                     telemetry.update();
                     if (colorSensor.red() > redThreshold) {
                         //ROTATE 25 CLOCKWISE
+                        sleep(2000);
+                        encoderDrive(3, 3, 0.75);
                         sleep(200);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 COUNTERCLOCKWISE
+                        sleep(200);
+                        encoderDrive(3, 4, 0.75);
                     }
                     else if (colorSensor.blue() > blueThreshold) {
+                        sleep(2000);
                         //ROTATE 25 COUNTERCLOCKWISE
+                        encoderDrive(3, 4, 0.75);
                         sleep(200);
                         colorSensorArm.setPosition(upPosition); //SET COLOR SENSOR ARM TO UP POSITION
                         //"RESET" WITH ROTATE 25 CLOCKWISE
+                        sleep(200);
+                        encoderDrive(3, 3, 0.75);
                     }
                     else { //in case color sensor doesn't detect any color thresholds
                         colorSensorArm.setPosition(upPosition);
@@ -158,5 +167,77 @@ public class Aut_Red1 extends LinearOpMode {
             telemetry.addData("Servo", "Position: " + String.format("%.3f", colorSensorArm.getPosition()));
             telemetry.update();
         }
+
+
     }
+
+    private void encoderDrive (int distance, int direction, double power) {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        final int ENCODER_CPR = 1120;
+        final int GEAR_RATIO = 1;
+        final int WHEEL_DIAMETER = 4;
+        final double CIRCUMFRANCE = Math.PI * WHEEL_DIAMETER;
+        double ROTATIONS = distance / CIRCUMFRANCE;
+        double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
+
+        double powerReductionFactor = 0.77;
+
+        if (direction == 1) { // robot will move forward
+            frontLeftMotor.setTargetPosition((int) counts);
+            frontRightMotor.setTargetPosition((int) counts);
+            rearLeftMotor.setTargetPosition((int) counts);
+            rearRightMotor.setTargetPosition((int) counts);
+        }
+
+        else if (direction == 2) { // robot will move backward
+            frontLeftMotor.setTargetPosition((int) -counts);
+            frontRightMotor.setTargetPosition((int) -counts);
+            rearLeftMotor.setTargetPosition((int) -counts);
+            rearRightMotor.setTargetPosition((int) -counts);
+        }
+
+        else if (direction == 3) { // robot will strafe left
+            frontLeftMotor.setTargetPosition((int) -counts);
+            frontRightMotor.setTargetPosition((int) counts);
+            rearLeftMotor.setTargetPosition((int) counts);
+            rearRightMotor.setTargetPosition((int) -counts);
+        }
+
+        else if (direction == 4) { // robot will strafe right
+            frontLeftMotor.setTargetPosition((int) counts);
+            frontRightMotor.setTargetPosition((int) -counts);
+            rearLeftMotor.setTargetPosition((int) -counts);
+            rearRightMotor.setTargetPosition((int) counts);
+        }
+
+        else if (direction == 5) { // robot will rotate left
+            frontLeftMotor.setTargetPosition((int) -counts);
+            frontRightMotor.setTargetPosition((int) counts);
+            rearLeftMotor.setTargetPosition((int) -counts);
+            rearRightMotor.setTargetPosition((int) counts);
+        }
+
+        else if (direction == 6) { // robot will rotate right
+            frontLeftMotor.setTargetPosition((int) counts);
+            frontRightMotor.setTargetPosition((int) -counts);
+            rearLeftMotor.setTargetPosition((int) counts);
+            rearRightMotor.setTargetPosition((int) -counts);
+        }
+
+        frontLeftMotor.setPower(power * powerReductionFactor);
+        frontRightMotor.setPower(power * powerReductionFactor);
+        rearLeftMotor.setPower(power * powerReductionFactor);
+        rearRightMotor.setPower(power * powerReductionFactor);
+    }
+
 }
