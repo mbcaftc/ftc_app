@@ -90,4 +90,11 @@ public class mechDriveAuto {
         rearLeftMotor.setPower(power * powerReductionFactor);
         rearRightMotor.setPower(power * powerReductionFactor);
     }
+
+    public void mechDriveSTOP () {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setTargetPosition(0);
+    }
 }
