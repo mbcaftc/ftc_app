@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class glyphArms {
-    double leftClosePosition;
-    double rightClosePosition;
-    double leftOpenPosition;
-    double rightOpenPosition;
+    double leftClosePosition = 0.89;
+    double rightClosePosition = 0.54;
+    double leftOpenPosition = 0.52;
+    double rightOpenPosition = 0.95;
+
     public Servo leftGlyphArm, rightGlyphArm;
     public glyphArms(Servo lGA, Servo rGA) {
         leftGlyphArm = lGA;

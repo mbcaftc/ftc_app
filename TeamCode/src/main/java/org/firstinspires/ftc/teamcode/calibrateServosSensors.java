@@ -19,15 +19,17 @@ public class calibrateServosSensors extends OpMode {
     public void init() {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+
         myColorSensorArm.colorSensorArmUp();
+        myGlyphArms.openGlyphArms();
     }
 
     @Override
     public void loop() {
-        if (gamepad2.dpad_left) {
+        if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();
         }
-        if (gamepad2.dpad_right) {
+        if (gamepad2.left_bumper) {
             myGlyphArms.openGlyphArms();
         }
         if (gamepad2.dpad_up) {
