@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.subClasses.colorSensorArmAuto;
+import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
+
 /**
  * Created by blake_shafer on 8/23/17.
  */
@@ -35,8 +38,17 @@ public class MecanumDriveEncoders extends OpMode {
 
     double speedLimiterFactor = 0.8;
 
+    glyphArms myGlyphArms;
+    colorSensorArmAuto myColorSensorArm;
+
+
     @Override
     public void init() {
+
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms.closeGlyphArms();
+        myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm.colorSensorArmUp();
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
