@@ -11,7 +11,7 @@ public class glyphArms {
     double rightClosePosition;
     double leftOpenPosition;
     double rightOpenPosition;
-    private Servo leftGlyphArm, rightGlyphArm;
+    public Servo leftGlyphArm, rightGlyphArm;
     public glyphArms(Servo lGA, Servo rGA) {
         leftGlyphArm = lGA;
         rightGlyphArm = rGA;
