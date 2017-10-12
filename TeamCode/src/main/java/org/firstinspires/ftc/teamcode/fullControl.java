@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  * Created by blake_shafer on 8/23/17.
  */
 
-@TeleOp(name = "Mecanum Drive Encoders")
+@TeleOp(name = "Full Control")
 
-public class MecanumDriveEncoders extends OpMode {
+public class fullControl extends OpMode {
 
     // left stick y axis controls forward/backward rotation of left motors
     // right stick y axis controls forward/backward rotation of right motors (tank drive)
@@ -36,7 +36,11 @@ public class MecanumDriveEncoders extends OpMode {
     double rearLeftSpeed;
     double rearRightSpeed;
 
-    double speedLimiterFactor = 0.8;
+    double speedFastFactor = 0.8;
+    double speedSlowFactor = 0.4;
+    double minSpeedVal = 0.2;
+
+    boolean speedState; // True = fast, false = slow
 
     glyphArms myGlyphArms;
     colorSensorArmAuto myColorSensorArm;
@@ -46,7 +50,8 @@ public class MecanumDriveEncoders extends OpMode {
     public void init() {
 
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myGlyphArms.closeGlyphArms();
+        myGlyphArms.openGlyphArms();
+
         myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myColorSensorArm.colorSensorArmUp();
 
@@ -67,9 +72,13 @@ public class MecanumDriveEncoders extends OpMode {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        speedState = true;
     }
     @Override
     public void loop() {
+
+        // Mecanum Drive
 
         leftStickVal = -gamepad1.left_stick_y;
         leftStickVal = Range.clip(leftStickVal, -1, 1);
@@ -94,11 +103,56 @@ public class MecanumDriveEncoders extends OpMode {
         rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
         rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
+        if (gamepad1.x) {
+            speedState = false;
+        }
+        if (gamepad1.y) {
+            speedState = true;
+        }
 
-        frontLeftMotor.setPower(frontLeftSpeed * speedLimiterFactor);
-        frontRightMotor.setPower(frontRightSpeed * speedLimiterFactor);
-        rearLeftMotor.setPower(rearLeftSpeed * speedLimiterFactor);
-        rearRightMotor.setPower(rearRightSpeed * speedLimiterFactor);
+        if (speedState) {
+            frontLeftMotor.setPower(frontLeftSpeed * speedFastFactor);
+            frontRightMotor.setPower(frontRightSpeed * speedFastFactor);
+            rearLeftMotor.setPower(rearLeftSpeed * speedFastFactor);
+            rearRightMotor.setPower(rearRightSpeed * speedFastFactor);
+        }
+        else {
+            frontLeftMotor.setPower(frontLeftSpeed * speedSlowFactor);
+            frontRightMotor.setPower(frontRightSpeed * speedSlowFactor);
+            rearLeftMotor.setPower(rearLeftSpeed * speedSlowFactor);
+            rearRightMotor.setPower(rearRightSpeed * speedSlowFactor);
+
+            if (frontLeftSpeed < minSpeedVal) {
+                frontLeftSpeed = minSpeedVal;
+            }
+            else if (frontRightSpeed < minSpeedVal) {
+                frontRightSpeed = minSpeedVal;
+            }
+            else if (rearLeftSpeed < minSpeedVal) {
+                rearLeftSpeed = minSpeedVal;
+            }
+            else if (rearRightSpeed < minSpeedVal) {
+                rearRightSpeed = minSpeedVal;
+            }
+        }
+
+        // Glyph Arms
+
+        if (gamepad2.left_bumper) {
+            myGlyphArms.openGlyphArms();
+        }
+        if (gamepad2.right_bumper) {
+            myGlyphArms.closeGlyphArms();
+        }
+
+        // Color Sensor Arm
+
+        if (gamepad2.dpad_down) {
+            myColorSensorArm.colorSensorArmDown();
+        }
+        if (gamepad2.dpad_up) {
+            myColorSensorArm.colorSensorArmUp();
+        }
 
         // Telemetry
 
