@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
-import org.firstinspires.ftc.teamcode.subClasses.colorSensorArmAuto;
+import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 
 
@@ -18,14 +17,14 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 public class Aut_Blue1 extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
 
-    colorSensorArmAuto myColorSensorArm;
+    colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
 
@@ -49,8 +48,7 @@ public class Aut_Blue1 extends LinearOpMode {
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
                     sleep(1000);
-                    myColorSensorArm.colorSensorREDalliance();
-                    //OR IS IT BETTER NOT TO REVERSE THE TURNS AND JUST CENTER BACK TO 0 DEGREES?
+                    myMechDrive.blueAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());                    //OR IS IT BETTER NOT TO REVERSE THE TURNS AND JUST CENTER BACK TO 0 DEGREES?
                     sleep(1000);
                     movement ++;
                     break;

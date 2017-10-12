@@ -47,49 +47,35 @@ public class colorSensorArm {
         colorSensor.enableLed(bLedOn);
     }
 
-   /* public void colorSensorSetup () {
-        // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F,0F,0F};
+    public void colorSensorArmUp () { colorSensorArm.setPosition(upPosition); }
 
-        // values is a reference to the hsvValues array.
-        final float values[] = hsvValues;
-
-        // bPrevState and bCurrState represent the previous and current state of the button.
-        boolean bPrevState = false;
-        boolean bCurrState = false;
-
-        // bLedOn represents the state of the LED.
-        boolean bLedOn = true;
-
-        // Set the LED in the beginning
-        colorSensor.enableLed(bLedOn);
-    }
-    */
-
-    public void colorSensorArmUp () {
-        colorSensorArm.setPosition(upPosition);
-    }
-
-    public void colorSensorArmDown () {
+    public void colorSensorArmDown () throws InterruptedException {
         colorSensorArm.setPosition(downPositionPause1);
-        try {
-            sleep(colorArmPause);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(colorArmPause);
         colorSensorArm.setPosition(downPositionPause2);
-        try {
-            sleep(colorArmPause);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(colorArmPause);
         colorSensorArm.setPosition(downPositionFinal);
     }
 
-    public void colorSensorREDalliance () {
+    public int colorJewel () throws InterruptedException {
+        //gives sensor time to be accurate
+        sleep(500);
+        if (colorSensor.red() > redThreshold) {
+            return 1;
+        }
+        else if (colorSensor.blue() > blueThreshold) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
+
+    public int colorSensorREDalliance () {
         if (colorSensor.red() > redThreshold) {
             //STRAFES RIGHT
-            try {
+
+            /*try {
                 sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -106,12 +92,12 @@ public class colorSensorArm {
                 sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             //   myMechDrive.encoderDrive(3,4,1);
-
+            return 1;
         }
         else if (colorSensor.blue() > blueThreshold) {
-            try {
+        /*    try {
                 sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -129,11 +115,13 @@ public class colorSensorArm {
                 sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             //   myMechDrive.encoderDrive(3, 3, 1);
+            return 2;
         }
         else { //in case color sensor doesn't detect any color thresholds
             colorSensorArm.setPosition(upPosition);
+            return 3;
         }
     }
 

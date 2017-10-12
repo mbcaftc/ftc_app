@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by johnduval on 10/7/17.
  */
@@ -11,6 +13,7 @@ public class mechDriveAuto {
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
+
         frontLeftMotor = frontLM;
         frontRightMotor = frontRM;
         rearLeftMotor = rearLM;
@@ -89,6 +92,54 @@ public class mechDriveAuto {
         frontRightMotor.setPower(power * powerReductionFactor);
         rearLeftMotor.setPower(power * powerReductionFactor);
         rearRightMotor.setPower(power * powerReductionFactor);
+    }
+
+    public void redAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+        if (jewelColor == 1) {
+            encoderDrive(3,3,1);
+            sleep (500);
+            armSensor.colorSensorArmUp();
+            sleep(200);
+            encoderDrive(3,4,1);
+            sleep(200);
+
+        }
+        else if (jewelColor == 2) {
+            encoderDrive(3,4,1);
+            sleep(500);
+            armSensor.colorSensorArmUp();
+            sleep(200);
+            encoderDrive(3,3,1);
+            sleep(200);
+        }
+        else {
+            sleep(100);
+            armSensor.colorSensorArmUp();
+        }
+    }
+
+    public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+        if (jewelColor == 1) {
+            encoderDrive(3,3,1);
+            sleep (500);
+            armSensor.colorSensorArmUp();
+            sleep(200);
+            encoderDrive(3,4,1);
+            sleep(200);
+
+        }
+        else if (jewelColor == 2) {
+            encoderDrive(3,4,1);
+            sleep(500);
+            armSensor.colorSensorArmUp();
+            sleep(200);
+            encoderDrive(3,3,1);
+            sleep(200);
+        }
+        else {
+            sleep(100);
+            armSensor.colorSensorArmUp();
+        }
     }
 
     public void mechDriveSTOP () {
