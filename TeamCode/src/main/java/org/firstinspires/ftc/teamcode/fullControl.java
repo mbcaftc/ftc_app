@@ -36,6 +36,11 @@ public class fullControl extends OpMode {
     double rearLeftSpeed;
     double rearRightSpeed;
 
+    double altFrontLeftSpeed; // are the altered speed values after the original speed values have been multiplied by the speed threshold factors
+    double altFrontRightSpeed;
+    double altRearLeftSpeed;
+    double altRearRightSpeed;
+
     double speedFastFactor = 0.8;
     double speedSlowFactor = 0.4;
     double minSpeedVal = 0.2;
@@ -111,29 +116,50 @@ public class fullControl extends OpMode {
         }
 
         if (speedState) {
-            frontLeftMotor.setPower(frontLeftSpeed * speedFastFactor);
-            frontRightMotor.setPower(frontRightSpeed * speedFastFactor);
-            rearLeftMotor.setPower(rearLeftSpeed * speedFastFactor);
-            rearRightMotor.setPower(rearRightSpeed * speedFastFactor);
+            altFrontLeftSpeed = frontLeftSpeed * speedFastFactor;
+            frontLeftMotor.setPower(altFrontLeftSpeed);
+
+            altFrontRightSpeed = frontRightSpeed * speedFastFactor;
+            frontRightMotor.setPower(altFrontRightSpeed);
+
+            altRearLeftSpeed = rearLeftSpeed * speedFastFactor;
+            rearLeftMotor.setPower(altRearLeftSpeed);
+
+            altRearRightSpeed = rearRightSpeed * speedFastFactor;
+            rearRightMotor.setPower(altRearRightSpeed);
         }
         else {
-            frontLeftMotor.setPower(frontLeftSpeed * speedSlowFactor);
-            frontRightMotor.setPower(frontRightSpeed * speedSlowFactor);
-            rearLeftMotor.setPower(rearLeftSpeed * speedSlowFactor);
-            rearRightMotor.setPower(rearRightSpeed * speedSlowFactor);
+            altFrontLeftSpeed = frontLeftSpeed * speedSlowFactor;
 
-            if (frontLeftSpeed < minSpeedVal) {
-                frontLeftSpeed = minSpeedVal;
+            if (altFrontLeftSpeed < minSpeedVal) {
+                altFrontLeftSpeed = minSpeedVal;
             }
-            else if (frontRightSpeed < minSpeedVal) {
-                frontRightSpeed = minSpeedVal;
+
+            frontLeftMotor.setPower(altFrontLeftSpeed);
+
+            altFrontRightSpeed = frontRightSpeed * speedSlowFactor;
+
+            if (altFrontRightSpeed < minSpeedVal) {
+                altFrontRightSpeed = minSpeedVal;
             }
-            else if (rearLeftSpeed < minSpeedVal) {
-                rearLeftSpeed = minSpeedVal;
+
+            frontRightMotor.setPower(altFrontRightSpeed);
+
+            altRearLeftSpeed = rearLeftSpeed * speedSlowFactor;
+
+            if (altRearLeftSpeed < minSpeedVal) {
+                altRearLeftSpeed = minSpeedVal;
             }
-            else if (rearRightSpeed < minSpeedVal) {
-                rearRightSpeed = minSpeedVal;
+
+            rearLeftMotor.setPower(altRearLeftSpeed);
+
+            altRearRightSpeed = rearRightSpeed * speedSlowFactor;
+
+            if (altRearRightSpeed < minSpeedVal) {
+                altRearRightSpeed = minSpeedVal;
             }
+
+            rearRightMotor.setPower(altRearRightSpeed);
         }
 
         // Glyph Arms
@@ -161,9 +187,9 @@ public class fullControl extends OpMode {
         telemetry.addData("val", "L trgr: " + String.format("%.2f", leftTriggerVal));
         telemetry.addData("val", "R trgr: " + String.format("%.2f", rightTriggerVal));
 
-        telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", frontLeftSpeed));
-        telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", frontRightSpeed));
-        telemetry.addData("pwr", "RL mtr: " + String.format("%.2f", rearLeftSpeed));
-        telemetry.addData("pwr", "RR mtr: " + String.format("%.2f", rearRightSpeed));
+        telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", altFrontLeftSpeed));
+        telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", altFrontRightSpeed));
+        telemetry.addData("pwr", "RL mtr: " + String.format("%.2f", altRearLeftSpeed));
+        telemetry.addData("pwr", "RR mtr: " + String.format("%.2f", altRearRightSpeed));
     }
 }
