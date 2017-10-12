@@ -49,25 +49,6 @@ public class colorSensorArmAuto {
         colorSensor.enableLed(bLedOn);
     }
 
-   /* public void colorSensorSetup () {
-        // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F,0F,0F};
-
-        // values is a reference to the hsvValues array.
-        final float values[] = hsvValues;
-
-        // bPrevState and bCurrState represent the previous and current state of the button.
-        boolean bPrevState = false;
-        boolean bCurrState = false;
-
-        // bLedOn represents the state of the LED.
-        boolean bLedOn = true;
-
-        // Set the LED in the beginning
-        colorSensor.enableLed(bLedOn);
-    }
-    */
-
     public void colorSensorArmUp () {
         colorSensorArm.setPosition(upPosition);
     }

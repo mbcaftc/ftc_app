@@ -42,14 +42,14 @@ public class fullControl extends OpMode {
     double altRearRightSpeed;
 
     double speedFastFactor = 0.8;
-    double speedSlowFactor = 0.4;
-    double minSpeedVal = 0.2;
+    double speedSlowFactor = 0.5;
+    double speedPullUpVal = 0.8;
+    double digitalJoystickVal = 0.1;
 
     boolean speedState; // True = fast, false = slow
 
     glyphArms myGlyphArms;
     colorSensorArmAuto myColorSensorArm;
-
 
     @Override
     public void init() {
@@ -67,6 +67,11 @@ public class fullControl extends OpMode {
 
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -95,7 +100,6 @@ public class fullControl extends OpMode {
         rightTriggerVal = gamepad1.right_trigger;
         rightTriggerVal = Range.clip(rightTriggerVal, 0, 1);
 
-
         frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
         frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
 
@@ -116,6 +120,14 @@ public class fullControl extends OpMode {
         }
 
         if (speedState) {
+
+            if (leftStickVal >= speedPullUpVal) {
+                leftStickVal = 1.0;
+            }
+            else if (rightStickVal >= speedPullUpVal) {
+                rightStickVal = 1.0;
+            }
+
             altFrontLeftSpeed = frontLeftSpeed * speedFastFactor;
             frontLeftMotor.setPower(altFrontLeftSpeed);
 
@@ -128,37 +140,43 @@ public class fullControl extends OpMode {
             altRearRightSpeed = rearRightSpeed * speedFastFactor;
             rearRightMotor.setPower(altRearRightSpeed);
         }
-        else {
-            altFrontLeftSpeed = frontLeftSpeed * speedSlowFactor;
+        if (!speedState) {
 
-            if (altFrontLeftSpeed < minSpeedVal) {
-                altFrontLeftSpeed = minSpeedVal;
+            if (leftStickVal >= digitalJoystickVal) {
+                leftStickVal = speedSlowFactor;
+            }
+            else if (rightStickVal >= digitalJoystickVal) {
+                rightStickVal = speedSlowFactor;
+            }
+            else if (leftStickVal <= -digitalJoystickVal) {
+                leftStickVal = -speedSlowFactor;
+            }
+            else if (rightStickVal <= -digitalJoystickVal) {
+                rightStickVal = -speedSlowFactor;
+            }
+            else if (leftStickVal < digitalJoystickVal && leftStickVal > 0) {
+                leftStickVal = 0;
+            }
+            else if (rightStickVal < digitalJoystickVal && rightStickVal > 0) {
+                rightStickVal = 0;
+            }
+            else if (leftStickVal > -digitalJoystickVal && leftStickVal < 0) {
+                leftStickVal = 0;
+            }
+            else if (rightStickVal > -digitalJoystickVal && rightStickVal < 0) {
+                rightStickVal = 0;
             }
 
+            altFrontLeftSpeed = frontLeftSpeed;
             frontLeftMotor.setPower(altFrontLeftSpeed);
 
-            altFrontRightSpeed = frontRightSpeed * speedSlowFactor;
-
-            if (altFrontRightSpeed < minSpeedVal) {
-                altFrontRightSpeed = minSpeedVal;
-            }
-
+            altFrontRightSpeed = frontRightSpeed;
             frontRightMotor.setPower(altFrontRightSpeed);
 
-            altRearLeftSpeed = rearLeftSpeed * speedSlowFactor;
-
-            if (altRearLeftSpeed < minSpeedVal) {
-                altRearLeftSpeed = minSpeedVal;
-            }
-
+            altRearLeftSpeed = rearLeftSpeed;
             rearLeftMotor.setPower(altRearLeftSpeed);
 
-            altRearRightSpeed = rearRightSpeed * speedSlowFactor;
-
-            if (altRearRightSpeed < minSpeedVal) {
-                altRearRightSpeed = minSpeedVal;
-            }
-
+            altRearRightSpeed = rearRightSpeed;
             rearRightMotor.setPower(altRearRightSpeed);
         }
 

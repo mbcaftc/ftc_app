@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  */
 
 @Autonomous (name = "Blue - 1", group = "BLUE")
-//@Disabled
 
 public class Aut_Blue1 extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
@@ -25,17 +24,21 @@ public class Aut_Blue1 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+
         myColorSensorArm.colorSensorArmUp();
-        myGlyphArms.closeGlyphArms();
+        myGlyphArms.openGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+
         waitForStart();
+
         while (opModeIsActive()) {
-            //STARTING GYRO AT 0 degrees
+
             switch (movement) {
                 case 0:
-                    //LOWER COLOR SENSOR ARM
+
                     myColorSensorArm.colorSensorArmDown();
                     movement ++; //move on to next movement
                     break;
