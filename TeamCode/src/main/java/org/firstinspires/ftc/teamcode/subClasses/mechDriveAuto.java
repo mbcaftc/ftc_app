@@ -19,6 +19,9 @@ public class mechDriveAuto {
         rearLeftMotor = rearLM;
         rearRightMotor = rearRM;
 
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -49,6 +52,7 @@ public class mechDriveAuto {
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
         double powerReductionFactor = 0.77;
+        double countsWhile = 0.95;
 
         switch (direction) {
             case 1: // robot will move forward
@@ -88,57 +92,62 @@ public class mechDriveAuto {
                 rearRightMotor.setTargetPosition((int) -counts);
                 break;
         }
-        frontLeftMotor.setPower(power * powerReductionFactor);
-        frontRightMotor.setPower(power * powerReductionFactor);
-        rearLeftMotor.setPower(power * powerReductionFactor);
-        rearRightMotor.setPower(power * powerReductionFactor);
+        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+            frontLeftMotor.setPower(power * powerReductionFactor);
+            frontRightMotor.setPower(power * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
+        }
+        //(frontLeftMotor.getCurrentPosition() < counts || frontRightMotor.getCurrentPosition() < counts || rearLeftMotor.getCurrentPosition() < counts || rearRightMotor.getCurrentPosition() < counts )
     }
 
     public void redAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+        //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            encoderDrive(3,3,1);
-            sleep (500);
+            encoderDrive(3,3,1); //red alliance seeing red ball -- strafe right
+            sleep (200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,4,1);
+            encoderDrive(3,4,1); //reset with strafe left
             sleep(200);
-
         }
         else if (jewelColor == 2) {
             encoderDrive(3,4,1);
-            sleep(500);
+            sleep(200);
             armSensor.colorSensorArmUp();
             sleep(200);
             encoderDrive(3,3,1);
             sleep(200);
         }
         else {
-            sleep(100);
             armSensor.colorSensorArmUp();
+            sleep(500);
         }
+        //mechDriveSTOP();
     }
 
     public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
             encoderDrive(3,3,1);
-            sleep (500);
+            sleep (1000);
             armSensor.colorSensorArmUp();
             sleep(200);
             encoderDrive(3,4,1);
-            sleep(200);
+            sleep(1000);
 
         }
         else if (jewelColor == 2) {
             encoderDrive(3,4,1);
-            sleep(500);
+            sleep(1000);
             armSensor.colorSensorArmUp();
             sleep(200);
             encoderDrive(3,3,1);
-            sleep(200);
+            sleep(1000);
         }
         else {
             sleep(100);
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
     }
 

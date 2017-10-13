@@ -59,6 +59,9 @@ public class colorSensorArm {
 
     public int colorJewel () throws InterruptedException {
         //gives sensor time to be accurate
+        //1 == red
+        //2 == blue
+        //3 = none detected
         sleep(500);
         if (colorSensor.red() > redThreshold) {
             return 1;
