@@ -11,8 +11,11 @@ import static java.lang.Thread.sleep;
 public class mechDriveAuto {
 
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
+    private double jewelMoveSpeed = 0.8;
+
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
+
 
         frontLeftMotor = frontLM;
         frontRightMotor = frontRM;
@@ -102,21 +105,22 @@ public class mechDriveAuto {
     }
 
     public void redAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            encoderDrive(3,3,0.8); //red alliance seeing red ball -- strafe right
+            encoderDrive(3,3,jewelMoveSpeed); //red alliance seeing red ball -- strafe right
             sleep (200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,4,0.8); //reset with strafe left
+            encoderDrive(3,4,jewelMoveSpeed); //reset with strafe left
             sleep(200);
         }
         else if (jewelColor == 2) {
-            encoderDrive(3,4,0.8);
+            encoderDrive(3,4,jewelMoveSpeed);
             sleep(200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,3,0.8);
+            encoderDrive(3,3,jewelMoveSpeed);
             sleep(200);
         }
         else {
@@ -128,21 +132,21 @@ public class mechDriveAuto {
 
     public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
-            encoderDrive(3,3,1);
-            sleep (1000);
+            encoderDrive(3,4,jewelMoveSpeed);
+            sleep (200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,4,1);
-            sleep(1000);
+            encoderDrive(3,3,jewelMoveSpeed);
+            sleep(200);
 
         }
         else if (jewelColor == 2) {
-            encoderDrive(3,4,1);
-            sleep(1000);
+            encoderDrive(3,3,jewelMoveSpeed);
+            sleep(200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,3,1);
-            sleep(1000);
+            encoderDrive(3,4,jewelMoveSpeed);
+            sleep(200);
         }
         else {
             sleep(100);

@@ -54,35 +54,33 @@ public class Aut_Red_2 extends LinearOpMode {
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
-                    //OR IS IT BETTER NOT TO REVERSE THE TURNS AND JUST CENTER BACK TO 0 DEGREES?
                     sleep(500);
                     movement ++;
                     break;
                 case 2: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    //USE GYRO TO CENTER?
-                    //USE ODS SENSOR ON BOTTOM OF ROBOT TO DETERMINE WHEN TO STOP INSTEAD OF ENCODERS?
-                    myMechDrive.encoderDrive(40,4,1);
+                    myMechDrive.encoderDrive(30,4,1);
                     sleep(500);
                     movement ++;
                     break;
                 case 3://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(50,5,1);
+                    myMechDrive.encoderDrive(21,5,0.6);
+                    sleep(500);
                     movement++;
                     break;
-                case 4: //GO FORWARD TO CRYPTO BOX
-                    //GO FORWARD Y AMOUNT
-                    //USE GYRO TO CENTER?
-                    //USE ODS SENSOR TO KNOW WHEN TO STOP GOING FORWARD?
+                case 4: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
                     movement ++;
                     break;
-                case 5: //RELEASE BLOCK WITH SERVOS
-                    //left servo OPEN
-                    //right servo OPEN
+                case 5: //GO FORWARD TO CRYPTOBOX
                     movement ++;
                     break;
-                case 6:
+                case 6: //RELEASE BLOCK WITH SERVOS
+                    movement ++;
+                    break;
+                case 7:
+                    sleep(1000);
                     myMechDrive.mechDriveSTOP();
+                    sleep(1000);
                     requestOpModeStop();
                     break;
             }

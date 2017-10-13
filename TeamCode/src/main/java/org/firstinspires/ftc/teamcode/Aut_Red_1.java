@@ -54,14 +54,11 @@ public class Aut_Red_1 extends LinearOpMode {
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
-                    //OR IS IT BETTER NOT TO REVERSE THE TURNS AND JUST CENTER BACK TO 0 DEGREES?
                     sleep(500);
                     movement ++;
                     break;
                 case 2: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    //USE GYRO TO CENTER?
-                    //USE ODS SENSOR ON BOTTOM OF ROBOT TO DETERMINE WHEN TO STOP INSTEAD OF ENCODERS?
                     myMechDrive.encoderDrive(39,4,1);
                     sleep(500);
                     movement ++;
@@ -72,11 +69,9 @@ public class Aut_Red_1 extends LinearOpMode {
                     movement++;
                     break;
                 case 4: //GO FORWARD TO CRYPTO BOX
+                    //GO FORWARD Y AMOUNT
                     myMechDrive.encoderDrive(5.75,1,0.7);
                     sleep(500);
-                    //GO FORWARD Y AMOUNT
-                    //USE GYRO TO CENTER?
-                    //USE ODS SENSOR TO KNOW WHEN TO STOP GOING FORWARD?
                     movement ++;
                     break;
                 case 5: //RELEASE BLOCK WITH SERVOS
@@ -84,7 +79,9 @@ public class Aut_Red_1 extends LinearOpMode {
                     movement ++;
                     break;
                 case 6:
+                    sleep(1000);
                     myMechDrive.mechDriveSTOP();
+                    sleep(1000);
                     requestOpModeStop();
                     break;
             }
