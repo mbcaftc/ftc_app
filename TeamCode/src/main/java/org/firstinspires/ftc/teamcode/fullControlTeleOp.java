@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 
 @TeleOp(name = "Full Control")
 
-public class fullControl extends OpMode {
+public class fullControlTeleOp extends OpMode {
 
     // left stick y axis controls forward/backward rotation of left motors
     // right stick y axis controls forward/backward rotation of right motors (tank drive)
