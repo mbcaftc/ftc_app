@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.extras;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  * Created by johnduval on 10/9/17.
  */
 @TeleOp (name = "Robot Control")
-
+@Disabled
 public class robotControl extends OpMode {
 
     glyphArms myGlyphArms;
@@ -24,7 +24,7 @@ public class robotControl extends OpMode {
         //myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
 
         //myColorSensorArm.colorSensorArmUp();
-        myGlyphArms.open();
+        myGlyphArms.openGlyphArms();
     }
 
     @Override
@@ -33,10 +33,10 @@ public class robotControl extends OpMode {
 
 
         if (gamepad2.right_bumper) {
-            myGlyphArms.close();
+            myGlyphArms.closeGlyphArms();
         }
         if (gamepad2.left_bumper) {
-            myGlyphArms.open();
+            myGlyphArms.openGlyphArms();
         }
         /*if (gamepad2.dpad_up) {
             myColorSensorArm.colorSensorArmUp();

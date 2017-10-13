@@ -62,23 +62,25 @@ public class Aut_Red_1 extends LinearOpMode {
                     //STRAFE LEFT X AMOUNT
                     //USE GYRO TO CENTER?
                     //USE ODS SENSOR ON BOTTOM OF ROBOT TO DETERMINE WHEN TO STOP INSTEAD OF ENCODERS?
-                    myMechDrive.encoderDrive(40,4,1);
+                    myMechDrive.encoderDrive(39,4,1);
                     sleep(500);
                     movement ++;
                     break;
                 case 3://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(50,5,1);
+                    myMechDrive.encoderDrive(42,5,0.6);
+                    sleep(500);
                     movement++;
                     break;
                 case 4: //GO FORWARD TO CRYPTO BOX
+                    myMechDrive.encoderDrive(5.75,1,0.7);
+                    sleep(500);
                     //GO FORWARD Y AMOUNT
                     //USE GYRO TO CENTER?
                     //USE ODS SENSOR TO KNOW WHEN TO STOP GOING FORWARD?
                     movement ++;
                     break;
                 case 5: //RELEASE BLOCK WITH SERVOS
-                    //left servo OPEN
-                    //right servo OPEN
+                    myGlyphArms.openGlyphArms();
                     movement ++;
                     break;
                 case 6:

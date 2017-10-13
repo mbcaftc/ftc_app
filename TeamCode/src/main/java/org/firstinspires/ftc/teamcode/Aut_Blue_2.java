@@ -67,7 +67,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement ++;
                     break;
                 case 3://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(50,5,1);
+                    myMechDrive.encoderDrive(25,5,1);
                     movement++;
                     break;
                 case 4: //GO FORWARD TO CRYPTO BOX

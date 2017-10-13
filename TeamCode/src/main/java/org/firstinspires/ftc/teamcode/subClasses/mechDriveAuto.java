@@ -33,7 +33,7 @@ public class mechDriveAuto {
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void encoderDrive (int distance, int direction, double power) {
+    public void encoderDrive (double distance, int direction, double power) {
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -44,9 +44,9 @@ public class mechDriveAuto {
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        final int ENCODER_CPR = 1120;
-        final int GEAR_RATIO = 1;
-        final int WHEEL_DIAMETER = 4;
+        final double ENCODER_CPR = 1120;
+        final double GEAR_RATIO = 1;
+        final double WHEEL_DIAMETER = 4;
         final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
         double ROTATIONS = distance / CIRCUMFERENCE;
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
@@ -104,19 +104,19 @@ public class mechDriveAuto {
     public void redAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            encoderDrive(3,3,1); //red alliance seeing red ball -- strafe right
+            encoderDrive(3,3,0.8); //red alliance seeing red ball -- strafe right
             sleep (200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,4,1); //reset with strafe left
+            encoderDrive(3,4,0.8); //reset with strafe left
             sleep(200);
         }
         else if (jewelColor == 2) {
-            encoderDrive(3,4,1);
+            encoderDrive(3,4,0.8);
             sleep(200);
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,3,1);
+            encoderDrive(3,3,0.8);
             sleep(200);
         }
         else {
