@@ -155,23 +155,32 @@ public class mechDriveAuto {
         }
     }
 
-    public void vuforiaLeft () throws InterruptedException {
+    public void vuforiaLeft (glyphArms arms) throws InterruptedException {
         encoderDrive(9,3,0.75);
         sleep(200);
         encoderDrive(cryptoboxDistanceForward,1,0.8);
         sleep(200);
+        arms.openGlyphArms();
+        sleep(500);
+        encoderDrive(2, 1, 1);
     }
 
-    public void vuforiaCenter () throws InterruptedException {
+    public void vuforiaCenter (glyphArms arms) throws InterruptedException {
         encoderDrive(cryptoboxDistanceForward,1,0.8);
         sleep(200);
+        arms.openGlyphArms();
+        sleep(500);
+        encoderDrive(2, 1, 1);
     }
 
-    public void vuforiaRight () throws InterruptedException {
+    public void vuforiaRight (glyphArms arms) throws InterruptedException {
         encoderDrive(9,4,0.75);
         sleep(200);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8);
         sleep(200);
+        arms.openGlyphArms();
+        sleep(500);
+        encoderDrive(2, 1, 1);
     }
 
     public void mechDriveSTOP () {

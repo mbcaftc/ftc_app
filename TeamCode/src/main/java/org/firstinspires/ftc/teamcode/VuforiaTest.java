@@ -76,7 +76,7 @@ public class VuforiaTest extends LinearOpMode {
     double upPosition = 0.325;
     double leftPosition = 0.75;
     double centerPosition = 0.5;
-    double rightPosition = 0.1;
+    double rightPosition = 0.4;
 
     boolean armState; // Up = false, down = true
 

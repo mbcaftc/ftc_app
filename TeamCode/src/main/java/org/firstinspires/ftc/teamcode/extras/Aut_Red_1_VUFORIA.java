@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.extras;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  */
 
 @Autonomous (name = "Red - 1 - VuForia", group = "RED")
+@Disabled
 
 public class Aut_Red_1_VUFORIA extends LinearOpMode {
 
@@ -80,6 +82,7 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                     movement ++; //move on to next movement
                     break;
                 case 1:
+                    sleep(1000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -100,6 +103,7 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                     else {
                         telemetry.addData("VuMark", "not visible");
                     }
+                    sleep(1000);
                     switch (vuMark) {
                         case LEFT:
                             cryptoboxColumn = 1;
@@ -139,12 +143,12 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(38,4,1);
+                    myMechDrive.encoderDrive(41, 4, 1);
                     sleep(500);
                     movement ++;
                     break;
                 case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(41,5,0.6);
+                    myMechDrive.encoderDrive(41, 5, 0.6);
                     sleep(500);
                     movement++;
                     break;
@@ -155,22 +159,20 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeft();
+                            myMechDrive.vuforiaLeft(myGlyphArms);
                             sleep(500);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter();
+                            myMechDrive.vuforiaCenter(myGlyphArms);
                             sleep(500);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRight();
+                            myMechDrive.vuforiaRight(myGlyphArms);
                             sleep(500);
                     }
                     movement++;
                     break;
                 case 6:
-                    myGlyphArms.openGlyphArms();
-                    sleep(1000);
                     requestOpModeStop();
                     break;
             }
