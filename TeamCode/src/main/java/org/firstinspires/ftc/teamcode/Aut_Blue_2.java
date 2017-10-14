@@ -77,7 +77,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     myColorSensorArm.colorSensorArmDown();
                     movement ++; //move on to next movement
                     break;
-                case 1:
+                case 1: // reading Vuforia code
                     sleep(3000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
