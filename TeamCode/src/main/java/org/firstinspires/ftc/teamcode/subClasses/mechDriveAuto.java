@@ -12,10 +12,9 @@ public class mechDriveAuto {
 
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     private double jewelMoveSpeed = 0.8;
-
+    private double cryptoboxDistanceForward = 4.0;
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
-
 
         frontLeftMotor = frontLM;
         frontRightMotor = frontRM;
@@ -115,7 +114,7 @@ public class mechDriveAuto {
             encoderDrive(3,4,jewelMoveSpeed); //reset with strafe left
             sleep(200);
         }
-        else if (jewelColor == 2) {
+        else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             encoderDrive(3,4,jewelMoveSpeed);
             sleep(200);
             armSensor.colorSensorArmUp();
@@ -153,6 +152,25 @@ public class mechDriveAuto {
             armSensor.colorSensorArmUp();
             sleep(200);
         }
+    }
+
+    public void vuforiaLeft () throws InterruptedException {
+        encoderDrive(5,3,0.75);
+        sleep(200);
+        encoderDrive(cryptoboxDistanceForward,1,0.75);
+        sleep(200);
+    }
+
+    public void vuforiaCenter () throws InterruptedException {
+        encoderDrive(cryptoboxDistanceForward,1,0.75);
+        sleep(200);
+    }
+
+    public void vuforiaRight () throws InterruptedException {
+        encoderDrive(5,4,0.75);
+        sleep(200);
+        encoderDrive(cryptoboxDistanceForward, 1, 0.75);
+        sleep(200);
     }
 
     public void mechDriveSTOP () {
