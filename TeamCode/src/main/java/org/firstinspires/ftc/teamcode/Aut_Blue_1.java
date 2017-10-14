@@ -80,7 +80,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     movement ++;
                     break;
                 case 6:
-                    myMechDrive.mechDriveSTOP();
+                    sleep(1000);
                     requestOpModeStop();
                     break;
             }

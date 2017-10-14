@@ -170,8 +170,6 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                 case 6:
                     myGlyphArms.openGlyphArms();
                     sleep(1000);
-                    myMechDrive.mechDriveSTOP();
-                    sleep(1000);
                     requestOpModeStop();
                     break;
             }

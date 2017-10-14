@@ -79,8 +79,6 @@ public class Aut_Red_2 extends LinearOpMode {
                     break;
                 case 7:
                     sleep(1000);
-                    myMechDrive.mechDriveSTOP();
-                    sleep(1000);
                     requestOpModeStop();
                     break;
             }

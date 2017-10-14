@@ -12,7 +12,7 @@ public class mechDriveAuto {
 
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     private double jewelMoveSpeed = 0.8;
-    private double cryptoboxDistanceForward = 4.0;
+    private double cryptoboxDistanceForward = 5;
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
 
@@ -155,21 +155,21 @@ public class mechDriveAuto {
     }
 
     public void vuforiaLeft () throws InterruptedException {
-        encoderDrive(5,3,0.75);
+        encoderDrive(9,3,0.75);
         sleep(200);
-        encoderDrive(cryptoboxDistanceForward,1,0.75);
+        encoderDrive(cryptoboxDistanceForward,1,0.8);
         sleep(200);
     }
 
     public void vuforiaCenter () throws InterruptedException {
-        encoderDrive(cryptoboxDistanceForward,1,0.75);
+        encoderDrive(cryptoboxDistanceForward,1,0.8);
         sleep(200);
     }
 
     public void vuforiaRight () throws InterruptedException {
-        encoderDrive(5,4,0.75);
+        encoderDrive(9,4,0.75);
         sleep(200);
-        encoderDrive(cryptoboxDistanceForward, 1, 0.75);
+        encoderDrive(cryptoboxDistanceForward, 1, 0.8);
         sleep(200);
     }
 
