@@ -27,6 +27,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 @Autonomous (name = "Red - 1 - VuForia", group = "RED")
 
 public class Aut_Red_1_VUFORIA extends LinearOpMode {
+
     int movement = 0; //switch variable to determine movementt
 
     colorSensorArm myColorSensorArm;
@@ -138,12 +139,12 @@ public class Aut_Red_1_VUFORIA extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(39,4,1);
+                    myMechDrive.encoderDrive(38,4,1);
                     sleep(500);
                     movement ++;
                     break;
                 case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(42,5,0.6);
+                    myMechDrive.encoderDrive(41,5,0.6);
                     sleep(500);
                     movement++;
                     break;

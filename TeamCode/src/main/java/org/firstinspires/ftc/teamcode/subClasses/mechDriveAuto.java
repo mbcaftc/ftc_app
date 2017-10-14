@@ -36,6 +36,7 @@ public class mechDriveAuto {
     }
 
     public void encoderDrive (double distance, int direction, double power) {
+
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
