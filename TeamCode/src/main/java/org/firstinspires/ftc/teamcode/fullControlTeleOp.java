@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
+import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 
 /**
  * Created by blake_shafer on 8/23/17.
@@ -46,13 +47,18 @@ public class fullControlTeleOp extends OpMode {
     double speedPullUpVal = 0.8;
     double digitalJoystickVal = 0.1;
 
+    double leftStickVal2;
+
     boolean speedState; // True = fast, false = slow
 
     glyphArms myGlyphArms;
     colorSensorArmAuto myColorSensorArm;
+    glyphLift myGlyphLift;
 
     @Override
     public void init() {
+
+        myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
 
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myGlyphArms.openGlyphArms();
@@ -197,6 +203,12 @@ public class fullControlTeleOp extends OpMode {
         if (gamepad2.dpad_up) {
             myColorSensorArm.colorSensorArmUp();
         }
+
+        // Glyph Lift
+
+        leftStickVal2 = -gamepad2.left_stick_y;
+        leftStickVal2 = Range.clip(leftStickVal2, -1, 1);
+        myGlyphLift.setPower(leftStickVal2);
 
         // Telemetry
 
