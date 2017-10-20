@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
@@ -33,6 +34,8 @@ public class Aut_Blue_1 extends LinearOpMode {
     colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
+    glyphLift myGlyphLift;
+
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
     // 3 == RIGHT
@@ -52,6 +55,7 @@ public class Aut_Blue_1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
@@ -77,11 +81,14 @@ public class Aut_Blue_1 extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.closeGlyphArms();
+                    sleep(400  );
+                    myGlyphLift.raiseGlyphLiftAutMode();
+                    sleep(200);
                     myColorSensorArm.colorSensorArmDown();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
-                    sleep(1000);
+                    sleep(2000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -124,12 +131,12 @@ public class Aut_Blue_1 extends LinearOpMode {
                     sleep(1000);
                     movement++;
                     break;
-
                 case 2: //detecting jewel and knocking off & centering
                     sleep (500); //wait to be sure color sensor is working
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
+                    telemetry.addData("CRYPTO COLUMN: ", cryptoboxColumn);
                     telemetry.update();
                     sleep(500);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
@@ -143,7 +150,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(41,3,1);
+                    myMechDrive.encoderDrive(41,3,.9);
                     sleep(500);
                     movement ++;
                     break;
@@ -160,15 +167,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     switch (cryptoboxColumn) {
                         case 1:
                             myMechDrive.vuforiaLeft(myGlyphArms);
-                            sleep(500);
                             break;
                         case 2:
                             myMechDrive.vuforiaCenter(myGlyphArms);
-                            sleep(500);
                             break;
                         case 3:
                             myMechDrive.vuforiaRight(myGlyphArms);
-                            sleep(500);
+                            break;
                     }
                     movement++;
                     break;

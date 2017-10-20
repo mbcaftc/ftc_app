@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
@@ -24,7 +25,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Blue - 2", group = "RED")
+@Autonomous (name = "Blue - 2", group = "BLUE")
 
 public class Aut_Blue_2 extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
@@ -32,6 +33,8 @@ public class Aut_Blue_2 extends LinearOpMode {
     colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
+    glyphLift myGlyphLift;
+
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
     // 3 == RIGHT
@@ -49,6 +52,7 @@ public class Aut_Blue_2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
@@ -74,11 +78,14 @@ public class Aut_Blue_2 extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.closeGlyphArms();
+                    sleep(400);
+                    myGlyphLift.raiseGlyphLiftAutMode();
+                    sleep(200);
                     myColorSensorArm.colorSensorArmDown();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
-                    sleep(3000);
+                    sleep(2000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -99,7 +106,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     else {
                         telemetry.addData("VuMark", "not visible");
                     }
-                    //sleep(2000);
+                    sleep(1000);
                     switch (vuMark) {
                         case LEFT:
                             cryptoboxColumn = 1;
@@ -139,7 +146,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(30,3,1);
+                    myMechDrive.encoderDrive(30,3,.9);
                     sleep(500);
                     movement ++;
                     break;
@@ -148,8 +155,8 @@ public class Aut_Blue_2 extends LinearOpMode {
                     sleep(500);
                     movement++;
                     break;
-                case 5: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17,4,1);
+                case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
+                    myMechDrive.encoderDrive(17,4,.9);
                     movement ++;
                     break;
                 case 6: //GO FORWARD TO CRYPTOBOX
@@ -160,23 +167,17 @@ public class Aut_Blue_2 extends LinearOpMode {
                     switch (cryptoboxColumn) {
                         case 1:
                             myMechDrive.vuforiaLeft(myGlyphArms);
-                            sleep(500);
                             break;
                         case 2:
                             myMechDrive.vuforiaCenter(myGlyphArms);
-                            sleep(500);
                             break;
                         case 3:
                             myMechDrive.vuforiaRight(myGlyphArms);
-                            sleep(500);
+                            break;
                     }
                     movement ++;
                     break;
-                case 7: //RELEASE BLOCK WITH SERVOS
-                    movement ++;
-                    break;
-                case 8:
-                    sleep(1000);
+                case 7:
                     requestOpModeStop();
                     break;
             }

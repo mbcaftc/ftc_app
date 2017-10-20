@@ -12,7 +12,7 @@ public class mechDriveAuto {
 
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     private double jewelMoveSpeed = 0.8;
-    private double cryptoboxDistanceForward = 5;
+    private double cryptoboxDistanceForward = 6;
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
 
@@ -33,6 +33,11 @@ public class mechDriveAuto {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void encoderDrive (double distance, int direction, double power) {
@@ -54,7 +59,7 @@ public class mechDriveAuto {
         double ROTATIONS = distance / CIRCUMFERENCE;
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
-        double powerReductionFactor = 0.77;
+        double powerReductionFactor = .60;
         double countsWhile = 0.95;
 
         switch (direction) {
@@ -95,11 +100,21 @@ public class mechDriveAuto {
                 rearRightMotor.setTargetPosition((int) -counts);
                 break;
         }
-        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
-            frontLeftMotor.setPower(power * powerReductionFactor);
-            frontRightMotor.setPower(power * powerReductionFactor);
-            rearLeftMotor.setPower(power * powerReductionFactor);
-            rearRightMotor.setPower(power * powerReductionFactor);
+        if (direction != 2) {
+            while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+                frontLeftMotor.setPower(power * powerReductionFactor);
+                frontRightMotor.setPower(power * powerReductionFactor);
+                rearLeftMotor.setPower(power * powerReductionFactor);
+                rearRightMotor.setPower(power * powerReductionFactor);
+            }
+        }
+        else if (direction == 2) {
+            while (frontLeftMotor.getCurrentPosition() > counts * countsWhile && frontRightMotor.getCurrentPosition() > counts * countsWhile && rearLeftMotor.getCurrentPosition() > counts * countsWhile && rearRightMotor.getCurrentPosition() > counts * countsWhile) {
+                frontLeftMotor.setPower(power * powerReductionFactor);
+                frontRightMotor.setPower(power * powerReductionFactor);
+                rearLeftMotor.setPower(power * powerReductionFactor);
+                rearRightMotor.setPower(power * powerReductionFactor);
+            }
         }
         //(frontLeftMotor.getCurrentPosition() < counts || frontRightMotor.getCurrentPosition() < counts || rearLeftMotor.getCurrentPosition() < counts || rearRightMotor.getCurrentPosition() < counts )
     }
@@ -156,31 +171,57 @@ public class mechDriveAuto {
     }
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
-        encoderDrive(9,3,0.75);
+        encoderDrive(9,3,0.75); //strafe left to column
         sleep(200);
-        encoderDrive(cryptoboxDistanceForward,1,0.8);
+        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(200);
-        arms.openGlyphArms();
+        arms.openGlyphArms(); //open glyph arms
         sleep(500);
-        encoderDrive(2, 1, 1);
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        sleep(200);
+        encoderDrive(2,2,1);
+        sleep(200);
+        encoderDrive(2.1,1,1);
+        sleep(200);
+        encoderDrive(2.5,2,1);
+        sleep(200);
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
-        encoderDrive(cryptoboxDistanceForward,1,0.8);
+        encoderDrive(1,2,1);
         sleep(200);
-        arms.openGlyphArms();
+        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
+        sleep(200);
+        arms.openGlyphArms(); //open glyph arms
         sleep(500);
-        encoderDrive(2, 1, 1);
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        sleep(200);
+        encoderDrive(2,2,1);
+        sleep(200);
+        encoderDrive(2.1,1,1);
+        sleep(200);
+        encoderDrive(2.5,2,1);
+        sleep(200);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
-        encoderDrive(9,4,0.75);
+        //encoderDrive(1,2,1);
         sleep(200);
-        encoderDrive(cryptoboxDistanceForward, 1, 0.8);
+        encoderDrive(9,4,0.75); //strafe right to column
         sleep(200);
-        arms.openGlyphArms();
+        encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
+        sleep(200);
+        arms.openGlyphArms(); //open glyph arms
         sleep(500);
-        encoderDrive(2, 1, 1);
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        sleep(200);
+        encoderDrive(2,2,1);
+        sleep(200);
+        encoderDrive(2.1,1,1);
+        sleep(200);
+        encoderDrive(2.5,2,1);
+        sleep(200);
+
     }
 
     public void mechDriveSTOP () {

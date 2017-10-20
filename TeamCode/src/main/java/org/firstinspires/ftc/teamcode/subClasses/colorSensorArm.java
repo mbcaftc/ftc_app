@@ -14,8 +14,8 @@ import static java.lang.Thread.sleep;
 
 public class colorSensorArm {
 
-    int redThreshold = 2;
-    int blueThreshold = 2;
+    int redThreshold = 3;
+    int blueThreshold = 3;
     double upPosition = 0.325;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;

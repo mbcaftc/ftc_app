@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 @Autonomous (name = "Red - 1 - old", group = "RED")
+@Disabled
 
 public class Aut_Red1_old extends LinearOpMode {
 
@@ -119,6 +121,7 @@ public class Aut_Red1_old extends LinearOpMode {
                         //"RESET" WITH ROTATE 25 COUNTERCLOCKWISE
                         sleep(200);
                         encoderDrive(3, 4, 1);
+                        sleep(500);
                     }
                     else if (colorSensor.blue() > blueThreshold) {
                         sleep(2000);
@@ -129,6 +132,7 @@ public class Aut_Red1_old extends LinearOpMode {
                         //"RESET" WITH ROTATE 25 CLOCKWISE
                         sleep(200);
                         encoderDrive(3, 3, 1);
+                        sleep(500);
                     }
                     else { //in case color sensor doesn't detect any color thresholds
                         colorSensorArm.setPosition(upPosition);
@@ -141,9 +145,13 @@ public class Aut_Red1_old extends LinearOpMode {
                     //STRAFE LEFT X AMOUNT/
                     //USE GYRO TO CENTER?
                     //USE ODS SENSOR ON BOTTOM OF ROBOT TO DETERMINE WHEN TO STOP INSTEAD OF ENCODERS?
+                    encoderDrive(41, 4, 1);
+                    sleep(500);
                     movement ++;
                     break;
                 case 3: //GO FORWARD
+                    encoderDrive(41, 5, 0.6);
+                    sleep(500);
                     //GO FORWARD Y AMOUNT
                     //USE GYRO TO CENTER?
                     //USE ODS SENSOR TO KNOW WHEN TO STOP GOING FORWARD?
@@ -172,6 +180,7 @@ public class Aut_Red1_old extends LinearOpMode {
     }
 
     private void encoderDrive (int distance, int direction, double power) {
+        double countsWhile = 0.95;
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -234,10 +243,12 @@ public class Aut_Red1_old extends LinearOpMode {
             rearRightMotor.setTargetPosition((int) -counts);
         }
 
-        frontLeftMotor.setPower(power * powerReductionFactor);
-        frontRightMotor.setPower(power * powerReductionFactor);
-        rearLeftMotor.setPower(power * powerReductionFactor);
-        rearRightMotor.setPower(power * powerReductionFactor);
+        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+            frontLeftMotor.setPower(power * powerReductionFactor);
+            frontRightMotor.setPower(power * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
+        }
     }
 
 }
