@@ -156,7 +156,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17,4,.9);
+                    myMechDrive.encoderDrive(17.25,4,.9);
                     movement ++;
                     break;
                 case 6: //GO FORWARD TO CRYPTOBOX

@@ -183,7 +183,7 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(2.1,1,1);
         sleep(200);
-        encoderDrive(2.5,2,1);
+        encoderDrive(4.5,2,1);
         sleep(200);
     }
 
@@ -200,7 +200,7 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(2.1,1,1);
         sleep(200);
-        encoderDrive(2.5,2,1);
+        encoderDrive(4.5,2,1);
         sleep(200);
     }
 
@@ -219,15 +219,7 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(2.1,1,1);
         sleep(200);
-        encoderDrive(2.5,2,1);
+        encoderDrive(4.5,2,1);
         sleep(200);
-
-    }
-
-    public void mechDriveSTOP () {
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        rearLeftMotor.setPower(0);
-        rearRightMotor.setTargetPosition(0);
     }
 }

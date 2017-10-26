@@ -194,6 +194,9 @@ public class fullControlTeleOp extends OpMode {
         if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();
         }
+        if (gamepad2.a) {
+            myGlyphArms.slightlyOpenGlyphArms();
+        }
 
         // Color Sensor Arm
 

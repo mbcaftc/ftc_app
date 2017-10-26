@@ -21,8 +21,10 @@ public class glyphLift {
         glyphLift.setDirection(DcMotor.Direction.REVERSE);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        autRaisePower = 1;      // full power
-        autRaiseTime = 3000;    // 1 second
+        //autRaisePower = 1;      // full power
+        //autRaiseTime = 3000;    // 1 second
+        autRaisePower = .4;      // full power
+        autRaiseTime = 1000;    // 1 second
     }
 
     public void setPower(double power) {

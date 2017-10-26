@@ -30,6 +30,8 @@ public class glyphArms {
     double rightClosePosition = .32;
     double rightOpenPosition = .79;
 
+    double leftSlightlyOpenPosition = .75;
+    double rightSlightlyOpenPosition = .42;
 
     public Servo leftGlyphArm, rightGlyphArm;
     public glyphArms(Servo lGA, Servo rGA) {
@@ -45,5 +47,10 @@ public class glyphArms {
     public void openGlyphArms () {
         leftGlyphArm.setPosition(leftOpenPosition);
         rightGlyphArm.setPosition(rightOpenPosition);
+    }
+
+    public void slightlyOpenGlyphArms () {
+        leftGlyphArm.setPosition(leftSlightlyOpenPosition);
+        rightGlyphArm.setPosition(rightSlightlyOpenPosition);
     }
 }
