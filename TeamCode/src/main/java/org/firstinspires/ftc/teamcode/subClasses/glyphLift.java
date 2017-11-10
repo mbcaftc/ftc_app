@@ -14,6 +14,7 @@ public class glyphLift {
     public DcMotor glyphLift;
     private int autRaiseTime;
     private double autRaisePower;
+    private int autLowerTime;
 
     public glyphLift(DcMotor gL) {
         glyphLift = gL;
@@ -25,6 +26,7 @@ public class glyphLift {
         //autRaiseTime = 3000;    // 1 second
         autRaisePower = .4;      // full power
         autRaiseTime = 1000;    // 1 second
+        autLowerTime = 450;
     }
 
     public void setPower(double power) {
@@ -35,6 +37,12 @@ public class glyphLift {
     public void raiseGlyphLiftAutMode () throws InterruptedException {
         glyphLift.setPower(autRaisePower);
         sleep (autRaiseTime);
+        glyphLift.setPower(0);
+    }
+
+    public void lowerGlyphLiftAutMode () throws InterruptedException {
+        glyphLift.setPower(-autRaisePower);
+        sleep(autLowerTime);
         glyphLift.setPower(0);
     }
 }

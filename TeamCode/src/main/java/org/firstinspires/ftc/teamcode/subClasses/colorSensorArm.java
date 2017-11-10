@@ -19,7 +19,7 @@ public class colorSensorArm {
     double upPosition = 0.325;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;
-    double downPositionFinal = 0.90;
+    double downPositionFinal = 0.88;
     int colorArmPause = 300;
 
     public Servo colorSensorArm;

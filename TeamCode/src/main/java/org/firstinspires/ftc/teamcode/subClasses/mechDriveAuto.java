@@ -175,7 +175,8 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(200);
-        arms.openGlyphArms(); //open glyph arms
+        //arms.openGlyphArms(); //open glyph arms
+        arms.openLoweredGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
@@ -192,7 +193,8 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(200);
-        arms.openGlyphArms(); //open glyph arms
+        //arms.openGlyphArms(); //open glyph arms
+        arms.openLoweredGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
@@ -211,7 +213,8 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
         sleep(200);
-        arms.openGlyphArms(); //open glyph arms
+        //arms.openGlyphArms(); //open glyph arms
+        arms.openLoweredGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);

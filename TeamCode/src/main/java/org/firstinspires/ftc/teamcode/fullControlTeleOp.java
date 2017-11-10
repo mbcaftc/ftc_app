@@ -59,7 +59,9 @@ public class fullControlTeleOp extends OpMode {
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
 
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myGlyphArms.openGlyphArms();
+        //myGlyphArms.openGlyphArms();
+        //changed to make sure panels don't hit robot frame.
+        myGlyphArms.openLoweredGlyphArms();
 
         myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
         myColorSensorArm.colorSensorArmUp();
@@ -122,13 +124,19 @@ public class fullControlTeleOp extends OpMode {
         // Glyph Arms
 
         if (gamepad2.left_bumper) {
-            myGlyphArms.openGlyphArms();
+            //myGlyphArms.openGlyphArms();
+            //changed to make sure panels don't hit robot frame.
+            myGlyphArms.openLoweredGlyphArms();
         }
         if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();
         }
         if (gamepad2.a) {
             myGlyphArms.slightlyOpenGlyphArms();
+        }
+
+        if (gamepad2.x) {
+            myGlyphArms.openRaisedGlyphArms();
         }
 
         // Color Sensor Arm
