@@ -49,8 +49,6 @@ public class fullControlTeleOp extends OpMode {
 
     double leftStickVal2;
 
-    boolean speedState; // True = fast, false = slow
-
     glyphArms myGlyphArms;
     colorSensorArmAuto myColorSensorArm;
     glyphLift myGlyphLift;
@@ -88,8 +86,6 @@ public class fullControlTeleOp extends OpMode {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        speedState = true;
     }
     @Override
     public void loop() {
@@ -118,73 +114,10 @@ public class fullControlTeleOp extends OpMode {
         rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
         rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
-        if (gamepad1.x) {
-            speedState = false;
-        }
-        if (gamepad1.y) {
-            speedState = true;
-        }
-
-        if (speedState) {
-
-            if (leftStickVal >= speedPullUpVal) {
-                leftStickVal = 1.0;
-            }
-            else if (rightStickVal >= speedPullUpVal) {
-                rightStickVal = 1.0;
-            }
-
-            altFrontLeftSpeed = frontLeftSpeed * speedFastFactor;
-            frontLeftMotor.setPower(altFrontLeftSpeed);
-
-            altFrontRightSpeed = frontRightSpeed * speedFastFactor;
-            frontRightMotor.setPower(altFrontRightSpeed);
-
-            altRearLeftSpeed = rearLeftSpeed * speedFastFactor;
-            rearLeftMotor.setPower(altRearLeftSpeed);
-
-            altRearRightSpeed = rearRightSpeed * speedFastFactor;
-            rearRightMotor.setPower(altRearRightSpeed);
-        }
-        if (!speedState) {
-
-            if (leftStickVal >= digitalJoystickVal) {
-                leftStickVal = speedSlowFactor;
-            }
-            else if (rightStickVal >= digitalJoystickVal) {
-                rightStickVal = speedSlowFactor;
-            }
-            else if (leftStickVal <= -digitalJoystickVal) {
-                leftStickVal = -speedSlowFactor;
-            }
-            else if (rightStickVal <= -digitalJoystickVal) {
-                rightStickVal = -speedSlowFactor;
-            }
-            else if (leftStickVal < digitalJoystickVal && leftStickVal > 0) {
-                leftStickVal = 0;
-            }
-            else if (rightStickVal < digitalJoystickVal && rightStickVal > 0) {
-                rightStickVal = 0;
-            }
-            else if (leftStickVal > -digitalJoystickVal && leftStickVal < 0) {
-                leftStickVal = 0;
-            }
-            else if (rightStickVal > -digitalJoystickVal && rightStickVal < 0) {
-                rightStickVal = 0;
-            }
-
-            altFrontLeftSpeed = frontLeftSpeed;
-            frontLeftMotor.setPower(altFrontLeftSpeed);
-
-            altFrontRightSpeed = frontRightSpeed;
-            frontRightMotor.setPower(altFrontRightSpeed);
-
-            altRearLeftSpeed = rearLeftSpeed;
-            rearLeftMotor.setPower(altRearLeftSpeed);
-
-            altRearRightSpeed = rearRightSpeed;
-            rearRightMotor.setPower(altRearRightSpeed);
-        }
+        frontLeftMotor.setPower(frontLeftSpeed);
+        frontRightMotor.setPower(frontRightSpeed);
+        rearLeftMotor.setPower(rearLeftSpeed);
+        rearRightMotor.setPower(rearRightSpeed);
 
         // Glyph Arms
 

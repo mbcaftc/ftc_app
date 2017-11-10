@@ -29,7 +29,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 
 public class Aut_Red_1 extends LinearOpMode {
 
-    int movement = 0; //switch variable to determine movementt
+    int movement = 0; //switch variable to determine movement
 
     colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
