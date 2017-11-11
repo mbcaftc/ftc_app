@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
+import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 
@@ -49,8 +50,10 @@ public class fullControlTeleOp extends OpMode {
 
     double leftStickVal2;
 
+    boolean initServos = false;
+
     glyphArms myGlyphArms;
-    colorSensorArmAuto myColorSensorArm;
+    colorSensorArm myColorSensorArm;
     glyphLift myGlyphLift;
 
     @Override
@@ -61,10 +64,8 @@ public class fullControlTeleOp extends OpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         //myGlyphArms.openGlyphArms();
         //changed to make sure panels don't hit robot frame.
-        myGlyphArms.openLoweredGlyphArms();
 
-        myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
-        myColorSensorArm.colorSensorArmUp();
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
@@ -91,6 +92,12 @@ public class fullControlTeleOp extends OpMode {
     }
     @Override
     public void loop() {
+
+        if (!initServos) {
+            myGlyphArms.openLoweredGlyphArms();
+            myColorSensorArm.colorSensorArmRest();
+            initServos = true;
+        }
 
         // Mecanum Drive
 
@@ -141,11 +148,8 @@ public class fullControlTeleOp extends OpMode {
 
         // Color Sensor Arm
 
-        if (gamepad2.dpad_down) {
-            myColorSensorArm.colorSensorArmDown();
-        }
         if (gamepad2.dpad_up) {
-            myColorSensorArm.colorSensorArmUp();
+            myColorSensorArm.colorSensorArmRest();
         }
 
         // Glyph Lift

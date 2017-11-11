@@ -14,8 +14,9 @@ import static java.lang.Thread.sleep;
 
 public class colorSensorArm {
 
-    int redThreshold = 3;
-    int blueThreshold = 3;
+    int redThreshold = 2;
+    int blueThreshold = 2;
+    double restPosition = 0.25;
     double upPosition = 0.325;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;
@@ -49,6 +50,10 @@ public class colorSensorArm {
 
     public void colorSensorArmUp() {
         colorSensorArm.setPosition(upPosition);
+    }
+
+    public void colorSensorArmRest() {
+        colorSensorArm.setPosition(restPosition);
     }
 
     public void colorSensorArmDown() throws InterruptedException {
