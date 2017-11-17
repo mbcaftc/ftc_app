@@ -30,7 +30,6 @@ public class glyphLift {
     }
 
     public void setPower(double power) {
-
         glyphLift.setPower(power);
     }
 

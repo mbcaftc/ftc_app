@@ -6,6 +6,7 @@ import android.view.View;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 import static java.lang.Thread.sleep;
 
 /**
@@ -20,7 +21,7 @@ public class colorSensorArm {
     double upPosition = 0.325;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;
-    double downPositionFinal = 0.88;
+    double downPositionFinal = 0.880;
     int colorArmPause = 300;
 
     public Servo colorSensorArm;
