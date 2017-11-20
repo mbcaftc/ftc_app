@@ -38,17 +38,10 @@ public class fullControlTeleOp extends OpMode {
     double rearLeftSpeed;
     double rearRightSpeed;
 
-    double altFrontLeftSpeed; // are the altered speed values after the original speed values have been multiplied by the speed threshold factors
-    double altFrontRightSpeed;
-    double altRearLeftSpeed;
-    double altRearRightSpeed;
-
-    double speedFastFactor = 0.8;
-    double speedSlowFactor = 0.5;
-    double speedPullUpVal = 0.8;
-    double digitalJoystickVal = 0.1;
-
-    double leftStickVal2;
+    double liftPower;
+    int position;
+    int minLiftPosition = 0;
+    int maxLiftPosition = 10000;
 
     boolean initServos = false;
 
@@ -154,9 +147,20 @@ public class fullControlTeleOp extends OpMode {
 
         // Glyph Lift
 
-        leftStickVal2 = -gamepad2.left_stick_y;
-        leftStickVal2 = Range.clip(leftStickVal2, -1, 1);
-        myGlyphLift.setPower(leftStickVal2);
+        liftPower = -gamepad2.left_stick_y;
+        liftPower = Range.clip(liftPower, -1, 1);
+
+        position = myGlyphLift.getCurrentPosition();
+
+        if (position == minLiftPosition && liftPower < 0) {
+            liftPower = 0;
+        }
+
+        else if (position == maxLiftPosition && liftPower > 0) {
+            liftPower = 0;
+        }
+
+        myGlyphLift.setPower(liftPower);
 
         // Telemetry
 
@@ -165,9 +169,12 @@ public class fullControlTeleOp extends OpMode {
         telemetry.addData("val", "L trgr: " + String.format("%.2f", leftTriggerVal));
         telemetry.addData("val", "R trgr: " + String.format("%.2f", rightTriggerVal));
 
-        telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", altFrontLeftSpeed));
-        telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", altFrontRightSpeed));
-        telemetry.addData("pwr", "RL mtr: " + String.format("%.2f", altRearLeftSpeed));
-        telemetry.addData("pwr", "RR mtr: " + String.format("%.2f", altRearRightSpeed));
+        telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", frontLeftSpeed));
+        telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", frontRightSpeed));
+        telemetry.addData("pwr", "RL mtr: " + String.format("%.2f", rearLeftSpeed));
+        telemetry.addData("pwr", "RR mtr: " + String.format("%.2f", rearRightSpeed));
+
+        telemetry.addData("lift", "position: " + String.format("%.2f", position));
+        telemetry.addData("lift", "pwr: " + String.format("%.2f", liftPower));
     }
 }

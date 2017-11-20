@@ -15,12 +15,15 @@ public class glyphLift {
     private int autRaiseTime;
     private double autRaisePower;
     private int autLowerTime;
+    int position;
 
     public glyphLift(DcMotor gL) {
         glyphLift = gL;
 
         glyphLift.setDirection(DcMotor.Direction.REVERSE);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //autRaisePower = 1;      // full power
         //autRaiseTime = 3000;    // 1 second
@@ -33,9 +36,14 @@ public class glyphLift {
         glyphLift.setPower(power);
     }
 
+    public int getCurrentPosition() {
+        position = glyphLift.getCurrentPosition();
+        return position;
+    }
+
     public void raiseGlyphLiftAutMode () throws InterruptedException {
         glyphLift.setPower(autRaisePower);
-        sleep (autRaiseTime);
+        sleep(autRaiseTime);
         glyphLift.setPower(0);
     }
 
