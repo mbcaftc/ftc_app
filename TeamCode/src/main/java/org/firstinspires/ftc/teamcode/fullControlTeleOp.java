@@ -41,7 +41,7 @@ public class fullControlTeleOp extends OpMode {
     double liftPower;
     int position;
     int minLiftPosition = 0;
-    int maxLiftPosition = 10000;
+    int maxLiftPosition = 9200;
 
     boolean initServos = false;
 
@@ -58,7 +58,7 @@ public class fullControlTeleOp extends OpMode {
         //myGlyphArms.openGlyphArms();
         //changed to make sure panels don't hit robot frame.
 
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
@@ -87,8 +87,9 @@ public class fullControlTeleOp extends OpMode {
     public void loop() {
 
         if (!initServos) {
-            myGlyphArms.openLoweredGlyphArms();
-            myColorSensorArm.colorSensorArmRest();
+            myGlyphArms.openGlyphArms();
+            myColorSensorArm.colorSensorArmUp();
+            myColorSensorArm.colorRotateResting();
             initServos = true;
         }
 
@@ -126,7 +127,7 @@ public class fullControlTeleOp extends OpMode {
         if (gamepad2.left_bumper) {
             //myGlyphArms.openGlyphArms();
             //changed to make sure panels don't hit robot frame.
-            myGlyphArms.openLoweredGlyphArms();
+            myGlyphArms.openGlyphArms();
         }
         if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();
@@ -150,31 +151,21 @@ public class fullControlTeleOp extends OpMode {
         liftPower = -gamepad2.left_stick_y;
         liftPower = Range.clip(liftPower, -1, 1);
 
-        position = myGlyphLift.getCurrentPosition();
-
-        if (position == minLiftPosition && liftPower < 0) {
-            liftPower = 0;
-        }
-
-        else if (position == maxLiftPosition && liftPower > 0) {
-            liftPower = 0;
-        }
-
         myGlyphLift.setPower(liftPower);
 
         // Telemetry
 
-        telemetry.addData("val", "L stck: " + String.format("%.2f", leftStickVal));
-        telemetry.addData("val", "R stck: " + String.format("%.2f", rightStickVal));
-        telemetry.addData("val", "L trgr: " + String.format("%.2f", leftTriggerVal));
-        telemetry.addData("val", "R trgr: " + String.format("%.2f", rightTriggerVal));
+        telemetry.addData("val", "L stck: " + leftStickVal);
+        telemetry.addData("val", "R stck: " + rightStickVal);
+        telemetry.addData("val", "L trgr: " + leftTriggerVal);
+        telemetry.addData("val", "R trgr: " + rightTriggerVal);
 
-        telemetry.addData("pwr", "FL mtr: " + String.format("%.2f", frontLeftSpeed));
-        telemetry.addData("pwr", "FR mtr: " + String.format("%.2f", frontRightSpeed));
-        telemetry.addData("pwr", "RL mtr: " + String.format("%.2f", rearLeftSpeed));
-        telemetry.addData("pwr", "RR mtr: " + String.format("%.2f", rearRightSpeed));
+        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
 
-        telemetry.addData("lift", "position: " + String.format("%.2f", position));
-        telemetry.addData("lift", "pwr: " + String.format("%.2f", liftPower));
+        telemetry.addData("lift", "position: " +  position);
+        telemetry.addData("lift", "pwr: " + liftPower);
     }
 }

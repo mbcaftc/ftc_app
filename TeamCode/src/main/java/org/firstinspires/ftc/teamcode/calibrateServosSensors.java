@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
+import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 
@@ -15,20 +16,20 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 //@Disabled
 public class calibrateServosSensors extends OpMode {
     glyphArms myGlyphArms;
-    colorSensorArmAuto myColorSensorArm;
     glyphLift myGlyphLift;
+    colorSensorArm myColorSensorArm;
+
     double leftStickVal2;
-
-
-
 
     @Override
     public void init() {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myColorSensorArm = new colorSensorArmAuto(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
 
         myColorSensorArm.colorSensorArmUp();
+
+        myColorSensorArm.colorRotateResting();
         //myGlyphArms.openGlyphArms();
     }
 
@@ -38,7 +39,7 @@ public class calibrateServosSensors extends OpMode {
             myGlyphArms.closeGlyphArms();
         }
         if (gamepad2.a) {
-            myGlyphArms.openLoweredGlyphArms();
+            myGlyphArms.openGlyphArms();
         }
         if (gamepad2.y) {
             myGlyphArms.openRaisedGlyphArms();
@@ -53,7 +54,15 @@ public class calibrateServosSensors extends OpMode {
             myColorSensorArm.colorSensorArmUp();
         }
         if (gamepad2.dpad_down) {
-            myColorSensorArm.colorSensorArmDown();
+            myColorSensorArm.colorSensorArmDownTesting();
+        }
+
+        if(gamepad2.dpad_left) {
+            myColorSensorArm.colorRotateClockwise();
+        }
+
+        if (gamepad2.dpad_right) {
+            myColorSensorArm.colorRotateCounterClockwise();
         }
 
         leftStickVal2 = -gamepad2.left_stick_y;

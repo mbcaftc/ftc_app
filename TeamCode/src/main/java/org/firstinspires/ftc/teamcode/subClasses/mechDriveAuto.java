@@ -123,48 +123,34 @@ public class mechDriveAuto {
 
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            encoderDrive(3,3,jewelMoveSpeed); //red alliance seeing red ball -- strafe right
-            sleep (200);
+            armSensor.colorRotateClockwise();
             armSensor.colorSensorArmUp();
-            sleep(200);
-            encoderDrive(3,4,jewelMoveSpeed); //reset with strafe left
             sleep(200);
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
-            encoderDrive(3,4,jewelMoveSpeed);
-            sleep(200);
+            armSensor.colorRotateCounterClockwise();
             armSensor.colorSensorArmUp();
-            sleep(200);
-            encoderDrive(3,3,jewelMoveSpeed);
             sleep(200);
         }
         else {
             armSensor.colorSensorArmUp();
-            sleep(500);
+            sleep(200);
         }
         //mechDriveSTOP();
     }
 
     public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
-            encoderDrive(3,4,jewelMoveSpeed);
-            sleep (200);
+            armSensor.colorRotateCounterClockwise();
             armSensor.colorSensorArmUp();
             sleep(200);
-            encoderDrive(3,3,jewelMoveSpeed);
-            sleep(200);
-
         }
         else if (jewelColor == 2) {
-            encoderDrive(3,3,jewelMoveSpeed);
-            sleep(200);
+            armSensor.colorRotateClockwise();
             armSensor.colorSensorArmUp();
-            sleep(200);
-            encoderDrive(3,4,jewelMoveSpeed);
             sleep(200);
         }
         else {
-            sleep(100);
             armSensor.colorSensorArmUp();
             sleep(200);
         }
@@ -176,7 +162,7 @@ public class mechDriveAuto {
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(200);
         //arms.openGlyphArms(); //open glyph arms
-        arms.openLoweredGlyphArms();
+        arms.openGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
@@ -194,7 +180,7 @@ public class mechDriveAuto {
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(200);
         //arms.openGlyphArms(); //open glyph arms
-        arms.openLoweredGlyphArms();
+        arms.openGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
@@ -214,7 +200,7 @@ public class mechDriveAuto {
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
         sleep(200);
         //arms.openGlyphArms(); //open glyph arms
-        arms.openLoweredGlyphArms();
+        arms.openGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);

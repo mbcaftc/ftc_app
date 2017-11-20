@@ -55,12 +55,12 @@ public class Aut_Red_1_b extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
 
         myColorSensorArm.colorSensorArmUp();
-        myGlyphArms.openGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -79,10 +79,8 @@ public class Aut_Red_1_b extends LinearOpMode {
 
             switch (movement) {
                 case 0:
-                    myGlyphArms.openLoweredGlyphArms();
-                    sleep(200);
-                    myGlyphLift.lowerGlyphLiftAutMode();
-                    sleep(200);
+                    myGlyphArms.openGlyphArms();
+                    sleep(500);
                     myGlyphArms.closeGlyphArms();
                     sleep(200);
                     myGlyphLift.raiseGlyphLiftAutMode();
@@ -135,19 +133,19 @@ public class Aut_Red_1_b extends LinearOpMode {
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
-                    sleep (500); //wait to be sure color sensor is working
+                    sleep (200); //wait to be sure color sensor is working
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(500);
+                    sleep(200);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
-                    sleep(1000);
+                    sleep(500);
                     movement ++;
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN

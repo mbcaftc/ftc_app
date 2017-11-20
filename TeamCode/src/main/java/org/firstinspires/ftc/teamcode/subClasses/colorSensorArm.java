@@ -18,7 +18,7 @@ public class colorSensorArm {
     int redThreshold = 2;
     int blueThreshold = 2;
     double restPosition = 0.25;
-    double upPosition = 0.325;
+    double upPosition = 0.2;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;
     double downPositionFinal = 0.880;
@@ -26,10 +26,12 @@ public class colorSensorArm {
 
     public Servo colorSensorArm;
     public ColorSensor colorSensor;
+    public Servo colorSensorArmRotate;
     //mechDriveAuto myMechDrive;
 
-    public colorSensorArm(Servo cSA, ColorSensor cS) {
+    public colorSensorArm(Servo cSA, ColorSensor cS, Servo cSAR) {
         colorSensorArm = cSA;
+        colorSensorArmRotate = cSAR;
         colorSensor = cS;
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
@@ -64,6 +66,27 @@ public class colorSensorArm {
         sleep(colorArmPause);
         colorSensorArm.setPosition(downPositionFinal);
     }
+
+    //TeleOp cannot ThrowInterruptedExcpetion.
+    public void colorSensorArmDownTesting () {
+        colorSensorArm.setPosition(downPositionPause1);
+        colorSensorArm.setPosition(downPositionPause2);
+        colorSensorArm.setPosition(downPositionFinal);
+    }
+
+    public void colorRotateResting () {
+        colorSensorArmRotate.setPosition(0.45);
+    }
+
+    public void colorRotateClockwise () {
+        colorSensorArmRotate.setPosition(0.6);
+    }
+
+    public void colorRotateCounterClockwise () {
+        colorSensorArmRotate.setPosition(0.3);
+    }
+
+
 
     public int colorJewel() throws InterruptedException {
         //gives sensor time to be accurate

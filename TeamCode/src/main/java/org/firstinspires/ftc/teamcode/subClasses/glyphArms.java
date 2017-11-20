@@ -26,13 +26,11 @@ public class glyphArms {
     //with channel
     double leftClosePosition =.83;
     double leftOpenPosition = .36;
-    double leftOpenRaisedPosition = .36;
-    double leftOpenLoweredPosition = .50;
+    double leftOpenLoweredPosition = .64;
 
     double rightClosePosition = .32;
     double rightOpenPosition = .78;
-    double rightOpenRaisedPosition = .78;
-    double rightOpenLoweredPosition = .64;
+    double rightOpenLoweredPosition = .5;
 
     double leftSlightlyOpenPosition = .74;
     double rightSlightlyOpenPosition = .4;
@@ -49,18 +47,13 @@ public class glyphArms {
     }
 
     public void openGlyphArms () {
-        leftGlyphArm.setPosition(leftOpenPosition);
-        rightGlyphArm.setPosition(rightOpenPosition);
-    }
-
-    public void openLoweredGlyphArms () {
         leftGlyphArm.setPosition(leftOpenLoweredPosition);
         rightGlyphArm.setPosition(rightOpenLoweredPosition);
     }
 
     public void openRaisedGlyphArms () {
-        leftGlyphArm.setPosition(leftOpenRaisedPosition);
-        rightGlyphArm.setPosition(rightOpenRaisedPosition);
+        leftGlyphArm.setPosition(leftOpenPosition);
+        rightGlyphArm.setPosition(rightOpenPosition);
     }
 
     public void slightlyOpenGlyphArms () {

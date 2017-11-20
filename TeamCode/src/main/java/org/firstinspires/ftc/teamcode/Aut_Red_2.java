@@ -53,7 +53,7 @@ public class Aut_Red_2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
 
@@ -77,7 +77,7 @@ public class Aut_Red_2 extends LinearOpMode {
 
             switch (movement) {
                 case 0:
-                    myGlyphArms.openLoweredGlyphArms();
+                    myGlyphArms.openGlyphArms();
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     sleep(200);
