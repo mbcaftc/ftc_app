@@ -81,7 +81,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.openGlyphArms();
-                    sleep(400);
+                    sleep(1000);
                     myGlyphArms.closeGlyphArms();
                     sleep(100);
                     myGlyphLift.raiseGlyphLiftAutMode();
@@ -147,7 +147,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(41, 4, .9);
+                    myMechDrive.encoderDrive(41, 1, .9);
                     sleep(200);
                     movement ++;
                     break;
