@@ -124,17 +124,18 @@ public class mechDriveAuto {
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
             armSensor.colorRotateClockwise();
-            armSensor.colorSensorArmUp();
             sleep(200);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
-            armSensor.colorSensorArmUp();
             sleep(200);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
         }
         else {
             armSensor.colorSensorArmUp();
-            sleep(200);
         }
         //mechDriveSTOP();
     }
@@ -142,17 +143,18 @@ public class mechDriveAuto {
     public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
             armSensor.colorRotateCounterClockwise();
-            armSensor.colorSensorArmUp();
             sleep(200);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwise();
-            armSensor.colorSensorArmUp();
             sleep(200);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
         }
         else {
             armSensor.colorSensorArmUp();
-            sleep(200);
         }
     }
 
@@ -171,7 +173,6 @@ public class mechDriveAuto {
         encoderDrive(2.1,1,1);
         sleep(200);
         encoderDrive(4.5,2,1);
-        sleep(200);
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
@@ -189,12 +190,10 @@ public class mechDriveAuto {
         encoderDrive(2.1,1,1);
         sleep(200);
         encoderDrive(4.5,2,1);
-        sleep(200);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
         //encoderDrive(1,2,1);
-        sleep(200);
         encoderDrive(9,4,0.75); //strafe right to column
         sleep(200);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
@@ -209,6 +208,5 @@ public class mechDriveAuto {
         encoderDrive(2.1,1,1);
         sleep(200);
         encoderDrive(4.5,2,1);
-        sleep(200);
     }
 }

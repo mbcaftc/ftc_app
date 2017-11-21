@@ -60,7 +60,8 @@ public class Aut_Red_1 extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
 
         myColorSensorArm.colorSensorArmUp();
-        myGlyphArms.openGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myColorSensorArm.colorRotateResting();
+        myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -80,14 +81,10 @@ public class Aut_Red_1 extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.openGlyphArms();
-                    sleep(200);
-                    myGlyphLift.lowerGlyphLiftAutMode();
-                    sleep(200);
+                    sleep(400);
                     myGlyphArms.closeGlyphArms();
-                    sleep(200);
+                    sleep(100);
                     myGlyphLift.raiseGlyphLiftAutMode();
-                    sleep(200);
-                    myColorSensorArm.colorSensorArmDown();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
@@ -112,7 +109,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     else {
                         telemetry.addData("VuMark", "not visible");
                     }
-                    sleep(1000);
+
                     switch (vuMark) {
                         case LEFT:
                             cryptoboxColumn = 1;
@@ -131,34 +128,32 @@ public class Aut_Red_1 extends LinearOpMode {
                             telemetry.addData("DEFAULT SWITCH - Column: ", cryptoboxColumn);
                             break;
                     }
-                    sleep(1000);
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
-                    sleep (500); //wait to be sure color sensor is working
+                    myColorSensorArm.colorSensorArmDown();
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(500);
+                    sleep(2000);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
-                    sleep(1000);
                     movement ++;
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
                     myMechDrive.encoderDrive(41, 4, .9);
-                    sleep(500);
+                    sleep(200);
                     movement ++;
                     break;
                 case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
                     myMechDrive.encoderDrive(41, 5, 0.6);
-                    sleep(500);
+                    sleep(200);
                     movement++;
                     break;
                 case 5: //GO FORWARD TO CRYPTO BOX

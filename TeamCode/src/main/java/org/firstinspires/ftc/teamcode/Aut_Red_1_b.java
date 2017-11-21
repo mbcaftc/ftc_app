@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -26,6 +27,7 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
  */
 
 @Autonomous (name = "Red - 1 - B", group = "RED")
+@Disabled
 
 public class Aut_Red_1_b extends LinearOpMode {
 

@@ -27,12 +27,12 @@ public class glyphLift {
 
         //autRaisePower = 1;      // full power
         //autRaiseTime = 3000;    // 1 second
-        autRaisePower = .4;      // full power
-        autRaiseTime = 1000;    // 1 second
-        autLowerTime = 450;
+        autRaisePower = 1.0;      // full power
+        autRaiseTime = 500;    // 1 second
     }
 
     public void setPower(double power) {
+
         glyphLift.setPower(power);
     }
 
@@ -49,7 +49,7 @@ public class glyphLift {
 
     public void lowerGlyphLiftAutMode () throws InterruptedException {
         glyphLift.setPower(-autRaisePower);
-        sleep(autLowerTime);
+        sleep(autRaiseTime);
         glyphLift.setPower(0);
     }
 }

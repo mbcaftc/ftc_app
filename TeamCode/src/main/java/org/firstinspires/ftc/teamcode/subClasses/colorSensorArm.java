@@ -17,7 +17,7 @@ public class colorSensorArm {
 
     int redThreshold = 2;
     int blueThreshold = 2;
-    double restPosition = 0.25;
+    double restPosition = 0.2;
     double upPosition = 0.2;
     double downPositionPause1 = 0.75;
     double downPositionPause2 = 0.86;
