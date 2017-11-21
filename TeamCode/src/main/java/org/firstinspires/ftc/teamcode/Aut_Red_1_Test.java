@@ -25,10 +25,11 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Red - 2", group = "RED")
+@Autonomous (name = "Red - 1 Test", group = "RED")
 
-public class Aut_Red_2 extends LinearOpMode {
-    int movement = 0; //switch variable to determine movementt
+public class Aut_Red_1_Test extends LinearOpMode {
+
+    int movement = 0; //switch variable to determine movement
 
     colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
@@ -49,6 +50,7 @@ public class Aut_Red_2 extends LinearOpMode {
      * localization engine.
      */
     VuforiaLocalizer vuforia;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -79,7 +81,7 @@ public class Aut_Red_2 extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.openGlyphArms();
-                    sleep(1000);
+                    sleep(400);
                     myGlyphArms.closeGlyphArms();
                     sleep(100);
                     myGlyphLift.raiseGlyphLiftAutMode();
@@ -126,7 +128,7 @@ public class Aut_Red_2 extends LinearOpMode {
                             telemetry.addData("DEFAULT SWITCH - Column: ", cryptoboxColumn);
                             break;
                     }
-                    movement ++;
+                    movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
@@ -145,20 +147,16 @@ public class Aut_Red_2 extends LinearOpMode {
                     break;
                 case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
                     //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(30,4,.9);
+                    myMechDrive.encoderDrive(41, 4, .9);
                     sleep(200);
                     movement ++;
                     break;
                 case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(21,6,0.6);
+                    myMechDrive.encoderDrive(41, 5, 0.6);
                     sleep(200);
                     movement++;
                     break;
-                case 5: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(16,3,.9);
-                    movement ++;
-                    break;
-                case 6: //GO FORWARD TO CRYPTOBOX
+                case 5: //GO FORWARD TO CRYPTO BOX
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -174,9 +172,9 @@ public class Aut_Red_2 extends LinearOpMode {
                             myMechDrive.vuforiaRight(myGlyphArms);
                             break;
                     }
-                    movement ++;
+                    movement++;
                     break;
-                case 7:
+                case 6:
                     requestOpModeStop();
                     break;
             }

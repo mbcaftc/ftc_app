@@ -83,7 +83,7 @@ public class Aut_Blue_1 extends LinearOpMode {
             switch (movement) {
                 case 0:
                     myGlyphArms.openGlyphArms();
-                    sleep(600);
+                    sleep(1000);
                     myGlyphArms.closeGlyphArms();
                     sleep(100);
                     myGlyphLift.raiseGlyphLiftAutMode();
