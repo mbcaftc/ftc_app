@@ -127,15 +127,18 @@ public class mechDriveAuto {
             sleep(200);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
             sleep(200);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
         else {
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
         //mechDriveSTOP();
     }
@@ -146,15 +149,18 @@ public class mechDriveAuto {
             sleep(200);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwise();
             sleep(200);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
         else {
             armSensor.colorSensorArmUp();
+            sleep(200);
         }
     }
 

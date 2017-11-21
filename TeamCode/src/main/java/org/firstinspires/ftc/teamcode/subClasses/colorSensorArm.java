@@ -19,9 +19,9 @@ public class colorSensorArm {
     int blueThreshold = 2;
     double restPosition = 0.2;
     double upPosition = 0.2;
-    double downPositionPause1 = 0.75;
-    double downPositionPause2 = 0.86;
-    double downPositionFinal = 0.880;
+    double downPositionPause1 = 0.78;
+    double downPositionPause2 = 0.88;
+    double downPositionFinal = 0.94;
     int colorArmPause = 300;
 
     public Servo colorSensorArm;
@@ -75,7 +75,7 @@ public class colorSensorArm {
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.45);
+        colorSensorArmRotate.setPosition(0.435);
     }
 
     public void colorRotateClockwise () {
@@ -85,8 +85,6 @@ public class colorSensorArm {
     public void colorRotateCounterClockwise () {
         colorSensorArmRotate.setPosition(0.3);
     }
-
-
 
     public int colorJewel() throws InterruptedException {
         //gives sensor time to be accurate

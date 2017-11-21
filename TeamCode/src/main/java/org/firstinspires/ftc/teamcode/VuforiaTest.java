@@ -68,7 +68,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 @Autonomous(name="VuMark Testing", group ="Concept")
-//@Disabled
+@Disabled
 public class VuforiaTest extends LinearOpMode {
 
     Servo colorSensorArm;
