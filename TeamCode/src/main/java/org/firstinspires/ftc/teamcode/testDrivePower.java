@@ -28,8 +28,8 @@ public class testDrivePower extends OpMode {
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
@@ -37,8 +37,6 @@ public class testDrivePower extends OpMode {
         if (gamepad1.y) {
             frontLeftMotor.setPower(1);
             frontRightMotor.setPower(1);
-            rearLeftMotor.setPower(1);
-            rearRightMotor.setPower(1);
         }
         if (gamepad1.a) {
             frontLeftMotor.setPower(-1);
@@ -48,8 +46,8 @@ public class testDrivePower extends OpMode {
         }
         if (gamepad1.x) {
             frontLeftMotor.setPower(-1);
-            frontRightMotor.setPower(.9);
-            rearLeftMotor.setPower(.9);
+            frontRightMotor.setPower(1);
+            rearLeftMotor.setPower(1);
             rearRightMotor.setPower(-1);
         }
         if (gamepad1.b) {

@@ -80,10 +80,8 @@ public class Aut_Red_1_Test extends LinearOpMode {
 
             switch (movement) {
                 case 0:
-                    myGlyphArms.openGlyphArms();
-                    sleep(1000);
                     myGlyphArms.closeGlyphArms();
-                    sleep(100);
+                    sleep(500);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
@@ -145,18 +143,23 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
-                case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
-                    //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(41, 1, .9);
+                case 3: //Rotate right on platform
+                    myMechDrive.encoderDrive(20.5, 6, 0.5);
                     sleep(200);
                     movement ++;
                     break;
-                case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(41, 5, 0.6);
+                case 4: //Go forward off platform
+                    myMechDrive.encoderDrivePlatform(31, 1.0);
                     sleep(200);
                     movement++;
                     break;
-                case 5: //GO FORWARD TO CRYPTO BOX
+                case 5: //Rotate right to orient with cryptobox
+                    myMechDrive.encoderDrive(20.5, 6, 0.5);
+                    sleep(200);
+                    myGlyphLift.lowerGlyphLiftAutMode();
+                    movement++;
+                    break;
+                case 6: //GO FORWARD TO CRYPTO BOX
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -174,13 +177,13 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     }
                     movement++;
                     break;
-                case 6:
+                case 7:
                     requestOpModeStop();
                     break;
             }
-            telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
-            telemetry.update();
 
+            telemetry.addData("Servo", " Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
+            telemetry.update();
         }
     }
 }

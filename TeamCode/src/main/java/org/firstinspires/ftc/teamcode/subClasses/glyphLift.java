@@ -12,9 +12,9 @@ import static java.lang.Thread.sleep;
 public class glyphLift {
 
     public DcMotor glyphLift;
-    private int autRaiseTime;
-    private double autRaisePower;
-    private int autLowerTime;
+    private double autRaisePower = 1.0;
+    private int autRaiseTime = 800;
+    private int autLowerTime = 300;
     int position;
 
     public glyphLift(DcMotor gL) {
@@ -24,15 +24,9 @@ public class glyphLift {
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        //autRaisePower = 1;      // full power
-        //autRaiseTime = 3000;    // 1 second
-        autRaisePower = 1.0;      // full power
-        autRaiseTime = 500;    // 1 second
     }
 
     public void setPower(double power) {
-
         glyphLift.setPower(power);
     }
 
@@ -49,7 +43,7 @@ public class glyphLift {
 
     public void lowerGlyphLiftAutMode () throws InterruptedException {
         glyphLift.setPower(-autRaisePower);
-        sleep(autRaiseTime);
+        sleep(autLowerTime);
         glyphLift.setPower(0);
     }
 }

@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by johnduval on 11/21/17.
  */
-@Autonomous(name = "Test -- Aut Strafing 2s", group = "TESTING")
+@Autonomous(name = "Test - Aut Strafing 2s", group = "TESTING")
 
-public class testAutEncoders extends LinearOpMode {
+public class testAutEncoders_2sPower extends LinearOpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
     DcMotor rearLeftMotor;
