@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import static java.lang.Thread.sleep;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 
 /**
  * Created by johnduval on 10/7/17.
@@ -15,7 +15,12 @@ public class mechDriveAuto {
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     private double cryptoboxDistanceForward = 6;
 
-    Telemetry telemetry;
+    GyroSensor gyroSensor;
+    ModernRoboticsI2cGyro mrGyro;
+
+    int zAccumulated;
+    int heading;
+    int xVal, yVal, zVal;
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
 
@@ -147,6 +152,81 @@ public class mechDriveAuto {
                 rearLeftMotor.setPower(power * powerReductionFactor);
                 rearRightMotor.setPower(power * powerReductionFactor);
             }
+        }
+    }
+
+    public void stopMotors () {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+    }
+
+    public void gyroDriveStraight (int targetHeading, double speed, long sleepTime) throws InterruptedException {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        double frontLeftSpeed;
+        double frontRightSpeed;
+        double rearLeftSpeed;
+        double rearRightSpeed;
+
+        long startTime = System.nanoTime();
+        long elapsedTime = (System.nanoTime() - startTime) / 1000000;
+
+        while (elapsedTime < sleepTime) {
+            int currentPosition = zAccumulated = -mrGyro.getIntegratedZValue();
+            int targetDeviation = (currentPosition - targetHeading);
+
+            frontLeftSpeed = speed - targetDeviation;
+            frontRightSpeed = speed + targetDeviation;
+            rearLeftSpeed = speed - targetDeviation;
+            rearRightSpeed = speed + targetDeviation;
+
+            frontLeftMotor.setPower(frontLeftSpeed);
+            frontRightMotor.setPower(frontRightSpeed);
+            rearLeftMotor.setPower(rearLeftSpeed);
+            rearRightMotor.setPower(rearRightSpeed);
+        }
+
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+    }
+
+    public void gyroTurn (double speed, int turnChoice /* rotate left = 1, rotate right = 2 */) {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if (turnChoice == 1) {
+            frontLeftMotor.setPower(-speed);
+            frontRightMotor.setPower(speed);
+            rearLeftMotor.setPower(-speed);
+            rearRightMotor.setPower(speed);
+        }
+
+        else if (turnChoice == 2) {
+            frontLeftMotor.setPower(speed);
+            frontRightMotor.setPower(-speed);
+            rearLeftMotor.setPower(speed);
+            rearRightMotor.setPower(-speed);
         }
     }
 
