@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by johnduval on 11/21/17.
  */
-@TeleOp(name = "testing- drive power")
+@TeleOp(name = "test drive POWER")
 
 public class testDrivePower extends OpMode {
 

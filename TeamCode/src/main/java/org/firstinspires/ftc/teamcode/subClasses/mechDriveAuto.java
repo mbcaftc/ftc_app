@@ -60,7 +60,7 @@ public class mechDriveAuto {
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
         //double powerReductionFactor = .60;
-        double powerReductionFactor = 1;
+        double powerReductionFactor = .8;
         double countsWhile = 0.95;
 
         switch (direction) {
