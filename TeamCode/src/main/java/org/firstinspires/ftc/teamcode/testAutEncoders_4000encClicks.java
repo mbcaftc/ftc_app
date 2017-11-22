@@ -15,9 +15,10 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
 
-    int counts = 4000;
+    int countsForward = 500;
+    int countsBack = 1000;
     double powerReductionFactor = .60;
-    double countsWhile = 0.95;
+    double countsWhile = 1;
     double power = 0.75;
 
 
@@ -49,68 +50,83 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            //go forward for 4000 clicks
-            frontLeftMotor.setTargetPosition((int) counts);
-            frontRightMotor.setTargetPosition((int) counts);
-            rearLeftMotor.setTargetPosition((int) counts);
-            rearRightMotor.setTargetPosition((int) counts);
-            while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+            //go forward for x clicks
+
+            frontLeftMotor.setTargetPosition((int) countsForward);
+            frontRightMotor.setTargetPosition((int) countsForward);
+            rearLeftMotor.setTargetPosition((int) countsForward);
+            rearRightMotor.setTargetPosition((int) countsForward);
+            while (frontLeftMotor.getCurrentPosition() < countsForward * countsWhile && frontRightMotor.getCurrentPosition() < countsForward * countsWhile && rearLeftMotor.getCurrentPosition() < countsForward * countsWhile && rearRightMotor.getCurrentPosition() < countsForward * countsWhile) {
                 frontLeftMotor.setPower(power * powerReductionFactor);
                 frontRightMotor.setPower(power * powerReductionFactor);
                 rearLeftMotor.setPower(power * powerReductionFactor);
                 rearRightMotor.setPower(power * powerReductionFactor);
                 telemetry.addData("operation: ", "Going FORWARD");
-                telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition());
-                telemetry.addData("front right: ", frontRightMotor.getCurrentPosition());
-                telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition());
-                telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
+                telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+                telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+                telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+                telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
                 telemetry.update();
             }
+            sleep(500);
+            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            countsForward = 0;
+            frontLeftMotor.setTargetPosition((int) countsForward);
+            frontRightMotor.setTargetPosition((int) countsForward);
+            rearLeftMotor.setTargetPosition((int) countsForward);
+            rearRightMotor.setTargetPosition((int) countsForward);
             sleep(2000);
-            frontLeftMotor.setPower(0);
-            frontRightMotor.setPower(0);
-            rearLeftMotor.setPower(0);
-            rearRightMotor.setPower(0);
-            telemetry.addData("operation: ", "STOPPED FORWARD");
-            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition());
-            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition());
-            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
-            telemetry.update();
-            sleep(5000);
 
             //go backwards 4000 clicks
+telemetry.addLine("RESET ENCODERS");
+telemetry.update();
 
             frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+sleep(1000);
+            telemetry.addLine("RUN USING ENCODERS");
+            telemetry.update();
+
+            sleep(2000);
+
+            telemetry.addLine("Setting Back Position");
+            telemetry.update();
+            frontLeftMotor.setTargetPosition((int) countsBack);
+            frontRightMotor.setTargetPosition((int) countsBack);
+            rearLeftMotor.setTargetPosition((int) countsBack);
+            rearRightMotor.setTargetPosition((int) countsBack);
 
             telemetry.addData("operation: ", "Reset Encoders");
-            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition());
-            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition());
-            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
+            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
             telemetry.update();
             sleep(2000);
 
-            while (frontLeftMotor.getCurrentPosition() > counts * countsWhile && frontRightMotor.getCurrentPosition() > counts * countsWhile && rearLeftMotor.getCurrentPosition() > counts * countsWhile && rearRightMotor.getCurrentPosition() > counts * countsWhile) {
-                frontLeftMotor.setPower(-power * powerReductionFactor);
-                frontRightMotor.setPower(-power * powerReductionFactor);
-                rearLeftMotor.setPower(-power * powerReductionFactor);
-                rearRightMotor.setPower(-power * powerReductionFactor);
+            while (frontLeftMotor.getCurrentPosition() < countsBack * countsWhile && frontRightMotor.getCurrentPosition() < countsBack * countsWhile && rearLeftMotor.getCurrentPosition() < countsBack * countsWhile && rearRightMotor.getCurrentPosition() < countsBack * countsWhile) {
+                //frontLeftMotor.setPower(power * powerReductionFactor);
+                //frontRightMotor.setPower(power * powerReductionFactor);
+                //rearLeftMotor.setPower(power * powerReductionFactor);
+                //rearRightMotor.setPower(power * powerReductionFactor);
+                frontLeftMotor.setPower(1);
+                frontRightMotor.setPower(1);
+                rearLeftMotor.setPower(1);
+                rearRightMotor.setPower(1);
+
                 telemetry.addData("operation: ", "Going BACK");
-                telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition());
-                telemetry.addData("front right: ", frontRightMotor.getCurrentPosition());
-                telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition());
-                telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
+                telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+                telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+                telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+                telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
                 telemetry.update();
             }
             sleep(2000);
-            frontLeftMotor.setPower(0);
-            frontRightMotor.setPower(0);
-            rearLeftMotor.setPower(0);
-            rearRightMotor.setPower(0);
             telemetry.addData("operation: ", "STOPPED BACK");
             telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition());
             telemetry.addData("front right: ", frontRightMotor.getCurrentPosition());
@@ -118,6 +134,8 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
             telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
             telemetry.update();
             sleep(10000);
+
+
             requestOpModeStop();
         }
     }

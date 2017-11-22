@@ -80,12 +80,15 @@ public class Aut_Red_1_Test extends LinearOpMode {
 
             switch (movement) {
                 case 0:
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     myGlyphArms.closeGlyphArms();
                     sleep(500);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
+                    telemetry.addData("CASE: ", movement);
                     sleep(2000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
@@ -126,10 +129,12 @@ public class Aut_Red_1_Test extends LinearOpMode {
                             telemetry.addData("DEFAULT SWITCH - Column: ", cryptoboxColumn);
                             break;
                     }
+                    telemetry.update();
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
+                    telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
@@ -144,22 +149,30 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement ++;
                     break;
                 case 3: //Rotate right on platform
-                    myMechDrive.encoderDrive(20.5, 6, 0.5);
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrive(21, 6, 0.5);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(31, 1.0);
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrivePlatform(34.5, 1.0);
                     sleep(200);
                     movement++;
                     break;
                 case 5: //Rotate right to orient with cryptobox
-                    myMechDrive.encoderDrive(20.5, 6, 0.5);
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrive(24, 6, 0.5);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
                     break;
                 case 6: //GO FORWARD TO CRYPTO BOX
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -178,6 +191,8 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement++;
                     break;
                 case 7:
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     requestOpModeStop();
                     break;
             }

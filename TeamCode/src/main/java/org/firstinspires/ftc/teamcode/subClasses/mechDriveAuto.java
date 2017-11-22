@@ -13,12 +13,11 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 public class mechDriveAuto {
 
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
-    private double cryptoboxDistanceForward = 6;
+    private double cryptoboxDistanceForward = 8;
 
     GyroSensor gyroSensor;
     ModernRoboticsI2cGyro mrGyro;
 
-    int zAccumulated;
     int heading;
     int xVal, yVal, zVal;
 
@@ -44,6 +43,10 @@ public class mechDriveAuto {
     }
 
     public void encoderDrivePlatform (double distance, double power) {
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -52,8 +55,8 @@ public class mechDriveAuto {
 
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         final double ENCODER_CPR = 1120;
         final double GEAR_RATIO = 1;
@@ -62,21 +65,37 @@ public class mechDriveAuto {
         double ROTATIONS = distance / CIRCUMFERENCE;
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
-        double powerReductionFactor = .6;
-        double countsWhile = 0.95;
+        double powerReductionFactor = 1;
+        double countsWhile = 1;
 
         frontLeftMotor.setTargetPosition((int) counts);
         frontRightMotor.setTargetPosition((int) counts);
+        rearLeftMotor.setTargetPosition((int) counts);
+        rearRightMotor.setTargetPosition((int) counts);
 
-        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile) {
+        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
             frontLeftMotor.setPower(power * powerReductionFactor);
             frontRightMotor.setPower(power * powerReductionFactor);
             rearLeftMotor.setPower((power) * powerReductionFactor);
             rearRightMotor.setPower((power) * powerReductionFactor);
         }
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        counts = 0;
+        frontLeftMotor.setTargetPosition((int) counts);
+        frontRightMotor.setTargetPosition((int) counts);
+        rearLeftMotor.setTargetPosition((int) counts);
+        rearRightMotor.setTargetPosition((int) counts);
     }
 
     public void encoderDrive (double distance, int direction, double power) {
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -96,7 +115,7 @@ public class mechDriveAuto {
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
         double powerReductionFactor = .6;
-        double countsWhile = 0.95;
+        double countsWhile = .95;
 
         switch (direction) {
             case 1: // robot will move forward
@@ -153,6 +172,41 @@ public class mechDriveAuto {
                 rearRightMotor.setPower(power * powerReductionFactor);
             }
         }
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        counts = 0;
+        frontLeftMotor.setTargetPosition((int) counts);
+        frontRightMotor.setTargetPosition((int) counts);
+        rearLeftMotor.setTargetPosition((int) counts);
+        rearRightMotor.setTargetPosition((int) counts);
+    }
+
+    public void rotateLeft (double speed) {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontLeftMotor.setPower(-speed);
+        frontRightMotor.setPower(speed);
+        rearLeftMotor.setPower(-speed);
+        rearRightMotor.setPower(speed);
+    }
+
+    public void rotateRight (double speed) {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontLeftMotor.setPower(speed);
+        frontRightMotor.setPower(-speed);
+        rearLeftMotor.setPower(speed);
+        rearRightMotor.setPower(-speed);
     }
 
     public void stopMotors () {
@@ -162,12 +216,36 @@ public class mechDriveAuto {
         rearRightMotor.setPower(0);
     }
 
-    public void gyroDriveStraight (int targetHeading, double speed, long sleepTime) throws InterruptedException {
+    public void setFrontLeftPower (double speed) {
 
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontLeftMotor.setPower(speed);
+
+    }
+    public void setFrontRightPower (double speed) {
+
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontRightMotor.setPower(speed);
+
+    }
+    public void setRearLeftPower (double speed) {
+
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        rearLeftMotor.setPower(speed);
+
+    }
+    public void setRearRightPower (double speed) {
+
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        rearRightMotor.setPower(speed);
+
+    }
+
+    public void gyroDriveStraight (int targetHeading, double speed, long sleepTime, int zAccumulated) throws InterruptedException {
 
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -183,7 +261,7 @@ public class mechDriveAuto {
         long elapsedTime = (System.nanoTime() - startTime) / 1000000;
 
         while (elapsedTime < sleepTime) {
-            int currentPosition = zAccumulated = -mrGyro.getIntegratedZValue();
+            int currentPosition = zAccumulated;
             int targetDeviation = (currentPosition - targetHeading);
 
             frontLeftSpeed = speed - targetDeviation;
@@ -196,14 +274,9 @@ public class mechDriveAuto {
             rearLeftMotor.setPower(rearLeftSpeed);
             rearRightMotor.setPower(rearRightSpeed);
         }
-
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        rearLeftMotor.setPower(0);
-        rearRightMotor.setPower(0);
     }
 
-    public void gyroTurn (double speed, int turnChoice /* rotate left = 1, rotate right = 2 */) {
+    public void gyroTurn (double speed, int turnChoice /* rotate left = 1, rotate right = 2 */, int targetAngle, int zAccumulated) {
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -216,17 +289,19 @@ public class mechDriveAuto {
         rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         if (turnChoice == 1) {
-            frontLeftMotor.setPower(-speed);
-            frontRightMotor.setPower(speed);
-            rearLeftMotor.setPower(-speed);
-            rearRightMotor.setPower(speed);
-        }
-
-        else if (turnChoice == 2) {
-            frontLeftMotor.setPower(speed);
-            frontRightMotor.setPower(-speed);
-            rearLeftMotor.setPower(speed);
-            rearRightMotor.setPower(-speed);
+            while (zAccumulated > -targetAngle) {
+                frontLeftMotor.setPower(-speed);
+                frontRightMotor.setPower(speed);
+                rearLeftMotor.setPower(-speed);
+                rearRightMotor.setPower(speed);
+            }
+        } else if (turnChoice == 2) {
+            while (zAccumulated > -targetAngle) {
+                frontLeftMotor.setPower(speed);
+                frontRightMotor.setPower(-speed);
+                rearLeftMotor.setPower(speed);
+                rearRightMotor.setPower(-speed);
+            }
         }
     }
 
@@ -291,12 +366,13 @@ public class mechDriveAuto {
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
 
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
-        sleep(200);
+        sleep(1000);
         arms.openGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
-        sleep(200);
-        encoderDrive(8,2,1);
+        sleep(500);
+        encoderDrive(20,2,1);
+        sleep(1000);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {

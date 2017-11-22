@@ -20,7 +20,10 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by johnduval on 10/7/17.
@@ -52,10 +55,11 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
      */
     VuforiaLocalizer vuforia;
 
-    GyroSensor gyroSensor;
-    ModernRoboticsI2cGyro mrGyro;
+    IntegratingGyroscope gyro;
+    ModernRoboticsI2cGyro modernRoboticsI2cGyro;
+    ElapsedTime timer = new ElapsedTime();
 
-    int zAccumulated;
+    int integratedZ;
     int heading;
     int xVal, yVal, zVal;
 
@@ -80,19 +84,31 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
-        gyroSensor = hardwareMap.gyroSensor.get("sensor_gyro");
-        mrGyro = (ModernRoboticsI2cGyro) gyroSensor;
+        boolean lastResetState = false;
+        boolean curResetState  = false;
 
-        mrGyro.calibrate();  //turns on blue light on Gyro to calibrate.  To set current position to 0
-        while (mrGyro.isCalibrating()) {}
+        modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "sensor_gyro");
+        gyro = (IntegratingGyroscope)modernRoboticsI2cGyro;
+
+        telemetry.log().add("Gyro Calibrating. Do Not Move!");
+        modernRoboticsI2cGyro.calibrate();
+
+        // Wait until the gyro calibration is complete
+        timer.reset();
+        while (!isStopRequested() && modernRoboticsI2cGyro.isCalibrating())  {
+            telemetry.addData("calibrating", "%s", Math.round(timer.seconds())%2==0 ? "|.." : "..|");
+            telemetry.update();
+            sleep(50);
+        }
+
+        telemetry.log().clear(); telemetry.log().add("Gyro Calibrated. Press Start.");
+        telemetry.clear(); telemetry.update();
 
         waitForStart();
 
         relicTrackables.activate();
 
         while (opModeIsActive()) {
-
-            zAccumulated = -mrGyro.getIntegratedZValue();
 
             switch (movement) {
                 case 0:
@@ -163,9 +179,12 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
                     //myMechDrive.encoderDrive(20.5, 6, 0.5);
                     //sleep(200);
 
-                    gyroSensor.resetZAxisIntegrator();
-                    while (zAccumulated < 90) {
-                        myMechDrive.gyroTurn(0.5, 2);
+                    modernRoboticsI2cGyro.resetZAxisIntegrator();
+                    while (integratedZ < 90) {
+                        integratedZ = -modernRoboticsI2cGyro.getIntegratedZValue();
+                        telemetry.addData("zheading: ", integratedZ);
+                        telemetry.update();
+                        myMechDrive.rotateRight(0.5);
                     }
                     myMechDrive.stopMotors();
 
@@ -175,8 +194,32 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
                     //myMechDrive.encoderDrivePlatform(31, 1.0);
                     //sleep(200);
 
-                    gyroSensor.resetZAxisIntegrator();
-                    myMechDrive.gyroDriveStraight(0, 0.75, 5000);
+                    modernRoboticsI2cGyro.resetZAxisIntegrator();
+
+                    double frontLeftSpeed;
+                    double frontRightSpeed;
+                    double rearLeftSpeed;
+                    double rearRightSpeed;
+
+                    long startTime = System.nanoTime();
+                    long elapsedTime = (System.nanoTime() - startTime) / 1000000;
+
+                    while (elapsedTime < 300 /*milliseconds*/) {
+                        integratedZ = -modernRoboticsI2cGyro.getIntegratedZValue();
+                        int targetDeviation = integratedZ;
+
+                        frontLeftSpeed = 0.5;
+                        frontRightSpeed = 0.5;
+                        rearLeftSpeed = 0.5;
+                        rearRightSpeed = 0.5;
+
+                        myMechDrive.setFrontLeftPower(frontLeftSpeed);
+                        myMechDrive.setFrontRightPower(frontRightSpeed);
+                        myMechDrive.setRearLeftPower(rearLeftSpeed);
+                        myMechDrive.setRearRightPower(rearRightSpeed);
+                    }
+
+                    myMechDrive.stopMotors();
 
                     movement++;
                     break;
@@ -184,9 +227,9 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
                     //myMechDrive.encoderDrive(20.5, 6, 0.5);
                     //sleep(200);
 
-                    gyroSensor.resetZAxisIntegrator();
-                    while (zAccumulated < 90) {
-                        myMechDrive.gyroTurn(0.6, 2);
+                    modernRoboticsI2cGyro.resetZAxisIntegrator();
+                    while (integratedZ < 90) {
+                        myMechDrive.rotateRight(0.6);
                     }
                     myMechDrive.stopMotors();
 
