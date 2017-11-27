@@ -80,14 +80,15 @@ public class Aut_Red_1 extends LinearOpMode {
 
             switch (movement) {
                 case 0:
-                    myGlyphArms.openGlyphArms();
-                    sleep(1000);
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     myGlyphArms.closeGlyphArms();
-                    sleep(100);
+                    sleep(500);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
+                    telemetry.addData("CASE: ", movement);
                     sleep(2000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
@@ -128,10 +129,12 @@ public class Aut_Red_1 extends LinearOpMode {
                             telemetry.addData("DEFAULT SWITCH - Column: ", cryptoboxColumn);
                             break;
                     }
+                    telemetry.update();
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
+                    telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
@@ -145,18 +148,31 @@ public class Aut_Red_1 extends LinearOpMode {
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
-                case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
-                    //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(41, 4, .9);
+                case 3: //Rotate right on platform
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrive(21, 6, 0.5);
                     sleep(200);
                     movement ++;
                     break;
-                case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(41, 5, 0.6);
+                case 4: //Go forward off platform
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrivePlatform(31, 1.0);
                     sleep(200);
                     movement++;
                     break;
-                case 5: //GO FORWARD TO CRYPTO BOX
+                case 5: //Rotate right to orient with cryptobox
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrive(24, 6, 0.5);
+                    sleep(200);
+                    myGlyphLift.lowerGlyphLiftAutMode();
+                    movement++;
+                    break;
+                case 6: //GO FORWARD TO CRYPTO BOX
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -174,13 +190,15 @@ public class Aut_Red_1 extends LinearOpMode {
                     }
                     movement++;
                     break;
-                case 6:
+                case 7:
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     requestOpModeStop();
                     break;
             }
-            telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
-            telemetry.update();
 
+            telemetry.addData("Servo", " Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
+            telemetry.update();
         }
     }
 }
