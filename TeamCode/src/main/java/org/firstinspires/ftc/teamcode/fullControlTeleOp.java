@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
+import org.firstinspires.ftc.teamcode.subClasses.boardArm;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
@@ -48,6 +49,7 @@ public class fullControlTeleOp extends OpMode {
     glyphArms myGlyphArms;
     colorSensorArm myColorSensorArm;
     glyphLift myGlyphLift;
+    boardArm myBoardArm;
 
     @Override
     public void init() {
@@ -59,6 +61,8 @@ public class fullControlTeleOp extends OpMode {
         //changed to make sure panels don't hit robot frame.
 
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
+
+        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
@@ -90,6 +94,7 @@ public class fullControlTeleOp extends OpMode {
             myGlyphArms.openGlyphArms();
             myColorSensorArm.colorSensorArmUp();
             myColorSensorArm.colorRotateResting();
+            myBoardArm.boardArmUp();
             initServos = true;
         }
 
@@ -152,6 +157,16 @@ public class fullControlTeleOp extends OpMode {
         liftPower = Range.clip(liftPower, -1, 1);
 
         myGlyphLift.setPower(liftPower);
+
+        // Board Arm
+
+        if (gamepad1.a) {
+            myBoardArm.boardArmDown();
+        }
+
+        else if (gamepad1.y) {
+            myBoardArm.boardArmUp();
+        }
 
         // Telemetry
 
