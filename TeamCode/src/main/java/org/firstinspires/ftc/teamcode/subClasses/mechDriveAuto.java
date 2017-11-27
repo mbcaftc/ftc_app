@@ -43,6 +43,17 @@ public class mechDriveAuto {
     }
 
     public void encoderDrivePlatform (double distance, double power) {
+
+        final double ENCODER_CPR = 1120;
+        final double GEAR_RATIO = 1;
+        final double WHEEL_DIAMETER = 4;
+        final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
+        double ROTATIONS = distance / CIRCUMFERENCE;
+        double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
+
+        double powerReductionFactor = .8;
+        double countsWhile = 1;
+
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,32 +64,26 @@ public class mechDriveAuto {
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        final double ENCODER_CPR = 1120;
-        final double GEAR_RATIO = 1;
-        final double WHEEL_DIAMETER = 4;
-        final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-        double ROTATIONS = distance / CIRCUMFERENCE;
-        double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double powerReductionFactor = 1;
-        double countsWhile = 1;
-
-        frontLeftMotor.setTargetPosition((int) counts);
-        frontRightMotor.setTargetPosition((int) counts);
-        rearLeftMotor.setTargetPosition((int) counts);
-        rearRightMotor.setTargetPosition((int) counts);
-
-        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+      /*  while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
             frontLeftMotor.setPower(power * powerReductionFactor);
             frontRightMotor.setPower(power * powerReductionFactor);
-            rearLeftMotor.setPower((power) * powerReductionFactor);
-            rearRightMotor.setPower((power) * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
+        } */
+
+        while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile) {
+            frontLeftMotor.setPower(power * powerReductionFactor);
+            frontRightMotor.setPower(power * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
         }
+
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -165,7 +170,7 @@ public class mechDriveAuto {
             }
         }
         else if (direction == 2) {
-            while (frontLeftMotor.getCurrentPosition() > counts * countsWhile && frontRightMotor.getCurrentPosition() > counts * countsWhile && rearLeftMotor.getCurrentPosition() > counts * countsWhile && rearRightMotor.getCurrentPosition() > counts * countsWhile) {
+            while (frontLeftMotor.getCurrentPosition() > -counts * countsWhile && frontRightMotor.getCurrentPosition() > -counts * countsWhile && rearLeftMotor.getCurrentPosition() > -counts * countsWhile && rearRightMotor.getCurrentPosition() > -counts * countsWhile) {
                 frontLeftMotor.setPower(power * powerReductionFactor);
                 frontRightMotor.setPower(power * powerReductionFactor);
                 rearLeftMotor.setPower(power * powerReductionFactor);
@@ -360,7 +365,12 @@ public class mechDriveAuto {
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
-        encoderDrive(8,2,1);
+        encoderDrive(1,2,1);
+        sleep(200);
+        encoderDrive(1,1,1);
+        sleep(200);
+        encoderDrive(6,2,1);
+        sleep(200);
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
@@ -370,9 +380,13 @@ public class mechDriveAuto {
         arms.openGlyphArms();
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
-        sleep(500);
-        encoderDrive(20,2,1);
-        sleep(1000);
+        sleep(200);
+        encoderDrive(1,2,1);
+        sleep(200);
+        encoderDrive(1,1,1);
+        sleep(200);
+        encoderDrive(6,2,1);
+        sleep(200);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
@@ -385,6 +399,11 @@ public class mechDriveAuto {
         sleep(500);
         encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(200);
-        encoderDrive(8,2,1);
+        encoderDrive(1,2,1);
+        sleep(200);
+        encoderDrive(1,1,1);
+        sleep(200);
+        encoderDrive(6,2,1);
+        sleep(200);
     }
 }

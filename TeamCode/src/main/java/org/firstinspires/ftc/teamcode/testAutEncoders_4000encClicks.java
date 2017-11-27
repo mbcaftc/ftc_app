@@ -15,7 +15,7 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
 
-    int countsForward = 500;
+    int countsForward = 1000;
     int countsBack = 1000;
     double powerReductionFactor = .60;
     double countsWhile = 1;
@@ -88,6 +88,12 @@ telemetry.update();
             frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 sleep(1000);
             telemetry.addLine("RUN USING ENCODERS");
             telemetry.update();
@@ -96,10 +102,10 @@ sleep(1000);
 
             telemetry.addLine("Setting Back Position");
             telemetry.update();
-            frontLeftMotor.setTargetPosition((int) countsBack);
-            frontRightMotor.setTargetPosition((int) countsBack);
-            rearLeftMotor.setTargetPosition((int) countsBack);
-            rearRightMotor.setTargetPosition((int) countsBack);
+            frontLeftMotor.setTargetPosition((int) -countsBack);
+            frontRightMotor.setTargetPosition((int) -countsBack);
+            rearLeftMotor.setTargetPosition((int) -countsBack);
+            rearRightMotor.setTargetPosition((int) -countsBack);
 
             telemetry.addData("operation: ", "Reset Encoders");
             telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
@@ -109,15 +115,15 @@ sleep(1000);
             telemetry.update();
             sleep(2000);
 
-            while (frontLeftMotor.getCurrentPosition() < countsBack * countsWhile && frontRightMotor.getCurrentPosition() < countsBack * countsWhile && rearLeftMotor.getCurrentPosition() < countsBack * countsWhile && rearRightMotor.getCurrentPosition() < countsBack * countsWhile) {
+            while (frontLeftMotor.getCurrentPosition() > -countsBack * countsWhile && frontRightMotor.getCurrentPosition() > -countsBack * countsWhile && rearLeftMotor.getCurrentPosition() > -countsBack * countsWhile && rearRightMotor.getCurrentPosition() > -countsBack * countsWhile) {
                 //frontLeftMotor.setPower(power * powerReductionFactor);
                 //frontRightMotor.setPower(power * powerReductionFactor);
                 //rearLeftMotor.setPower(power * powerReductionFactor);
                 //rearRightMotor.setPower(power * powerReductionFactor);
-                frontLeftMotor.setPower(1);
-                frontRightMotor.setPower(1);
-                rearLeftMotor.setPower(1);
-                rearRightMotor.setPower(1);
+                frontLeftMotor.setPower(power * powerReductionFactor);
+                frontRightMotor.setPower(power * powerReductionFactor);
+                rearLeftMotor.setPower(power * powerReductionFactor);
+                rearRightMotor.setPower(power * powerReductionFactor);
 
                 telemetry.addData("operation: ", "Going BACK");
                 telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
