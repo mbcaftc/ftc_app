@@ -78,14 +78,15 @@ public class Aut_Red_2 extends LinearOpMode {
 
             switch (movement) {
                 case 0:
-                    myGlyphArms.openGlyphArms();
-                    sleep(1000);
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
                     myGlyphArms.closeGlyphArms();
-                    sleep(100);
+                    sleep(500);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
                 case 1: // reading Vuforia code
+                    telemetry.addData("CASE: ", movement);
                     sleep(2000);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
@@ -126,10 +127,12 @@ public class Aut_Red_2 extends LinearOpMode {
                             telemetry.addData("DEFAULT SWITCH - Column: ", cryptoboxColumn);
                             break;
                     }
-                    movement ++;
+                    telemetry.update();
+                    movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
+                    telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
@@ -143,16 +146,17 @@ public class Aut_Red_2 extends LinearOpMode {
                     myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
-                case 3: //STRAFE LEFT TO CRYPTOBOX COLUMN
-                    //STRAFE LEFT X AMOUNT
-                    myMechDrive.encoderDrive(30,4,.9);
+                case 3: //rotate left
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDrive(21, 5, 0.5);
                     sleep(200);
                     movement ++;
                     break;
-                case 4://ROTATE ROBOT WITH CORRECT ORIENTATION FOR GLYPH
-                    myMechDrive.encoderDrive(21,6,0.6);
+                case 4: //FORWARD TO CRYPTOBOX COLUMN
+                    myMechDrive.encoderDrivePlatform(30,1);
                     sleep(200);
-                    movement++;
+                    movement ++;
                     break;
                 case 5: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
                     myMechDrive.encoderDrive(16,3,.9);

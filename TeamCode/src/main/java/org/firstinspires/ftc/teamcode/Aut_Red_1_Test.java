@@ -29,6 +29,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 
 public class Aut_Red_1_Test extends LinearOpMode {
 
+
     int movement = 0; //switch variable to determine movement
 
     colorSensorArm myColorSensorArm;
