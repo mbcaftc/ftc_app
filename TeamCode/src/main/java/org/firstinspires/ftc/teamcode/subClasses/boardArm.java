@@ -11,8 +11,8 @@ public class boardArm {
 
     public Servo boardArm;
 
-    double servoArmUpPosition = 0.9;
-    double servoArmDownPosition = 0.1;
+    double servoArmUpPosition = 1.0;
+    double servoArmDownPosition = 0.15;
 
     public boardArm(Servo bA) {
         boardArm = bA;
