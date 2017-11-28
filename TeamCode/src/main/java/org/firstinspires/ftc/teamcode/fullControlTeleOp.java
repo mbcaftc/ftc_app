@@ -55,13 +55,8 @@ public class fullControlTeleOp extends OpMode {
     public void init() {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        //myGlyphArms.openGlyphArms();
-        //changed to make sure panels don't hit robot frame.
-
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
-
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");

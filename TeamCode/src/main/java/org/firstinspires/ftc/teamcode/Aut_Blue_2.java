@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.subClasses.boardArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
@@ -35,6 +36,8 @@ public class Aut_Blue_2 extends LinearOpMode {
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
+    boardArm myBoardArm;
+
 
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
@@ -57,7 +60,9 @@ public class Aut_Blue_2 extends LinearOpMode {
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
+        myBoardArm.boardArmUp();
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
@@ -155,12 +160,12 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //FORWARD Off platform
-                    myMechDrive.encoderDrivePlatform(24,0.75);
+                    myMechDrive.encoderDrivePlatform(24,0.95);
                     sleep(200);
                     movement ++;
                     break;
                 case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17.25,4,.9);
+                    myMechDrive.encoderDrive(17,4,.9);
                     movement ++;
                     break;
                 case 6: //GO FORWARD TO CRYPTOBOX

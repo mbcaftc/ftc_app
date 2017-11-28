@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.subClasses.boardArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
@@ -35,6 +36,8 @@ public class Aut_Blue_1 extends LinearOpMode {
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
+    boardArm myBoardArm;
+
 
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
@@ -58,7 +61,9 @@ public class Aut_Blue_1 extends LinearOpMode {
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
+        myBoardArm.boardArmUp();
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
@@ -165,7 +170,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                 case 5: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 5, 0.5);
+                    myMechDrive.encoderDrive(21, 5, 0.6);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
