@@ -75,7 +75,7 @@ public class colorSensorArm {
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.435);
+        colorSensorArmRotate.setPosition(0.450);
     }
 
     public void colorRotateClockwise () {

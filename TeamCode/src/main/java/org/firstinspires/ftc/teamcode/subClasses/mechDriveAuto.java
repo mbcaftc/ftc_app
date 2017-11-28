@@ -51,7 +51,7 @@ public class mechDriveAuto {
         double ROTATIONS = distance / CIRCUMFERENCE;
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
-        double powerReductionFactor = .8;
+        double powerReductionFactor = .6;
         double countsWhile = 1;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -363,11 +363,11 @@ public class mechDriveAuto {
         sleep(200);
         arms.openGlyphArms();
         sleep(500);
-        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
         encoderDrive(1,2,1);
         sleep(200);
-        encoderDrive(1,1,1);
+        encoderDrive(2,1,1);
         sleep(200);
         encoderDrive(6,2,1);
         sleep(200);
@@ -379,11 +379,11 @@ public class mechDriveAuto {
         sleep(1000);
         arms.openGlyphArms();
         sleep(500);
-        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
         encoderDrive(1,2,1);
         sleep(200);
-        encoderDrive(1,1,1);
+        encoderDrive(2,1,1);
         sleep(200);
         encoderDrive(6,2,1);
         sleep(200);
@@ -397,11 +397,11 @@ public class mechDriveAuto {
         sleep(200);
         arms.openGlyphArms();
         sleep(500);
-        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
         encoderDrive(1,2,1);
         sleep(200);
-        encoderDrive(1,1,1);
+        encoderDrive(2,1,1);
         sleep(200);
         encoderDrive(6,2,1);
         sleep(200);

@@ -137,7 +137,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(2000);
+                    sleep(4000);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
@@ -149,12 +149,12 @@ public class Aut_Red_2 extends LinearOpMode {
                 case 3: //rotate left
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 5, 0.5);
+                    myMechDrive.encoderDrive(21, 6, 0.5);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //FORWARD TO CRYPTOBOX COLUMN
-                    myMechDrive.encoderDrivePlatform(30,1);
+                    myMechDrive.encoderDrivePlatform(15,0.6);
                     sleep(200);
                     movement ++;
                     break;

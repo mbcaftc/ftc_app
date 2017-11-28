@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -30,7 +31,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous (name = "Red - 1 Test Gyro", group = "RED")
-
+@Disabled
 public class Aut_Red_1_Gyro extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement

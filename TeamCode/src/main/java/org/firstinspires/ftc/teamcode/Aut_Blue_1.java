@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Blue - 1", group = "RED")
+@Autonomous (name = "Blue - 1", group = "BLUE")
 
 public class Aut_Blue_1 extends LinearOpMode {
 
@@ -158,14 +158,14 @@ public class Aut_Blue_1 extends LinearOpMode {
                 case 4: //Go forward off platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrivePlatform(31, 1.0);
+                    myMechDrive.encoderDrivePlatform(33, 0.95);
                     sleep(200);
                     movement++;
                     break;
                 case 5: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(24, 5, 0.5);
+                    myMechDrive.encoderDrive(21, 5, 0.5);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;

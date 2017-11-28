@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
  * Created by johnduval on 10/9/17.
  */
 @TeleOp (name = "Calibrate Servos + Sensors")
-@Disabled
+
 public class calibrateServosSensors extends OpMode {
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
