@@ -51,7 +51,7 @@ public class mechDriveAuto {
         double ROTATIONS = distance / CIRCUMFERENCE;
         double counts =  ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
-        double powerReductionFactor = .6;
+        double powerReductionFactor = 1;
         double countsWhile = 1;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

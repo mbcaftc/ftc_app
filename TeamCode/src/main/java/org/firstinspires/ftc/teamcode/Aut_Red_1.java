@@ -139,6 +139,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
+                    sleep(1000);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -163,14 +164,14 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 4: //Go forward off platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrivePlatform(33, 0.95);
+                    myMechDrive.encoderDrivePlatform(29, 0.8);
                     sleep(200);
                     movement++;
                     break;
                 case 5: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 6, 0.6);
+                    myMechDrive.encoderDrive(23, 6, 0.6);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;

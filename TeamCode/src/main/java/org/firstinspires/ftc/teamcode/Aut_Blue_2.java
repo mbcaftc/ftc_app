@@ -138,6 +138,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDown();
+                    sleep(1000);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -160,12 +161,12 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //FORWARD Off platform
-                    myMechDrive.encoderDrivePlatform(24,0.95);
+                    myMechDrive.encoderDrivePlatform(23,0.8);
                     sleep(200);
                     movement ++;
                     break;
                 case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17,4,.9);
+                    myMechDrive.encoderDrive(17.25,4,.9);
                     movement ++;
                     break;
                 case 6: //GO FORWARD TO CRYPTOBOX
