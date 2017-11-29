@@ -63,7 +63,6 @@ public class Aut_Red_1 extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
-        myBoardArm.boardArmUp();
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
@@ -164,14 +163,14 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 4: //Go forward off platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrivePlatform(29, 0.8);
+                    myMechDrive.encoderDrivePlatform(31, 0.8);
                     sleep(200);
                     movement++;
                     break;
                 case 5: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(23, 6, 0.6);
+                    myMechDrive.encoderDrive(25, 6, 0.6);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;

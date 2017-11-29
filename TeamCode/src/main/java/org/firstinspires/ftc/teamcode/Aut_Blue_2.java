@@ -62,7 +62,6 @@ public class Aut_Blue_2 extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
-        myBoardArm.boardArmUp();
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
@@ -161,12 +160,12 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //FORWARD Off platform
-                    myMechDrive.encoderDrivePlatform(23,0.8);
+                    myMechDrive.encoderDrivePlatform(24,0.8);
                     sleep(200);
                     movement ++;
                     break;
                 case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17.25,4,.9);
+                    myMechDrive.encoderDrive(17,4,.9);
                     movement ++;
                     break;
                 case 6: //GO FORWARD TO CRYPTOBOX

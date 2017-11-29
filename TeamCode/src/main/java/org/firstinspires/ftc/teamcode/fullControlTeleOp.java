@@ -72,15 +72,15 @@ public class fullControlTeleOp extends OpMode {
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     @Override
     public void loop() {
@@ -136,15 +136,16 @@ public class fullControlTeleOp extends OpMode {
             myGlyphArms.slightlyOpenGlyphArms();
         }
 
+
         if (gamepad2.x) {
             myGlyphArms.openRaisedGlyphArms();
         }
 
         // Color Sensor Arm
 
-        if (gamepad2.dpad_up) {
-            myColorSensorArm.colorSensorArmRest();
-        }
+//        if (gamepad2.dpad_up) {
+//            myColorSensorArm.colorSensorArmRest();
+//        }
 
         // Glyph Lift
 
@@ -155,11 +156,11 @@ public class fullControlTeleOp extends OpMode {
 
         // Board Arm
 
-        if (gamepad1.a) {
+        if (gamepad1.a || gamepad2.dpad_down) {
             myBoardArm.boardArmDown();
         }
 
-        else if (gamepad1.y) {
+        else if (gamepad1.y || gamepad2.dpad_up) {
             myBoardArm.boardArmUp();
         }
 
