@@ -365,7 +365,7 @@ public class mechDriveAuto {
         sleep(500);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
-        encoderDrive(1,2,1);
+        encoderDrive(3,2,1);
         sleep(200);
         encoderDrive(2,1,1);
         sleep(200);
@@ -381,7 +381,7 @@ public class mechDriveAuto {
         sleep(500);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
-        encoderDrive(1,2,1);
+        encoderDrive(3,2,1);
         sleep(200);
         encoderDrive(2,1,1);
         sleep(200);
@@ -399,7 +399,7 @@ public class mechDriveAuto {
         sleep(500);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(200);
-        encoderDrive(1,2,1);
+        encoderDrive(3,2,1);
         sleep(200);
         encoderDrive(2,1,1);
         sleep(200);

@@ -163,7 +163,7 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 4: //Go forward off platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrivePlatform(31, 0.8);
+                    myMechDrive.encoderDrivePlatform(31.50, 0.8);
                     sleep(200);
                     movement++;
                     break;
