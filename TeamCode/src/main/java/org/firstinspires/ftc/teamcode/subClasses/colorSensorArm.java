@@ -18,7 +18,7 @@ public class colorSensorArm {
     int redThreshold = 2;
     int blueThreshold = 2;
     double restPosition = 0.2;
-    double upPosition = 0.12;
+    double upPosition = 0.15;
     double downPositionPause1 = 0.78;
     double downPositionPause2 = 0.88;
     double downPositionFinal = 0.94;
@@ -75,7 +75,7 @@ public class colorSensorArm {
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.443);
+        colorSensorArmRotate.setPosition(0.445);
     }
 
     public void colorRotateClockwise () {

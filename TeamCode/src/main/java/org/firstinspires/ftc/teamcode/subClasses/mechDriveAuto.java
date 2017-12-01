@@ -367,9 +367,9 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(3,2,1);
         sleep(200);
-        encoderDrive(2,1,1);
+        encoderDrive(3.5,1,1);
         sleep(200);
-        encoderDrive(6,2,1);
+        encoderDrive(6,2,.5);
         sleep(200);
     }
 
@@ -383,9 +383,9 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(3,2,1);
         sleep(200);
-        encoderDrive(2,1,1);
+        encoderDrive(3.5,1,1);
         sleep(200);
-        encoderDrive(6,2,1);
+        encoderDrive(6,2,.5);
         sleep(200);
     }
 
@@ -401,9 +401,9 @@ public class mechDriveAuto {
         sleep(200);
         encoderDrive(3,2,1);
         sleep(200);
-        encoderDrive(2,1,1);
+        encoderDrive(3.5,1,1);
         sleep(200);
-        encoderDrive(6,2,1);
+        encoderDrive(6,2,.5);
         sleep(200);
     }
 }

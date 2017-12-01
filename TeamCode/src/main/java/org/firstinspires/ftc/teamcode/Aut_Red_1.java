@@ -170,7 +170,7 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 5: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(25, 6, 0.6);
+                    myMechDrive.encoderDrive(24.5, 6, 0.6);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
