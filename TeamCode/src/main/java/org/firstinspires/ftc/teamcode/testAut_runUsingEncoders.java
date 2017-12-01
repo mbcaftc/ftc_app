@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by johnduval on 11/21/17.
  */
-@Autonomous(name = "Test - Aut Strafing 4000 clicks", group = "TESTING")
+@Autonomous(name = "Test - Run Using Encoders", group = "TESTING")
 
-public class testAutEncoders_4000encClicks extends LinearOpMode {
+public class testAut_runUsingEncoders extends LinearOpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
     DcMotor rearLeftMotor;
@@ -17,9 +17,9 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
 
     int countsForward = 1000;
     int countsBack = 1000;
-    double powerReductionFactor = .60;
+    double powerReductionFactor = 1;
     double countsWhile = 1;
-    double power = 0.75;
+    double power = .5;
 
 
     @Override
@@ -37,30 +37,27 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        resetEncoders();
 
         waitForStart();
 
         while (opModeIsActive()) {
-            //go forward for x clicks
+            //RESETS ENCODERS AND MAKES SURE AT 0
+            resetEncoders();
+            //Set encoders to run Using Encoders
+            runUsingEncoders();
+/*
+            frontLeftMotor.setTargetPosition(countsForward);
+            frontRightMotor.setTargetPosition(countsForward);
+            rearLeftMotor.setTargetPosition(countsForward);
+            rearRightMotor.setTargetPosition(countsForward);
+*/
+            frontLeftMotor.setPower(power * powerReductionFactor);
+            frontRightMotor.setPower(power * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
 
-            frontLeftMotor.setTargetPosition((int) countsForward);
-            frontRightMotor.setTargetPosition((int) countsForward);
-            rearLeftMotor.setTargetPosition((int) countsForward);
-            rearRightMotor.setTargetPosition((int) countsForward);
-            while (frontLeftMotor.getCurrentPosition() < countsForward * countsWhile && frontRightMotor.getCurrentPosition() < countsForward * countsWhile && rearLeftMotor.getCurrentPosition() < countsForward * countsWhile && rearRightMotor.getCurrentPosition() < countsForward * countsWhile) {
-                frontLeftMotor.setPower(power * powerReductionFactor);
-                frontRightMotor.setPower(power * powerReductionFactor);
-                rearLeftMotor.setPower(power * powerReductionFactor);
-                rearRightMotor.setPower(power * powerReductionFactor);
+            while (frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) {
                 telemetry.addData("operation: ", "Going FORWARD");
                 telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
                 telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
@@ -68,6 +65,34 @@ public class testAutEncoders_4000encClicks extends LinearOpMode {
                 telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
                 telemetry.update();
             }
+            stopMotor();
+            sleep(3000);
+
+            resetEncoders();
+            runUsingEncoders();
+
+            frontLeftMotor.setTargetPosition(-countsForward);
+            frontRightMotor.setTargetPosition(-countsForward);
+            rearLeftMotor.setTargetPosition(-countsForward);
+            rearRightMotor.setTargetPosition(-countsForward);
+
+            frontLeftMotor.setPower(power * powerReductionFactor);
+            frontRightMotor.setPower(power * powerReductionFactor);
+            rearLeftMotor.setPower(power * powerReductionFactor);
+            rearRightMotor.setPower(power * powerReductionFactor);
+
+            while (frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) {
+                telemetry.addData("operation: ", "Going FORWARD");
+                telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+                telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+                telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+                telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
+                telemetry.update();
+            }
+            stopMotor();
+            sleep(3000);
+
+            /*
             sleep(500);
             frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -140,9 +165,38 @@ sleep(1000);
             telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition());
             telemetry.update();
             sleep(10000);
-
+*/
 
             requestOpModeStop();
         }
+    }
+
+    public void stopMotor () {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+    }
+
+    //RESETS ENCODERS
+    public void resetEncoders () {
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        while (frontLeftMotor.getCurrentPosition() != 0 || frontRightMotor.getCurrentPosition() != 0 || rearLeftMotor.getCurrentPosition() != 0 || rearRightMotor.getCurrentPosition() != 0) {
+            frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            sleep(100);
+        }
+    }
+
+    public void runUsingEncoders () {
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
