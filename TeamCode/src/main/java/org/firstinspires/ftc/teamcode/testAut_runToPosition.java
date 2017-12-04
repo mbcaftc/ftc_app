@@ -15,8 +15,11 @@ public class testAut_runToPosition extends LinearOpMode {
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
 
-    double runForward = 1000;
-    double power = .5;
+    double runForward = 4000;
+    double powerHigh = .6;
+    double powerLow = .3;
+
+    double countsMultiplyer = .95;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -84,21 +87,45 @@ public class testAut_runToPosition extends LinearOpMode {
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Give them the power level we want them to move at
-        frontLeftMotor.setPower(power);
-        frontRightMotor.setPower(power);
-        rearLeftMotor.setPower(power);
-        rearRightMotor.setPower(power);
+        frontLeftMotor.setPower(powerHigh);
+        frontRightMotor.setPower(powerHigh);
+        rearLeftMotor.setPower(powerHigh);
+        rearRightMotor.setPower(powerHigh);
 
         // Wait until they are done
         while (opModeIsActive() && (frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()))
         {
+            if (frontLeftMotor.getCurrentPosition() >= frontLeftMotor.getTargetPosition() * .5) {
+                frontLeftMotor.setPower(powerLow);
+                frontRightMotor.setPower(powerLow);
+                rearLeftMotor.setPower(powerLow);
+                rearRightMotor.setPower(powerLow);
+                telemetry.addData("Current Speed: ", powerLow);
+            }
+            else {
+                telemetry.addData("Current Speed: ", powerHigh);
+            }
             telemetry.addData("operation: ", "Going FORWARD");
             telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
             telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
             telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
             telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
             telemetry.update();
-            this.idle();
         }
+        telemetry.addData("operation: ", "Going FORWARD ENDED");
+        telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+        telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+        telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+        telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
+        telemetry.update();
+        stopMotor();
+        resetEncoders();
+    }
+
+    public void stopMotor () {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
     }
 }
