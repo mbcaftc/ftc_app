@@ -34,6 +34,7 @@ public class colorSensorArm {
         colorSensorArmRotate = cSAR;
         colorSensor = cS;
 
+        /*  MODERN ROBOTICS COLOR SENSOR CODE
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};
 
@@ -49,6 +50,11 @@ public class colorSensorArm {
 
         // Set the LED in the beginning
         colorSensor.enableLed(bLedOn);
+        */
+
+        //REV ROBOTICS COLOR SENSOR
+
+
     }
 
     public void colorSensorArmUp() {
