@@ -42,6 +42,36 @@ public class mechDriveAuto {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+    public void encoderDrivePlatformDistanceSensor (int direction, double power) {
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if (direction == 1) {
+            frontLeftMotor.setPower(power);
+            frontRightMotor.setPower(power);
+            rearLeftMotor.setPower(power);
+            rearRightMotor.setPower(power);
+        } else if (direction == 2) {
+            frontLeftMotor.setPower(-power);
+            frontRightMotor.setPower(-power);
+            rearLeftMotor.setPower(-power);
+            rearRightMotor.setPower(-power);
+        }
+    }
+
     public void encoderDrivePlatform (double distance, double power) {
 
         final double ENCODER_CPR = 1120;

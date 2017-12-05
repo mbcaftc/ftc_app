@@ -37,7 +37,7 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Rev_Gyro_test", group="K9bot")
+@Autonomous(name="Rev_Gyro_test", group="TESTING")
 public class testRevIMU extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -48,6 +48,7 @@ public class testRevIMU extends LinearOpMode {
     Orientation angles;
     Acceleration gravity;
 
+    float heading;
 
     @Override
     public void runOpMode() {
@@ -76,9 +77,20 @@ public class testRevIMU extends LinearOpMode {
         imu.initialize(parameters);
 
         composeTelemetry();
+
+        waitForStart();
 // Set up our telemetry dashboard
         while (opModeIsActive()) {
-
+            /*heading = -angles.firstAngle;
+            if (heading < 1 || heading > -1) {
+                telemetry.addData("heading: ", "not moved");
+            }
+            if (heading >= 1) {
+                telemetry.addData("heading: ", "moved clockwise / right");
+            }
+            if (heading <= 1) {
+                telemetry.addData("heading: ", "moved counterclockwise / left");
+            }*/
             telemetry.update();
         }
     }

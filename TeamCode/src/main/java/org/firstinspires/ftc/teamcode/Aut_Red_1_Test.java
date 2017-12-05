@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -23,6 +24,8 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
+
+import java.util.Locale;
 
 /**
  * Created by johnduval on 10/7/17.
@@ -40,6 +43,9 @@ public class Aut_Red_1_Test extends LinearOpMode {
     glyphLift myGlyphLift;
     boardArm myBoardArm;
     revColorDistanceSensor myRevColorDistanceSensor;
+
+    boolean distanceSensorInRange;
+
 
 
     // 1 == LEFT
@@ -66,6 +72,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+
 
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
@@ -143,7 +150,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     break;
                 case 2: //detecting jewel and knocking off & centering
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(1000);
+                    sleep(2000);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -166,13 +173,58 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //Go forward off platform
+                    myMechDrive.encoderDrivePlatform(22,.8);
+
+
+                    sleep(250);
+
+
+                    if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
+                        distanceSensorInRange = true;
+                        telemetry.addData("came off ramp ", "in range");
+                    }
+                    telemetry.addData("Distance (INCHES)",
+                            String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                    telemetry.update();
+                    sleep(500);
+
+
+                    while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
+                        telemetry.addData("GO BACK", "");
+                        telemetry.addData("Distance (INCHES)",
+                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                        telemetry.update();
+                        sleep(250);
+                        myMechDrive.encoderDrive(1, 2, .6);
+                        if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
+                            distanceSensorInRange = true;
+                        }
+                        sleep(250);
+                        telemetry.addData("WENT BACK", "");
+                        telemetry.addData("Distance (INCHES)",
+                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                        telemetry.update();
+                    }
+
+
+                    /*
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrivePlatform(31.50, 0.8);
                     sleep(200);
                     movement++;
                     break;
-                case 5: //Rotate right to orient with cryptobox
+                    */
+                    sleep(250);
+                    movement++;
+                    break;
+                case 5: // drive forward after sensor detects correct distance from balance stone
+                    telemetry.addData("CASE: ", movement);
+                    myMechDrive.encoderDrive(12,1,.6);
+                    sleep(250);
+                    movement ++;
+                    break;
+                case 6: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(24.5, 6, 0.6);
@@ -180,7 +232,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
                     break;
-                case 6: //GO FORWARD TO CRYPTO BOX
+                case 7: //GO FORWARD TO CRYPTO BOX
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     //from case 1 where we get the vuforia code
@@ -200,7 +252,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     }
                     movement++;
                     break;
-                case 7:
+                case 8:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     requestOpModeStop();

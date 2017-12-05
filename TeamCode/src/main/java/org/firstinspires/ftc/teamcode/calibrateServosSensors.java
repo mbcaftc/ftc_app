@@ -36,12 +36,6 @@ public class calibrateServosSensors extends OpMode {
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-
-
-        myColorSensorArm.colorSensorArmUp();
-
-        myColorSensorArm.colorRotateResting();
-        //myGlyphArms.openGlyphArms();
     }
 
     @Override
@@ -87,6 +81,14 @@ public class calibrateServosSensors extends OpMode {
         leftStickVal2 = -gamepad2.left_stick_y;
         leftStickVal2 = Range.clip(leftStickVal2, -1, 1);
         myGlyphLift.setPower(leftStickVal2);
+
+        if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) >= 4) {
+            myColorSensorArm.colorRotateCounterClockwise();
+        } else if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) < 4) {
+            myColorSensorArm.colorRotateClockwise();
+        } else {
+            myColorSensorArm.colorRotateResting();
+        }
 
         telemetry.addData("Red  ", myColorSensorArm.colorSensor.red());
         telemetry.addData("Blue ", myColorSensorArm.colorSensor.blue());
