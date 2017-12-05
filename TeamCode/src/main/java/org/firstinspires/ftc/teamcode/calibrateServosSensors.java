@@ -3,12 +3,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
+import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
+
+import java.util.Locale;
 
 /**
  * Created by johnduval on 10/9/17.
@@ -19,6 +25,8 @@ public class calibrateServosSensors extends OpMode {
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
     colorSensorArm myColorSensorArm;
+    revColorDistanceSensor myRevColorDistanceSensor;
+
 
     double leftStickVal2;
 
@@ -27,6 +35,8 @@ public class calibrateServosSensors extends OpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
+        myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+
 
         myColorSensorArm.colorSensorArmUp();
 
@@ -52,10 +62,18 @@ public class calibrateServosSensors extends OpMode {
             myGlyphArms.slightlyOpenGlyphArms();
         }
         if (gamepad2.dpad_up) {
-            myColorSensorArm.colorSensorArmUp();
+            try {
+                myColorSensorArm.colorSensorArmUpSlow();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         if (gamepad2.dpad_down) {
-            myColorSensorArm.colorSensorArmDownTesting();
+            try {
+                myColorSensorArm.colorSensorArmDownSlow();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         if(gamepad2.dpad_left) {
@@ -75,6 +93,7 @@ public class calibrateServosSensors extends OpMode {
         telemetry.addData("Color Servo pos:", myColorSensorArm.colorSensorArm.getPosition());
         telemetry.addData("Left glyph arm pos: ", myGlyphArms.leftGlyphArm.getPosition());
         telemetry.addData("Right glyph arm pos: ", myGlyphArms.rightGlyphArm.getPosition());
+        telemetry.addData("Distance (CM): ", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.CM));
         telemetry.update();
     }
 }

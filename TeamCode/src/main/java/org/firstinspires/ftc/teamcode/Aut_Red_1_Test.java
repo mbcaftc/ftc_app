@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
-import android.view.View;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -24,24 +22,24 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
-
+import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
 
 /**
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Red - 1 - TEST", group = "RED")
+@Autonomous (name = "Red - 1", group = "RED")
 
 public class Aut_Red_1_Test extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement
 
     colorSensorArm myColorSensorArm;
-    ColorSensor sensorColor;
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
     boardArm myBoardArm;
+    revColorDistanceSensor myRevColorDistanceSensor;
 
 
     // 1 == LEFT
@@ -67,30 +65,12 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
-        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
-
+        myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
         myColorSensorArm.colorSensorArmUp();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
 
-     //Color sensor - REV ROBOTICS
-        // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F, 0F, 0F};
-
-        // values is a reference to the hsvValues array.
-        final float values[] = hsvValues;
-
-        // sometimes it helps to multiply the raw RGB values with a scale factor
-        // to amplify/attentuate the measured values.
-        final double SCALE_FACTOR = 255;
-
-        // get a reference to the RelativeLayout so we can change the background
-        // color of the Robot Controller app to match the hue detected by the RGB sensor.
-        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
-        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
-
-     //Vuforia code
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "ASmjss3/////AAAAGQGMjs1d6UMZvrjQPX7J14B0s7kN+rWOyxwitoTy9i0qV7D+YGPfPeeoe/RgJjgMLabjIyRXYmDFLlJYTJvG9ez4GQSI4L8BgkCZkUWpAguRsP8Ah/i6dXIz/vVR/VZxVTR5ItyCovcRY+SPz3CP1tNag253qwl7E900NaEfFh6v/DalkEDppFevUDOB/WuLZmHu53M+xx7E3x35VW86glGKnxDLzcd9wS1wK5QhfbPOExe97azxVOVER8zNNF7LP7B+Qeticfs3O9pGXzI8lj3zClut/7aDVwZ10IPVk4oma6CO8FM5UtNLSb3sicoKV5QGiNmxbbOlnPxz9qD38UAHshq2/y0ZjI/a8oT+doCr";
@@ -107,6 +87,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         while (opModeIsActive()) {
 
             switch (movement) {
+
                 case 0:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
@@ -161,7 +142,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
-                    myColorSensorArm.colorSensorArmDown();
+                    myColorSensorArm.colorSensorArmDownSlow();
                     sleep(1000);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));

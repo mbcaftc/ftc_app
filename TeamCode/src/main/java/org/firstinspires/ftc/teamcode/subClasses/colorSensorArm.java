@@ -17,12 +17,14 @@ public class colorSensorArm {
 
     int redThreshold = 2;
     int blueThreshold = 2;
-    double restPosition = 0.2;
+    //double restPosition = 0.2;
     double upPosition = 0.15;
     double downPositionPause1 = 0.78;
     double downPositionPause2 = 0.88;
     double downPositionFinal = 0.94;
     int colorArmPause = 300;
+    double colorArmIncrementAmount = .01;
+    int colorArmIncrementTimeMS = 12; //will take aprox. 1 second to lower color sensor arm .
 
     public Servo colorSensorArm;
     public ColorSensor colorSensor;
@@ -34,7 +36,7 @@ public class colorSensorArm {
         colorSensorArmRotate = cSAR;
         colorSensor = cS;
 
-        /*  MODERN ROBOTICS COLOR SENSOR CODE
+        //  MODERN ROBOTICS COLOR SENSOR CODE
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};
 
@@ -50,7 +52,7 @@ public class colorSensorArm {
 
         // Set the LED in the beginning
         colorSensor.enableLed(bLedOn);
-        */
+
 
         //REV ROBOTICS COLOR SENSOR
 
@@ -61,9 +63,18 @@ public class colorSensorArm {
         colorSensorArm.setPosition(upPosition);
     }
 
-    public void colorSensorArmRest() {
-        colorSensorArm.setPosition(restPosition);
+    public void colorSensorArmUpSlow () throws InterruptedException {
+        double colorArmIncrementPosition = downPositionFinal;
+        while (colorArmIncrementPosition >=  upPosition) {
+            colorArmIncrementPosition = colorArmIncrementPosition - colorArmIncrementAmount;
+            colorSensorArm.setPosition(colorArmIncrementPosition);
+            sleep(colorArmIncrementTimeMS);
+        }
     }
+
+    //public void colorSensorArmRest() {
+    //   colorSensorArm.setPosition(restPosition);
+    //}
 
     public void colorSensorArmDown() throws InterruptedException {
         colorSensorArm.setPosition(downPositionPause1);
@@ -71,6 +82,15 @@ public class colorSensorArm {
         colorSensorArm.setPosition(downPositionPause2);
         sleep(colorArmPause);
         colorSensorArm.setPosition(downPositionFinal);
+    }
+
+    public void colorSensorArmDownSlow() throws InterruptedException {
+        double colorArmIncrementPosition = upPosition;
+        while (colorArmIncrementPosition <=  downPositionFinal) {
+            colorArmIncrementPosition = colorArmIncrementPosition + colorArmIncrementAmount;
+            colorSensorArm.setPosition(colorArmIncrementPosition);
+            sleep(colorArmIncrementTimeMS);
+        }
     }
 
     //TeleOp cannot ThrowInterruptedExcpetion.
