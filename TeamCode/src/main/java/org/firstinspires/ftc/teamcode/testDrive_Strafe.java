@@ -30,7 +30,7 @@ public class testDrive_Strafe extends OpMode {
     DcMotor rearRightMotor;
 
     double distance = 10000;
-    double powerHigh = .6;
+    double powerHigh = 1;
     double powerLow = .3;
 
     double leftStickVal;
@@ -98,6 +98,19 @@ public class testDrive_Strafe extends OpMode {
 
         if (gamepad1.dpad_up) {
             runToPosition_Forward();
+        }
+
+        if (gamepad1.dpad_left) {
+            runToPosition_Left();
+
+        }
+
+        if (gamepad1.dpad_right){
+            runToPosition_Right();
+        }
+
+        if (gamepad1.dpad_down) {
+            runToPosition_Back();
         }
 
         frontLeftMotor.setPower(frontLeftSpeed);
@@ -193,8 +206,129 @@ public class testDrive_Strafe extends OpMode {
             telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
             telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
             telemetry.update();
-            break;
         }
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        resetEncoders();
+        stopMotor();
+    }
+
+    void runToPosition_Right ()
+    {
+        resetEncoders();
+        // Tell the motors where we are going
+        frontLeftMotor.setTargetPosition((int)distance);
+        frontRightMotor.setTargetPosition((int)-distance);
+        rearLeftMotor.setTargetPosition((int)-distance);
+        rearRightMotor.setTargetPosition((int)distance);
+
+        // Set them a-going
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Give them the power level we want them to move at
+        frontLeftMotor.setPower(powerHigh);
+        frontRightMotor.setPower(powerHigh);
+        rearLeftMotor.setPower(powerHigh);
+        rearRightMotor.setPower(powerHigh);
+
+        // Wait until they are done
+        while ((frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) && gamepad1.dpad_right)
+        {
+            telemetry.addData("operation: ", "Going FORWARD");
+            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
+            telemetry.update();
+        }
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        resetEncoders();
+        stopMotor();
+    }
+
+    void runToPosition_Left ()
+    {
+        resetEncoders();
+        // Tell the motors where we are going
+        frontLeftMotor.setTargetPosition((int)-distance);
+        frontRightMotor.setTargetPosition((int)distance);
+        rearLeftMotor.setTargetPosition((int)distance);
+        rearRightMotor.setTargetPosition((int)-distance);
+
+        // Set them a-going
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Give them the power level we want them to move at
+        frontLeftMotor.setPower(powerHigh);
+        frontRightMotor.setPower(powerHigh);
+        rearLeftMotor.setPower(powerHigh);
+        rearRightMotor.setPower(powerHigh);
+
+        // Wait until they are done
+        while ((frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) && gamepad1.dpad_left)
+        {
+            telemetry.addData("operation: ", "Going FORWARD");
+            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
+            telemetry.update();
+        }
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        resetEncoders();
+        stopMotor();
+    }
+
+    void runToPosition_Back ()
+    {
+        resetEncoders();
+        // Tell the motors where we are going
+        frontLeftMotor.setTargetPosition((int)-distance);
+        frontRightMotor.setTargetPosition((int)-distance);
+        rearLeftMotor.setTargetPosition((int)-distance);
+        rearRightMotor.setTargetPosition((int)-distance);
+
+        // Set them a-going
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Give them the power level we want them to move at
+        frontLeftMotor.setPower(-powerHigh);
+        frontRightMotor.setPower(-powerHigh);
+        rearLeftMotor.setPower(-powerHigh);
+        rearRightMotor.setPower(-powerHigh);
+
+        // Wait until they are done
+        while ((frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) && gamepad1.dpad_down)
+        {
+            telemetry.addData("operation: ", "Going FORWARD");
+            telemetry.addData("front left: ", frontLeftMotor.getCurrentPosition() + " / " + frontLeftMotor.getTargetPosition());
+            telemetry.addData("front right: ", frontRightMotor.getCurrentPosition() + " / " + frontRightMotor.getTargetPosition());
+            telemetry.addData("rear left: ", rearLeftMotor.getCurrentPosition() + " / " + rearLeftMotor.getTargetPosition());
+            telemetry.addData("rear right: ", rearRightMotor.getCurrentPosition() + " / " + rearRightMotor.getTargetPosition());
+            telemetry.update();
+        }
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        resetEncoders();
         stopMotor();
     }
 

@@ -90,10 +90,17 @@ public class calibrateServosSensors extends OpMode {
 
         telemetry.addData("Red  ", myColorSensorArm.colorSensor.red());
         telemetry.addData("Blue ", myColorSensorArm.colorSensor.blue());
+        telemetry.addData("Distance (mm)",
+                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.MM)));
+        telemetry.addData("Distance (cm)",
+                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.CM)));
+        telemetry.addData("Distance (meter)",
+                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.METER)));
+        telemetry.addData("Distance (in)",
+                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
         telemetry.addData("Color Servo pos:", myColorSensorArm.colorSensorArm.getPosition());
         telemetry.addData("Left glyph arm pos: ", myGlyphArms.leftGlyphArm.getPosition());
         telemetry.addData("Right glyph arm pos: ", myGlyphArms.rightGlyphArm.getPosition());
-        telemetry.addData("Distance (CM): ", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.CM));
         telemetry.update();
     }
 }
