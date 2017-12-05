@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -52,11 +53,6 @@ public class colorSensorArm {
 
         // Set the LED in the beginning
         colorSensor.enableLed(bLedOn);
-
-
-        //REV ROBOTICS COLOR SENSOR
-
-
     }
 
     public void colorSensorArmUp() {
