@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Red - 1", group = "RED")
+@Autonomous (name = "Red - 1 - TEST", group = "TESTING")
 
 public class Aut_Red_1_Test extends LinearOpMode {
 

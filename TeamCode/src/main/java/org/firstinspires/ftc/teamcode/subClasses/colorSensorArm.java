@@ -89,13 +89,6 @@ public class colorSensorArm {
         }
     }
 
-    //TeleOp cannot ThrowInterruptedExcpetion.
-    public void colorSensorArmDownTesting () {
-        colorSensorArm.setPosition(downPositionPause1);
-        colorSensorArm.setPosition(downPositionPause2);
-        colorSensorArm.setPosition(downPositionFinal);
-    }
-
     public void colorRotateResting () {
         colorSensorArmRotate.setPosition(0.445);
     }

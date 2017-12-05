@@ -161,8 +161,16 @@ public class mechDriveAuto {
                 break;
         }
 
-        if (direction != 2) {
+        if (direction != 2 && direction!=1) {
             while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
+                frontLeftMotor.setPower(power * powerReductionFactor);
+                frontRightMotor.setPower(power * powerReductionFactor);
+                rearLeftMotor.setPower(power * powerReductionFactor);
+                rearRightMotor.setPower(power * powerReductionFactor);
+            }
+        }
+        else if (direction == 1) {
+            while ((frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy())) {
                 frontLeftMotor.setPower(power * powerReductionFactor);
                 frontRightMotor.setPower(power * powerReductionFactor);
                 rearLeftMotor.setPower(power * powerReductionFactor);
@@ -317,18 +325,18 @@ public class mechDriveAuto {
             armSensor.colorRotateClockwise();
             sleep(200);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
             sleep(200);
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
             sleep(200);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
             sleep(200);
         }
         else {
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
             sleep(200);
         }
         //mechDriveSTOP();
