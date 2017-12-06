@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -9,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -20,6 +23,9 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
 import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
+import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
+
+import java.util.Locale;
 
 
 /**
@@ -29,7 +35,6 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 @Autonomous (name = "Blue - 2", group = "BLUE")
 
 public class Aut_Blue_2 extends LinearOpMode {
-
     int movement = 0; //switch variable to determine movementt
 
     colorSensorArm myColorSensorArm;
@@ -37,6 +42,9 @@ public class Aut_Blue_2 extends LinearOpMode {
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
     boardArm myBoardArm;
+    revColorDistanceSensor myRevColorDistanceSensor;
+
+    boolean distanceSensorInRange;
 
 
     // 1 == LEFT
@@ -61,8 +69,10 @@ public class Aut_Blue_2 extends LinearOpMode {
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
-        myColorSensorArm.colorSensorArmUp();
+
+        myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
 
@@ -86,7 +96,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myGlyphArms.closeGlyphArms();
-                    sleep(500);
+                    sleep(250);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
@@ -136,14 +146,16 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
-                    myColorSensorArm.colorSensorArmDown();
-                    sleep(1000);
+                    telemetry.addLine("MOVING SERVO ARM DOWN");
+                    telemetry.update();
+                    myColorSensorArm.colorSensorArmDownSlow();
+                    sleep(250);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(2000);
+                    sleep(500);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
@@ -152,23 +164,56 @@ public class Aut_Blue_2 extends LinearOpMode {
                     myMechDrive.blueAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
-                case 3: //rotate right on platform
+                case 3: //rotate left
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 5, 0.5);
-                    sleep(200);
+                    sleep(250);
                     movement ++;
                     break;
-                case 4: //FORWARD Off platform
-                    myMechDrive.encoderDrivePlatform(24,0.8);
-                    sleep(200);
+                case 4: //FORWARD Off Platform
+                    myMechDrive.encoderDrivePlatform(22,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    sleep(250);
+                    //prevents robot from going back at all if distance from platform is <=4
+                    if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
+                        distanceSensorInRange = true;
+                        telemetry.addData("came off ramp ", "in range");
+                    }
+                    telemetry.addData("Distance (INCHES)",
+                            String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                    telemetry.update();
+                    //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
+                    //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
+                    //this helps make sure same distance from box.
+                    while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
+                        telemetry.addData("GO BACK", "");
+                        telemetry.addData("Distance (INCHES)",
+                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                        telemetry.update();
+                        myMechDrive.encoderDriveMat(1, 2, .6);
+                        if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
+                            distanceSensorInRange = true;
+                        }
+                        telemetry.addData("WENT BACK", "");
+                        telemetry.addData("Distance (INCHES)",
+                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                        telemetry.update();
+                        //sleep(100);
+                    }
+                    sleep(250);
+                    movement++;
+                    break;
+
+                case 5: //go forward a little - strafing with back against platform may get it caught
+                    myMechDrive.encoderDriveMat(2,1,.8);
+                    sleep(250);
                     movement ++;
                     break;
-                case 5: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDrive(17,4,.9);
+                case 6: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
+                    myMechDrive.encoderDriveMat(16,4,.75);
                     movement ++;
                     break;
-                case 6: //GO FORWARD TO CRYPTOBOX
+                case 7: //GO FORWARD TO CRYPTOBOX
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -186,7 +231,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     }
                     movement ++;
                     break;
-                case 7:
+                case 8:
                     requestOpModeStop();
                     break;
             }

@@ -19,13 +19,15 @@ public class colorSensorArm {
     int redThreshold = 2;
     int blueThreshold = 2;
     //double restPosition = 0.2;
+    double upPositionPause1 = .40;
     double upPosition = 0.15;
-    double downPositionPause1 = 0.78;
+    double downPositionPause1 = 0.70;
     double downPositionPause2 = 0.88;
     double downPositionFinal = 0.94;
-    int colorArmPause = 300;
+    int colorArmPause = 500;
     double colorArmIncrementAmount = .01;
-    int colorArmIncrementTimeMS = 12; //will take aprox. 1 second to lower color sensor arm .
+    int colorArmIncrementTimeMSdown = 12; //will take aprox. 1 second to lower color sensor arm .
+    int colorArmIncrementTimeMSup = 15; //will take aprox. 1 second to lower color sensor arm .
 
     public Servo colorSensorArm;
     public ColorSensor colorSensor;
@@ -60,11 +62,13 @@ public class colorSensorArm {
     }
 
     public void colorSensorArmUpSlow () throws InterruptedException {
-        double colorArmIncrementPosition = downPositionFinal;
+        double colorArmIncrementPosition = upPositionPause1;
+        colorSensorArm.setPosition(colorArmIncrementPosition);
+        sleep(colorArmPause);
         while (colorArmIncrementPosition >=  upPosition) {
             colorArmIncrementPosition = colorArmIncrementPosition - colorArmIncrementAmount;
             colorSensorArm.setPosition(colorArmIncrementPosition);
-            sleep(colorArmIncrementTimeMS);
+            sleep(colorArmIncrementTimeMSup);
         }
     }
 
@@ -81,16 +85,18 @@ public class colorSensorArm {
     }
 
     public void colorSensorArmDownSlow() throws InterruptedException {
-        double colorArmIncrementPosition = upPosition;
+        double colorArmIncrementPosition = downPositionPause1;
+        colorSensorArm.setPosition(colorArmIncrementPosition);
+        sleep(colorArmPause);
         while (colorArmIncrementPosition <=  downPositionFinal) {
             colorArmIncrementPosition = colorArmIncrementPosition + colorArmIncrementAmount;
             colorSensorArm.setPosition(colorArmIncrementPosition);
-            sleep(colorArmIncrementTimeMS);
+            sleep(colorArmIncrementTimeMSdown);
         }
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.445);
+        colorSensorArmRotate.setPosition(0.444);
     }
 
     public void colorRotateClockwise () {

@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
  */
 
 @TeleOp(name = "Strafe Testing")
+@Disabled
 
 public class testDrive_Strafe extends OpMode {
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -32,7 +33,7 @@ import java.util.Locale;
  */
 
 @Autonomous (name = "Red - 1 - TEST", group = "TESTING")
-
+@Disabled
 public class Aut_Red_1_Test extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement
@@ -76,7 +77,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
 
-        myColorSensorArm.colorSensorArmUp();
+        myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
 
@@ -100,7 +101,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myGlyphArms.closeGlyphArms();
-                    sleep(500);
+                    sleep(250);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
@@ -150,14 +151,16 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement++;
                     break;
                 case 2: //detecting jewel and knocking off & centering
+                    telemetry.addLine("MOVING SERVO ARM DOWN");
+                    telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(2000);
+                    sleep(250);
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(2000);
+                    sleep(500);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
@@ -170,22 +173,20 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
-                    sleep(200);
+                    sleep(250);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(22,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(250);
                         //prevents robot from going back at all if distance from platform is <=4
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
                         telemetry.addData("came off ramp ", "in range");
-                        sleep(1000);
                     }
                     telemetry.addData("Distance (INCHES)",
                             String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                     telemetry.update();
-                    sleep(500);
                  //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
                  //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
                  //this helps make sure same distance from box.
@@ -194,31 +195,30 @@ public class Aut_Red_1_Test extends LinearOpMode {
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
-                        sleep(250);
                         myMechDrive.encoderDriveMat(1, 2, .6);
                         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                             distanceSensorInRange = true;
                         }
-                        sleep(250);
                         telemetry.addData("WENT BACK", "");
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
+                        //sleep(100);
                     }
                     sleep(250);
                     movement++;
                     break;
                 case 5: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(12,1,.6);
+                    myMechDrive.encoderDriveMat(13.5,1,.6);
                     sleep(250);
                     movement ++;
                     break;
                 case 6: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(24.5, 6, 0.6);
-                    sleep(200);
+                    myMechDrive.encoderDriveMat(21, 6, 0.6);
+                    sleep(250);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
                     break;
@@ -240,6 +240,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                             myMechDrive.vuforiaRight(myGlyphArms);
                             break;
                     }
+                    sleep(250);
                     movement++;
                     break;
                 case 8:

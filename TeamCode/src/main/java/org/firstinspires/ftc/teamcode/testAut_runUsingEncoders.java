@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by johnduval on 11/21/17.
  */
 @Autonomous(name = "Test - Run Using Encoders", group = "TESTING")
-
+@Disabled
 public class testAut_runUsingEncoders extends LinearOpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
