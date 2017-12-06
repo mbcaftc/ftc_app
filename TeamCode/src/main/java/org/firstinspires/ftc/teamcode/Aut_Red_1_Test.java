@@ -66,6 +66,8 @@ public class Aut_Red_1_Test extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        //we know nothing will be in range to start.  Distance sensor returns "NaN" if objects too far away.
+        distanceSensorInRange = false;
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
@@ -94,7 +96,6 @@ public class Aut_Red_1_Test extends LinearOpMode {
         while (opModeIsActive()) {
 
             switch (movement) {
-
                 case 0:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
@@ -173,29 +174,28 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(22,.8);
-
-
+                    myMechDrive.encoderDrivePlatform(22,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(250);
-
-
+                        //prevents robot from going back at all if distance from platform is <=4
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
                         telemetry.addData("came off ramp ", "in range");
+                        sleep(1000);
                     }
                     telemetry.addData("Distance (INCHES)",
                             String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                     telemetry.update();
                     sleep(500);
-
-
+                 //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
+                 //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
+                 //this helps make sure same distance from box.
                     while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
                         telemetry.addData("GO BACK", "");
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
                         sleep(250);
-                        myMechDrive.encoderDrive(1, 2, .6);
+                        myMechDrive.encoderDriveMat(1, 2, .6);
                         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                             distanceSensorInRange = true;
                         }
@@ -205,29 +205,19 @@ public class Aut_Red_1_Test extends LinearOpMode {
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
                     }
-
-
-                    /*
-                    telemetry.addData("CASE: ", movement);
-                    telemetry.update();
-                    myMechDrive.encoderDrivePlatform(31.50, 0.8);
-                    sleep(200);
-                    movement++;
-                    break;
-                    */
                     sleep(250);
                     movement++;
                     break;
                 case 5: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDrive(12,1,.6);
+                    myMechDrive.encoderDriveMat(12,1,.6);
                     sleep(250);
                     movement ++;
                     break;
                 case 6: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(24.5, 6, 0.6);
+                    myMechDrive.encoderDriveMat(24.5, 6, 0.6);
                     sleep(200);
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
