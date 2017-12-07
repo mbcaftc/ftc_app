@@ -80,7 +80,9 @@ public class testPlatform extends LinearOpMode {
 
             switch (movement) {
                 case 0: // check everything
+                    heading = -angles.firstAngle;
                     telemetry.addData("CASE: ", movement);
+                    telemetry.addData("HEADING: ", heading);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
                     sleep(250);
@@ -100,38 +102,7 @@ public class testPlatform extends LinearOpMode {
                     sleep(250);
                     movement++;
                     break;
-                case 3: //calibrate with gyro
-                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    gravity = imu.getGravity();
-                    telemetry.addData("CASE gyro: ", movement);
-                    telemetry.addData("MOVING","");
-                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
-                    telemetry.update();
-                    sleep(1000);
-                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle >= -89) {
-                            myMechDrive.powerDrive(6, .16);
-                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                        }
-                    }
-                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle <= -91) {
-                            myMechDrive.powerDrive(5,.16);
-                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                        }
-                    }
-                    myMechDrive.stopMotors();
-                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    gravity = imu.getGravity();
-                    telemetry.addData("DONE MOVING","");
-                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
-                    telemetry.update();
-                    sleep(1000);
-                    movement++;
-                    break;
-                case 4:
+                case 3: // back up against platform for distance
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
                         telemetry.addData("came off ramp ", "in range");
@@ -162,13 +133,99 @@ public class testPlatform extends LinearOpMode {
                     sleep(250);
                     movement++;
                     break;
+                case 4: //center robot using Gyro
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    heading = -angles.firstAngle;
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.update();
+                    sleep(1000);
+                    if (heading <= 89) {  //robot did NOT rotate enough coming off platform
+                        heading = -angles.firstAngle;
+                        while (heading <= 89) {
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                            heading = -angles.firstAngle;
+                        }
+                    }
+                    else if (heading >= 91) {    //robot rotated TOO MUCH coming off platform
+                        heading = -angles.firstAngle;
+                        while (heading >= 91) {
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                            heading = -angles.firstAngle;
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    heading = -angles.firstAngle;
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.update();
+                    sleep(1000);
+                    angles.firstAngle = 0;  //reset heading to 0
+                    heading = -angles.firstAngle;
+                    movement++;
+                    break;
                 case 5: // run to center of cryptobox
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDrive(12,1,.6);
+                    myMechDrive.encoderDrive(13.5,1,.6);
                     sleep(250);
                     movement ++;
                     break;
-                case 6:
+                case 6: //rotate right to orient with CryptoBox
+                    telemetry.addData("CASE: ", movement);
+                    telemetry.update();
+                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);
+                    sleep(200);
+                    heading = -angles.firstAngle;
+                    telemetry.addData("HEADING: ", heading);
+                    sleep(1000);
+                    movement++;
+                    break;
+                case 7: //center robot with gyro
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    heading = -angles.firstAngle;
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.update();
+                    sleep(1000);
+                    if (heading <= 89) {  //robot did NOT rotate enough coming off platform
+                        heading = -angles.firstAngle;
+                        while (heading <= 89) {
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                            heading = -angles.firstAngle;
+                        }
+                    }
+                    else if (heading >= 91) {    //robot rotated TOO MUCH coming off platform
+                        heading = -angles.firstAngle;
+                        while (heading >= 91) {
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                            heading = -angles.firstAngle;
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    heading = -angles.firstAngle;
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.update();
+                    sleep(1000);
+                    movement++;
+                    break;
+                case 8:
                     requestOpModeStop();
             }
         }
