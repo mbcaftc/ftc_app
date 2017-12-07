@@ -548,7 +548,7 @@ public class mechDriveAuto {
         encoderDrive(7,2,.5);
     }
 
-    public void powerDrive (int timeMS, int direction, double power) throws InterruptedException {
+    public void powerDrive (int direction, double power) throws InterruptedException {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -559,50 +559,37 @@ public class mechDriveAuto {
                 frontRightMotor.setPower(power);
                 rearLeftMotor.setPower(power);
                 rearRightMotor.setPower(power);
-                sleep(timeMS);
-                stopMotors();
                 break;
             case 2: // robot will move backward
                 frontLeftMotor.setPower(-power);
                 frontRightMotor.setPower(-power);
                 rearLeftMotor.setPower(-power);
                 rearRightMotor.setPower(-power);
-                sleep(timeMS);
-                stopMotors();
                 break;
             case 3: // robot will strafe left
                 frontLeftMotor.setPower(-power);
                 frontRightMotor.setPower(power);
                 rearLeftMotor.setPower(power);
                 rearRightMotor.setPower(-power);
-                sleep(timeMS);
-                stopMotors();
                 break;
             case 4: // robot will strafe right
                 frontLeftMotor.setPower(power);
                 frontRightMotor.setPower(-power);
                 rearLeftMotor.setPower(-power);
                 rearRightMotor.setPower(power);
-                sleep(timeMS);
-                stopMotors();
                 break;
             case 5: // robot will rotate left
                 frontLeftMotor.setPower(-power);;
                 frontRightMotor.setPower(power);
                 rearLeftMotor.setPower(-power);
                 rearRightMotor.setPower(power);
-                sleep(timeMS);
-                stopMotors();
                 break;
             case 6: // robot will rotate right
                 frontLeftMotor.setPower(power);
                 frontRightMotor.setPower(-power);
                 rearLeftMotor.setPower(power);
                 rearRightMotor.setPower(-power);
-                sleep(timeMS);
-                stopMotors();
                 break;
         }
-        stopMotors();
     }
 }
