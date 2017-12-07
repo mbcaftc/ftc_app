@@ -96,15 +96,19 @@ public class colorSensorArm {
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.444);
+        colorSensorArmRotate.setPosition(0.446);
     }
 
-    public void colorRotateClockwise () {
+    public void colorRotateClockwiseRed1Blue2 () {
         colorSensorArmRotate.setPosition(0.6);
     }
+    public void colorRotateClockwiseRed2Blue1 () { colorSensorArmRotate.setPosition(1); }
 
-    public void colorRotateCounterClockwise () {
+    public void colorRotateCounterClockwiseRed2Blue1 () {
         colorSensorArmRotate.setPosition(0.3);
+    }
+    public void colorRotateCounterClockwiseRed1Blue2 () {
+        colorSensorArmRotate.setPosition(0);
     }
 
     public int colorJewel() throws InterruptedException {
@@ -114,9 +118,25 @@ public class colorSensorArm {
         //3 = none detected
         sleep(500);
         if (colorSensor.red() >= redThreshold) {
-            return 1;
+            if (colorSensor.red() > colorSensor.blue()) {
+                return 1;
+            }
+            else if (colorSensor.blue() > colorSensor.red()) {
+                return 2;
+            }
+            else {
+                return 3;
+            }
         } else if (colorSensor.blue() >= blueThreshold) {
-            return 2;
+            if (colorSensor.blue() > colorSensor.red()) {
+                return 2;
+            }
+            else if (colorSensor.red() > colorSensor.blue()) {
+                return 1;
+            }
+            else {
+                return 3;
+            }
         } else {
             return 3;
         }

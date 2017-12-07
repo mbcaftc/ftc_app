@@ -114,7 +114,6 @@ public class mechDriveAuto {
             rearLeftMotor.setPower(power * powerReductionFactor);
             rearRightMotor.setPower(power * powerReductionFactor);
         }
-
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -124,6 +123,7 @@ public class mechDriveAuto {
         frontRightMotor.setTargetPosition((int) counts);
         rearLeftMotor.setTargetPosition((int) counts);
         rearRightMotor.setTargetPosition((int) counts);
+        stopMotors();
     }
 
     public void encoderDrive (double distance, int direction, double power) {
@@ -192,8 +192,6 @@ public class mechDriveAuto {
                 break;
         }
 
-
-
         if (direction != 2) {
             while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
                 frontLeftMotor.setPower(power * powerReductionFactor);
@@ -219,6 +217,7 @@ public class mechDriveAuto {
         frontRightMotor.setTargetPosition((int) counts);
         rearLeftMotor.setTargetPosition((int) counts);
         rearRightMotor.setTargetPosition((int) counts);
+        stopMotors();
     }
 
 
@@ -283,7 +282,6 @@ public class mechDriveAuto {
                 rearRightMotor.setTargetPosition((int) -counts);
                 break;
         }
-
         while (frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) {
             frontLeftMotor.setPower(power);
             frontRightMotor.setPower(power);
@@ -291,7 +289,6 @@ public class mechDriveAuto {
             rearRightMotor.setPower(power);
 
         }
-
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -301,6 +298,7 @@ public class mechDriveAuto {
         frontRightMotor.setTargetPosition((int) counts);
         rearLeftMotor.setTargetPosition((int) counts);
         rearRightMotor.setTargetPosition((int) counts);
+        stopMotors();
     }
 
     public void rotateLeft (double speed) {
@@ -425,101 +423,129 @@ public class mechDriveAuto {
         }
     }
 
-    public void redAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+    public void red1Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
 
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            armSensor.colorRotateClockwise();
-            sleep(200);
+            armSensor.colorRotateClockwiseRed1Blue2();
+            sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
-            sleep(300);
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
-            armSensor.colorRotateCounterClockwise();
-            sleep(200);
+            armSensor.colorRotateCounterClockwiseRed1Blue2();
+            sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
-            sleep(300);
         }
         else {
             armSensor.colorSensorArmUpSlow();
-            sleep(300);
         }
-        //mechDriveSTOP();
     }
 
-    public void blueAllianceJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+    public void red2Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+
+        //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            armSensor.colorRotateCounterClockwise();
-            sleep(200);
+            armSensor.colorRotateClockwiseRed2Blue1();
+            sleep(100);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUpSlow();
+        }
+        else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
+            armSensor.colorRotateCounterClockwiseRed2Blue1();
+            sleep(100);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUpSlow();
+        }
+        else {
+            armSensor.colorSensorArmUpSlow();
+        }
+    }
+
+    public void blue1Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+        if (jewelColor == 1) {
+            armSensor.colorRotateCounterClockwiseRed2Blue1();
+            sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
-            sleep(300);
         }
         else if (jewelColor == 2) {
-            armSensor.colorRotateClockwise();
-            sleep(200);
+            armSensor.colorRotateClockwiseRed2Blue1();
+            sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUp();
-            sleep(300);
         }
         else {
             armSensor.colorSensorArmUp();
-            sleep(300);
+        }
+    }
+
+    public void blue2Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+        if (jewelColor == 1) {
+            armSensor.colorRotateCounterClockwiseRed1Blue2();
+            sleep(100);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
+        }
+        else if (jewelColor == 2) {
+            armSensor.colorRotateClockwiseRed1Blue2();
+            sleep(100);
+            armSensor.colorRotateResting();
+            armSensor.colorSensorArmUp();
+        }
+        else {
+            armSensor.colorSensorArmUp();
         }
     }
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
 
         encoderDriveMat(9,3,0.75); //strafe left to column
-        sleep(200);
+        sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
-        sleep(200);
+        sleep(100);
         arms.openGlyphArms();
-        sleep(500);
+        sleep(200);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
-        sleep(200);
+        sleep(100);
         encoderDrive(3,2,1); //back
-        sleep(200);
+        sleep(100);
         encoderDrive(3.5,1,1); //forward
-        sleep(200);
+        sleep(100);
         encoderDrive(6,2,.5); //slow back
-        sleep(200);
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
 
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
-        sleep(1000);
+        sleep(100);
         arms.openGlyphArms();
-        sleep(500);
+        sleep(200);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
-        sleep(200);
+        sleep(100);
         encoderDrive(3,2,1);
-        sleep(200);
+        sleep(100);
         encoderDrive(3.5,1,1);
-        sleep(200);
+        sleep(100);
         encoderDrive(6,2,.5);
-        sleep(200);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
 
         encoderDriveMat(9,4,0.75); //strafe right to column
-        sleep(200);
+        sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
-        sleep(200);
+        sleep(100);
         arms.openGlyphArms();
-        sleep(500);
+        sleep(200);
         encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
-        sleep(200);
+        sleep(100);
         encoderDrive(3,2,1);
-        sleep(200);
+        sleep(100);
         encoderDrive(3.5,1,1);
-        sleep(200);
+        sleep(100);
         encoderDrive(7,2,.5);
-        sleep(200);
     }
 
     public void powerDrive (int timeMS, int direction, double power) throws InterruptedException {
@@ -577,5 +603,6 @@ public class mechDriveAuto {
                 stopMotors();
                 break;
         }
+        stopMotors();
     }
 }

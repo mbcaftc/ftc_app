@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
  * Created by student on 12/6/17.
  */
 @TeleOp(name = "Testin - Vuforia Strafing", group = "TESTING")
+@Disabled
 public class testDrive_CryptoStrafe extends OpMode {
     mechDriveAuto myMechDrive;
     glyphArms myGlyphArms;

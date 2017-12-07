@@ -79,6 +79,7 @@ public class Aut_Red_1 extends LinearOpMode {
         myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myBoardArm.boardArmUp();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -106,7 +107,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     break;
                 case 1: // reading Vuforia code
                     telemetry.addData("CASE: ", movement);
-                    sleep(2000);
+                    sleep(1500);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -153,7 +154,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(250);
+
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -165,19 +166,19 @@ public class Aut_Red_1 extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.red1Jewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
                 case 3: //Rotate right on platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
                     myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
-                    sleep(250);
+                    sleep(200);
                     //prevents robot from going back at all if distance from platform is <=4
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
@@ -204,20 +205,20 @@ public class Aut_Red_1 extends LinearOpMode {
                         telemetry.update();
                         //sleep(100);
                     }
-                    sleep(250);
+                    sleep(200);
                     movement++;
                     break;
                 case 5: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
                     myMechDrive.encoderDriveMat(13.5,1,.6);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 6: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(21, 6, 0.6);
-                    sleep(250);
+                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);
+
                     myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
                     break;
@@ -239,7 +240,6 @@ public class Aut_Red_1 extends LinearOpMode {
                             myMechDrive.vuforiaRight(myGlyphArms);
                             break;
                     }
-                    sleep(250);
                     movement++;
                     break;
                 case 8:

@@ -71,11 +71,11 @@ public class calibrateServosSensors extends OpMode {
         }
 
         if(gamepad2.dpad_left) {
-            myColorSensorArm.colorRotateClockwise();
+            myColorSensorArm.colorRotateClockwiseRed1Blue2();
         }
 
         if (gamepad2.dpad_right) {
-            myColorSensorArm.colorRotateCounterClockwise();
+            myColorSensorArm.colorRotateCounterClockwiseRed1Blue2();
         }
 
         leftStickVal2 = -gamepad2.left_stick_y;
@@ -83,9 +83,9 @@ public class calibrateServosSensors extends OpMode {
         myGlyphLift.setPower(leftStickVal2);
 
         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) >= 4) {
-            myColorSensorArm.colorRotateCounterClockwise();
+            myColorSensorArm.colorRotateCounterClockwiseRed1Blue2();
         } else if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) < 4) {
-            myColorSensorArm.colorRotateClockwise();
+            myColorSensorArm.colorRotateClockwiseRed1Blue2();
         } else {
             myColorSensorArm.colorRotateResting();
         }

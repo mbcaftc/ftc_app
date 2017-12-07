@@ -75,6 +75,7 @@ public class Aut_Blue_2 extends LinearOpMode {
         myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myBoardArm.boardArmUp();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -102,7 +103,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     break;
                 case 1: // reading Vuforia code
                     telemetry.addData("CASE: ", movement);
-                    sleep(2000);
+                    sleep(1500);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -149,7 +150,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(250);
+
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -161,19 +162,19 @@ public class Aut_Blue_2 extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.blueAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.blue2Jewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
                 case 3: //rotate left
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 5, 0.5);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 4: //FORWARD Off Platform
                     myMechDrive.encoderDrivePlatform(22,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
-                    sleep(250);
+                    sleep(200);
                     //prevents robot from going back at all if distance from platform is <=4
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
@@ -200,17 +201,19 @@ public class Aut_Blue_2 extends LinearOpMode {
                         telemetry.update();
                         //sleep(100);
                     }
-                    sleep(250);
+                    sleep(200);
                     movement++;
                     break;
 
                 case 5: //go forward a little - strafing with back against platform may get it caught
                     myMechDrive.encoderDriveMat(2,1,.8);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 6: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
                     myMechDrive.encoderDriveMat(16,4,.75);
+
+                    myGlyphLift.lowerGlyphLiftAutMode();
                     movement ++;
                     break;
                 case 7: //GO FORWARD TO CRYPTOBOX

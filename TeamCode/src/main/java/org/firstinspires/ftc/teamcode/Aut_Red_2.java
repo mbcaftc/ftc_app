@@ -75,6 +75,7 @@ public class Aut_Red_2 extends LinearOpMode {
         myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myBoardArm.boardArmUp();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -102,7 +103,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     break;
                 case 1: // reading Vuforia code
                     telemetry.addData("CASE: ", movement);
-                    sleep(2000);
+                    sleep(1500);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -149,7 +150,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(250);
+
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -161,55 +162,30 @@ public class Aut_Red_2 extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.red2Jewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
                 case 3: //rotate right
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 4: //FORWARD Off Platform
                     myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
-                    sleep(250);
-                    //prevents robot from going back at all if distance from platform is <=4
-                    if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
-                        distanceSensorInRange = true;
-                        telemetry.addData("came off ramp ", "in range");
-                    }
-                    telemetry.addData("Distance (INCHES)",
-                            String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                    telemetry.update();
-                    //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
-                    //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
-                    //this helps make sure same distance from box.
-                    while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
-                        telemetry.addData("GO BACK", "");
-                        telemetry.addData("Distance (INCHES)",
-                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                        telemetry.update();
-                        myMechDrive.encoderDriveMat(1, 2, .6);
-                        if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
-                            distanceSensorInRange = true;
-                        }
-                        telemetry.addData("WENT BACK", "");
-                        telemetry.addData("Distance (INCHES)",
-                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                        telemetry.update();
-                        //sleep(100);
-                    }
-                    sleep(250);
+                    sleep(200);
                     movement++;
                     break;
                 case 5: //go forward a little - strafing with back against platform may get it caught
-                    myMechDrive.encoderDriveMat(2,1,.8);
-                    sleep(250);
+                    //myMechDrive.encoderDriveMat(2,1,.8);
+                    sleep(200);
                     movement ++;
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(16,3,.75);
+                    myMechDrive.encoderDriveMat(15,3,.75);
+
+                    myGlyphLift.lowerGlyphLiftAutMode();
                     movement ++;
                     break;
                 case 7: //GO FORWARD TO CRYPTOBOX

@@ -173,7 +173,7 @@ public class Aut_Red_1_Gyro extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.redAllianceJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.red1Jewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
                 case 3: //Rotate right on platform
