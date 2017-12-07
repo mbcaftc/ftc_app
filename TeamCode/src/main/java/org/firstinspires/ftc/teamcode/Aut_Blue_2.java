@@ -156,7 +156,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(500);
+                    sleep(1000);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right

@@ -18,16 +18,19 @@ public class colorSensorArm {
 
     int redThreshold = 2;
     int blueThreshold = 2;
+    int colorLoop = 0;
     //double restPosition = 0.2;
     double upPositionPause1 = .40;
-    double upPosition = 0.15;
+    double upPosition = 0.16;
     double downPositionPause1 = 0.70;
     double downPositionPause2 = 0.88;
     double downPositionFinal = 0.94;
     int colorArmPause = 500;
     double colorArmIncrementAmount = .01;
     int colorArmIncrementTimeMSdown = 12; //will take aprox. 1 second to lower color sensor arm .
-    int colorArmIncrementTimeMSup = 15; //will take aprox. 1 second to lower color sensor arm .
+    int colorArmIncrementTimeMSup = 16; //will take aprox. 1 second to lower color sensor arm .
+
+    double colorSensorArmRestingPosition = 0.447;
 
     public Servo colorSensorArm;
     public ColorSensor colorSensor;
@@ -96,7 +99,7 @@ public class colorSensorArm {
     }
 
     public void colorRotateResting () {
-        colorSensorArmRotate.setPosition(0.446);
+        colorSensorArmRotate.setPosition(colorSensorArmRestingPosition);
     }
 
     public void colorRotateClockwiseRed1Blue2 () {
@@ -112,11 +115,11 @@ public class colorSensorArm {
     }
 
     public int colorJewel() throws InterruptedException {
+        colorLoop++;
         //gives sensor time to be accurate
         //1 == red
         //2 == blue
         //3 = none detected
-        sleep(500);
         if (colorSensor.red() >= redThreshold) {
             if (colorSensor.red() > colorSensor.blue()) {
                 return 1;
@@ -125,6 +128,23 @@ public class colorSensorArm {
                 return 2;
             }
             else {
+                if (colorLoop == 1) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
+                    sleep(1000);
+                    colorJewel();
+                }
+                else if (colorLoop == 2) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
+                    sleep(1000);
+                    colorJewel();
+                }
+                else if (colorLoop == 3) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
+                    sleep(1000);
+                    colorJewel();
+                }
+                colorSensorArm.setPosition(upPositionPause1);
+                sleep(10000);
                 return 3;
             }
         } else if (colorSensor.blue() >= blueThreshold) {
@@ -135,9 +155,43 @@ public class colorSensorArm {
                 return 1;
             }
             else {
+                if (colorLoop == 1) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
+                    sleep(1000);
+                    colorJewel();
+                }
+                else if (colorLoop == 2) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
+                    sleep(1000);
+                    colorJewel();
+                }
+                else if (colorLoop == 3) {
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
+                    sleep(1000);
+                    colorJewel();
+                }
+                colorSensorArm.setPosition(upPositionPause1);
+                sleep(10000);
                 return 3;
             }
         } else {
+            if (colorLoop == 1) {
+                colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
+                sleep(1000);
+                colorJewel();
+            }
+            else if (colorLoop == 2) {
+                colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
+                sleep(1000);
+                colorJewel();
+            }
+            else if (colorLoop == 3) {
+                colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
+                sleep(1000);
+                colorJewel();
+            }
+            colorSensorArm.setPosition(upPositionPause1);
+            sleep(10000);
             return 3;
         }
     }

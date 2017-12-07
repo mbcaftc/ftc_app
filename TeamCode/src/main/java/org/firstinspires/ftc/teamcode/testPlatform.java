@@ -41,7 +41,7 @@ public class testPlatform extends LinearOpMode {
     // State used for updating telemetry
     Orientation angles;
     Acceleration gravity;
-    float heading;
+    //float heading;
 
 
     @Override
@@ -62,7 +62,7 @@ public class testPlatform extends LinearOpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        gravity = imu.getGravity();
+        //gravity = imu.getGravity();
 
         waitForStart();
 
@@ -80,9 +80,8 @@ public class testPlatform extends LinearOpMode {
 
             switch (movement) {
                 case 0: // check everything
-                    heading = -angles.firstAngle;
                     telemetry.addData("CASE: ", movement);
-                    telemetry.addData("HEADING: ", heading);
+                    telemetry.addData("HEADING: ", angles.firstAngle);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
                     sleep(250);
@@ -98,7 +97,7 @@ public class testPlatform extends LinearOpMode {
                 case 2: //go off platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrivePlatform(21.5,.8);
+                    myMechDrive.encoderDrivePlatform(21.25,.8);
                     sleep(250);
                     movement++;
                     break;
@@ -111,8 +110,6 @@ public class testPlatform extends LinearOpMode {
                             String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                     telemetry.update();
                     sleep(500);
-
-
                     while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
                         telemetry.addData("GO BACK", "");
                         telemetry.addData("Distance (INCHES)",
@@ -128,7 +125,6 @@ public class testPlatform extends LinearOpMode {
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
-
                     }
                     sleep(250);
                     movement++;
@@ -136,40 +132,42 @@ public class testPlatform extends LinearOpMode {
                 case 4: //center robot using Gyro
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                     gravity = imu.getGravity();
-                    heading = -angles.firstAngle;
                     telemetry.addData("CASE gyro: ", movement);
                     telemetry.addData("MOVING","");
-                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (heading <= 89) {  //robot did NOT rotate enough coming off platform
-                        heading = -angles.firstAngle;
-                        while (heading <= 89) {
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
                             myMechDrive.powerDrive(6, .16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                            heading = -angles.firstAngle;
                         }
                     }
-                    else if (heading >= 91) {    //robot rotated TOO MUCH coming off platform
-                        heading = -angles.firstAngle;
-                        while (heading >= 91) {
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
                             myMechDrive.powerDrive(5,.16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                            heading = -angles.firstAngle;
                         }
                     }
                     myMechDrive.stopMotors();
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    gravity = imu.getGravity();
-                    heading = -angles.firstAngle;
                     telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
+                    /*
+                    idea was to reset heading to 0.  eh. didn't work as planned.
+                    telemetry.addData("RESETING Gyro","");
+                    telemetry.update();
+                    imu.initialize(parameters);
+                    sleep(1000);
+                    heading = -angles.firstAngle;
+                    sleep(1000);
+                    telemetry.addData("Gyro Reset before running forward","");
                     telemetry.addData("Gyro Heading: ", heading);
                     telemetry.update();
                     sleep(1000);
-                    angles.firstAngle = 0;  //reset heading to 0
-                    heading = -angles.firstAngle;
+                    */
                     movement++;
                     break;
                 case 5: // run to center of cryptobox
@@ -183,46 +181,36 @@ public class testPlatform extends LinearOpMode {
                     telemetry.update();
                     myMechDrive.encoderDriveMat(21.5, 6, 0.6);
                     sleep(200);
-                    heading = -angles.firstAngle;
-                    telemetry.addData("HEADING: ", heading);
+                    telemetry.addData("HEADING: ", angles.firstAngle);
                     sleep(1000);
                     movement++;
                     break;
                 case 7: //center robot with gyro
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                     gravity = imu.getGravity();
-                    heading = -angles.firstAngle;
                     telemetry.addData("CASE gyro: ", movement);
                     telemetry.addData("MOVING","");
-                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (heading <= 89) {  //robot did NOT rotate enough coming off platform
-                        heading = -angles.firstAngle;
-                        while (heading <= 89) {
+                    if (angles.firstAngle >= -179 && angles.firstAngle < 0) {           //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= 179 && angles.firstAngle < 0) {     // && since goes -180 --> + 180
                             myMechDrive.powerDrive(6, .16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                            heading = -angles.firstAngle;
                         }
                     }
-                    else if (heading >= 91) {    //robot rotated TOO MUCH coming off platform
-                        heading = -angles.firstAngle;
-                        while (heading >= 91) {
+                    else if (angles.firstAngle <= 179 && angles.firstAngle > 0) {       //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= 179 && angles.firstAngle > 0) {     // && sinnce goes -180 --> +180
                             myMechDrive.powerDrive(5,.16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                            gravity = imu.getGravity();
-                            heading = -angles.firstAngle;
                         }
                     }
                     myMechDrive.stopMotors();
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    gravity = imu.getGravity();
-                    heading = -angles.firstAngle;
                     telemetry.addData("DONE MOVING","");
-                    telemetry.addData("Gyro Heading: ", heading);
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
-                    sleep(1000);
+                    sleep(10000);
                     movement++;
                     break;
                 case 8:

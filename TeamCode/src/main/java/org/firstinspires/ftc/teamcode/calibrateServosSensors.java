@@ -25,7 +25,7 @@ public class calibrateServosSensors extends OpMode {
     glyphArms myGlyphArms;
     glyphLift myGlyphLift;
     colorSensorArm myColorSensorArm;
-    revColorDistanceSensor myRevColorDistanceSensor;
+    //revColorDistanceSensor myRevColorDistanceSensor;
 
 
     double leftStickVal2;
@@ -35,7 +35,7 @@ public class calibrateServosSensors extends OpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+        //myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
     }
 
     @Override
@@ -82,6 +82,8 @@ public class calibrateServosSensors extends OpMode {
         leftStickVal2 = Range.clip(leftStickVal2, -1, 1);
         myGlyphLift.setPower(leftStickVal2);
 
+
+        /*
         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) >= 4) {
             myColorSensorArm.colorRotateCounterClockwiseRed1Blue2();
         } else if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) < 4) {
@@ -90,8 +92,8 @@ public class calibrateServosSensors extends OpMode {
             myColorSensorArm.colorRotateResting();
         }
 
-        telemetry.addData("Red  ", myColorSensorArm.colorSensor.red());
-        telemetry.addData("Blue ", myColorSensorArm.colorSensor.blue());
+        //telemetry.addData("Red  ", myColorSensorArm.colorSensor.red());
+        //telemetry.addData("Blue ", myColorSensorArm.colorSensor.blue());
         telemetry.addData("Distance (mm)",
                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.MM)));
         telemetry.addData("Distance (cm)",
@@ -99,7 +101,9 @@ public class calibrateServosSensors extends OpMode {
         telemetry.addData("Distance (meter)",
                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.METER)));
         telemetry.addData("Distance (in)",
-                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
+                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH))); */
+        telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
+        telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
         telemetry.addData("Color Servo pos:", myColorSensorArm.colorSensorArm.getPosition());
         telemetry.addData("Left glyph arm pos: ", myGlyphArms.leftGlyphArm.getPosition());
         telemetry.addData("Right glyph arm pos: ", myGlyphArms.rightGlyphArm.getPosition());

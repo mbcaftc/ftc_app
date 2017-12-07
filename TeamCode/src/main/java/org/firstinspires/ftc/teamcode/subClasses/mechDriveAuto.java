@@ -468,16 +468,16 @@ public class mechDriveAuto {
             armSensor.colorRotateCounterClockwiseRed2Blue1();
             sleep(100);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwiseRed2Blue1();
             sleep(100);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
         else {
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
     }
 
@@ -486,22 +486,22 @@ public class mechDriveAuto {
             armSensor.colorRotateCounterClockwiseRed1Blue2();
             sleep(100);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwiseRed1Blue2();
             sleep(100);
             armSensor.colorRotateResting();
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
         else {
-            armSensor.colorSensorArmUp();
+            armSensor.colorSensorArmUpSlow();
         }
     }
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,3,0.75); //strafe left to column
+        encoderDriveMat(9,3,0.80); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(100);
@@ -533,7 +533,7 @@ public class mechDriveAuto {
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,4,0.75); //strafe right to column
+        encoderDriveMat(9,4,0.80); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
         sleep(100);

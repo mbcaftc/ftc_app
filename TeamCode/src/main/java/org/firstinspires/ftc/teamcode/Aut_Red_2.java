@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -8,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -45,6 +48,13 @@ public class Aut_Red_2 extends LinearOpMode {
     revColorDistanceSensor myRevColorDistanceSensor;
 
     boolean distanceSensorInRange;
+
+    //info for gyro
+    BNO055IMU imu;
+    // State used for updating telemetry
+    Orientation angles;
+    Acceleration gravity;
+    //float heading;
 
 
     // 1 == LEFT
@@ -85,6 +95,21 @@ public class Aut_Red_2 extends LinearOpMode {
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+
+        BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
+        parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parametersimu.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parametersimu.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parametersimu.loggingEnabled = true;
+        parametersimu.loggingTag = "IMU";
+        parametersimu.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+// Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+// on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+// and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parametersimu);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         waitForStart();
 
@@ -156,7 +181,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
                     telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
                     telemetry.update();
-                    sleep(500);
+                    sleep(1000);
                     //robot will move dependeing on the color sensed in myColorArm.colorJewel()
                     //colorJewel passes an int to redAllianceJewel so knows which direction to move
                     //1 = red jewel on left and strafe right
@@ -177,18 +202,70 @@ public class Aut_Red_2 extends LinearOpMode {
                     sleep(200);
                     movement++;
                     break;
-                case 5: //go forward a little - strafing with back against platform may get it caught
-                    //myMechDrive.encoderDriveMat(2,1,.8);
-                    sleep(200);
-                    movement ++;
+                case 5: //use gyro to orient robot
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(250);
+                    movement++;
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
                     myMechDrive.encoderDriveMat(15,3,.75);
-
-                    myGlyphLift.lowerGlyphLiftAutMode();
                     movement ++;
                     break;
-                case 7: //GO FORWARD TO CRYPTOBOX
+                case 7: // gyro - am I straight?
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(250);
+                    movement++;
+                    break;
+                case 8: //GO FORWARD TO CRYPTOBOX
+                    myGlyphLift.lowerGlyphLiftAutMode();
+                    telemetry.addData("CASE Vuforia move: ", movement);
+                    telemetry.update();
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
@@ -206,7 +283,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     }
                     movement ++;
                     break;
-                case 8:
+                case 9:
                     requestOpModeStop();
                     break;
             }
