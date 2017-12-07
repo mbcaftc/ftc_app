@@ -76,21 +76,26 @@ public class testRevGyroIMU extends LinearOpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        composeTelemetry();
+        //composeTelemetry();
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        gravity = imu.getGravity();
 
         waitForStart();
 // Set up our telemetry dashboard
         while (opModeIsActive()) {
-            /*heading = -angles.firstAngle;
-            if (heading < 1 || heading > -1) {
-                telemetry.addData("heading: ", "not moved");
+            //heading = -angles.firstAngle;
+            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            gravity = imu.getGravity();
+            if (angles.firstAngle < 1 || angles.firstAngle > -1) {
+                telemetry.addData("not moved: ", angles.firstAngle);
             }
-            if (heading >= 1) {
-                telemetry.addData("heading: ", "moved clockwise / right");
+            if (angles.firstAngle >= 1) {
+                telemetry.addData("heading right: ", angles.firstAngle);
             }
-            if (heading <= 1) {
-                telemetry.addData("heading: ", "moved counterclockwise / left");
-            }*/
+            if (angles.firstAngle <= -1) {
+                telemetry.addData("heading left: ", angles.firstAngle);
+            }
+            telemetry.addData("out of loop heading:", angles.firstAngle);
             telemetry.update();
         }
     }

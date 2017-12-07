@@ -10,6 +10,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
@@ -38,7 +41,6 @@ public class testPlatform extends LinearOpMode {
     // State used for updating telemetry
     Orientation angles;
     Acceleration gravity;
-
     float heading;
 
 
@@ -59,6 +61,8 @@ public class testPlatform extends LinearOpMode {
 // and named "imu".
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        gravity = imu.getGravity();
 
         waitForStart();
 
@@ -97,20 +101,34 @@ public class testPlatform extends LinearOpMode {
                     movement++;
                     break;
                 case 3: //calibrate with gyro
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
                     telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
+                    sleep(1000);
                     if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle >= -89) {
-                            myMechDrive.powerDrive(6, .5);
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
                         }
                     }
                     else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle <= -91) {
-                            myMechDrive.powerDrive(5,.5);
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
                         }
                     }
                     myMechDrive.stopMotors();
-                    sleep(250);
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
                     movement++;
                     break;
                 case 4:

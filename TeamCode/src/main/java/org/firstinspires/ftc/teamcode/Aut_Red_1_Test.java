@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -33,7 +35,7 @@ import java.util.Locale;
  */
 
 @Autonomous (name = "Red - 1 - TEST", group = "TESTING")
-@Disabled
+
 public class Aut_Red_1_Test extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement
@@ -44,10 +46,14 @@ public class Aut_Red_1_Test extends LinearOpMode {
     glyphLift myGlyphLift;
     boardArm myBoardArm;
     revColorDistanceSensor myRevColorDistanceSensor;
-
     boolean distanceSensorInRange;
 
-
+    //info for gyro
+    BNO055IMU imu;
+    // State used for updating telemetry
+    Orientation angles;
+    Acceleration gravity;
+    float heading;
 
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
@@ -80,6 +86,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
         myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
+        myBoardArm.boardArmUp();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -90,6 +97,21 @@ public class Aut_Red_1_Test extends LinearOpMode {
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
+        BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
+        parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parametersimu.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parametersimu.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parametersimu.loggingEnabled = true;
+        parametersimu.loggingTag = "IMU";
+        parametersimu.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+// Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+// on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+// and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parametersimu);
+
+
         waitForStart();
 
         relicTrackables.activate();
@@ -98,7 +120,10 @@ public class Aut_Red_1_Test extends LinearOpMode {
 
             switch (movement) {
                 case 0:
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
                     telemetry.addData("CASE: ", movement);
+                    telemetry.addData("Heading: ", angles.firstAngle);
                     telemetry.update();
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
@@ -107,7 +132,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     break;
                 case 1: // reading Vuforia code
                     telemetry.addData("CASE: ", movement);
-                    sleep(2000);
+                    sleep(1500);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
@@ -154,7 +179,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-                    sleep(250);
+
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -173,13 +198,13 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
-                    sleep(250);
-                        //prevents robot from going back at all if distance from platform is <=4
+                    myMechDrive.encoderDrivePlatform(21,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    sleep(200);
+                    //prevents robot from going back at all if distance from platform is <=4
                     if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                         distanceSensorInRange = true;
                         telemetry.addData("came off ramp ", "in range");
@@ -187,9 +212,9 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     telemetry.addData("Distance (INCHES)",
                             String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                     telemetry.update();
-                 //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
-                 //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
-                 //this helps make sure same distance from box.
+                    //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
+                    //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
+                    //this helps make sure same distance from box.
                     while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
                         telemetry.addData("GO BACK", "");
                         telemetry.addData("Distance (INCHES)",
@@ -205,24 +230,60 @@ public class Aut_Red_1_Test extends LinearOpMode {
                         telemetry.update();
                         //sleep(100);
                     }
-                    sleep(250);
+                    sleep(200);
                     movement++;
                     break;
-                case 5: // drive forward after sensor detects correct distance from balance stone
+                case 5: //orient self with gyro
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                        }
+                    }
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.16);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                            gravity = imu.getGravity();
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(1000);
+                    movement++;
+                    break;
+                case 6: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
                     myMechDrive.encoderDriveMat(13.5,1,.6);
-                    sleep(250);
+                    sleep(200);
                     movement ++;
                     break;
-                case 6: //Rotate right to orient with cryptobox
+                case 7: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(21, 6, 0.6);
-                    sleep(250);
+                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);
                     myGlyphLift.lowerGlyphLiftAutMode();
+                    sleep(200);
                     movement++;
                     break;
-                case 7: //GO FORWARD TO CRYPTO BOX
+                case 8: //orient again with gyro
+
+                    sleep(200);
+                    movement++;
+                    break;
+                case 9: //GO FORWARD TO CRYPTO BOX
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     //from case 1 where we get the vuforia code
@@ -240,10 +301,9 @@ public class Aut_Red_1_Test extends LinearOpMode {
                             myMechDrive.vuforiaRight(myGlyphArms);
                             break;
                     }
-                    sleep(250);
                     movement++;
                     break;
-                case 8:
+                case 10:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     requestOpModeStop();
