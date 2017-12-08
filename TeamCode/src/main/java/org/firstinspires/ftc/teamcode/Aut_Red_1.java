@@ -258,7 +258,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     break;
                 case 6: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(13.5,1,.6);
+                    myMechDrive.encoderDriveMat(13.5,1,.9);
                     sleep(200);
                     movement ++;
                     break;

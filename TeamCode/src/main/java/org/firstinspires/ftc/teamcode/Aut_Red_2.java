@@ -229,7 +229,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(15,3,.75);
+                    myMechDrive.encoderDriveMat(15,3,.8);
                     sleep(200);
                     movement ++;
                     break;
@@ -271,13 +271,13 @@ public class Aut_Red_2 extends LinearOpMode {
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeft(myGlyphArms);
+                            myMechDrive.vuforiaLeft2(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter(myGlyphArms);
+                            myMechDrive.vuforiaCenter2(myGlyphArms);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRight(myGlyphArms);
+                            myMechDrive.vuforiaRight2(myGlyphArms);
                             break;
                     }
                     movement ++;

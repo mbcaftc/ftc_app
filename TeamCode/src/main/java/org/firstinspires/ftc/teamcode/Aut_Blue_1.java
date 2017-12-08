@@ -260,7 +260,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     break;
                 case 6: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(13.5,1,.6);
+                    myMechDrive.encoderDriveMat(14,1,.9);
                     sleep(200);
                     movement ++;
                     break;
@@ -268,8 +268,6 @@ public class Aut_Blue_1 extends LinearOpMode {
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDriveMat(21, 5, 0.6);
-
-                    myGlyphLift.lowerGlyphLiftAutMode();
                     movement++;
                     break;
                 case 8: //orient again with gyro
@@ -282,13 +280,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle <= 179 && angles.firstAngle > 0) {           //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 179 && angles.firstAngle > 0) {     // && since goes -180 --> + 180
-                            myMechDrive.powerDrive(6, .16);
+                            myMechDrive.powerDrive(5, .16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= -179 && angles.firstAngle < 0) {       //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= -179 && angles.firstAngle < 0) {     // && sinnce goes -180 --> +180
-                            myMechDrive.powerDrive(5,.16);
+                            myMechDrive.powerDrive(6,.16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -301,6 +299,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     movement++;
                     break;
                 case 9: //GO FORWARD TO CRYPTO BOX
+                    myGlyphLift.lowerGlyphLiftAutMode();
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     //from case 1 where we get the vuforia code

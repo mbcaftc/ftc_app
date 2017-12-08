@@ -195,34 +195,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement ++;
                     break;
                 case 4: //FORWARD Off Platform
-                    myMechDrive.encoderDrivePlatform(22,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
-                    sleep(200);
-                    //prevents robot from going back at all if distance from platform is <=4
-                    if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
-                        distanceSensorInRange = true;
-                        telemetry.addData("came off ramp ", "in range");
-                    }
-                    telemetry.addData("Distance (INCHES)",
-                            String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                    telemetry.update();
-                    //robot will check to go backwards towards platform when distance > 4 and distanceSensorInRange is false.
-                    //boolean is because if platform is to far away, returns "NaN" which throws out of while loop.
-                    //this helps make sure same distance from box.
-                    while (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) > 4 || !distanceSensorInRange) {
-                        telemetry.addData("GO BACK", "");
-                        telemetry.addData("Distance (INCHES)",
-                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                        telemetry.update();
-                        myMechDrive.encoderDriveMat(1, 2, .6);
-                        if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
-                            distanceSensorInRange = true;
-                        }
-                        telemetry.addData("WENT BACK", "");
-                        telemetry.addData("Distance (INCHES)",
-                                String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
-                        telemetry.update();
-                        //sleep(100);
-                    }
+                    myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(200);
                     movement++;
                     break;
@@ -255,7 +228,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 6: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(16,4,.75);
+                    myMechDrive.encoderDriveMat(16,4,.8);
                     sleep(200);
                     movement ++;
                     break;
@@ -295,13 +268,13 @@ public class Aut_Blue_2 extends LinearOpMode {
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeft(myGlyphArms);
+                            myMechDrive.vuforiaLeft2(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter(myGlyphArms);
+                            myMechDrive.vuforiaCenter2(myGlyphArms);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRight(myGlyphArms);
+                            myMechDrive.vuforiaRight2(myGlyphArms);
                             break;
                     }
                     movement ++;

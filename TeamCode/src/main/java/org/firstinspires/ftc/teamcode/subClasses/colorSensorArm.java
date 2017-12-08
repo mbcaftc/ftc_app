@@ -103,12 +103,12 @@ public class colorSensorArm {
     }
 
     public void colorRotateClockwiseRed1Blue2 () {
-        colorSensorArmRotate.setPosition(0.6);
+        colorSensorArmRotate.setPosition(0.7);
     }
     public void colorRotateClockwiseRed2Blue1 () { colorSensorArmRotate.setPosition(1); }
 
     public void colorRotateCounterClockwiseRed2Blue1 () {
-        colorSensorArmRotate.setPosition(0.3);
+        colorSensorArmRotate.setPosition(0.2);
     }
     public void colorRotateCounterClockwiseRed1Blue2 () {
         colorSensorArmRotate.setPosition(0);
@@ -129,22 +129,22 @@ public class colorSensorArm {
             }
             else {
                 if (colorLoop == 1) {
-                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
-                    sleep(1000);
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .0075);
+                    sleep(100);
                     colorJewel();
                 }
                 else if (colorLoop == 2) {
                     colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
-                    sleep(1000);
+                    sleep(100);
                     colorJewel();
                 }
                 else if (colorLoop == 3) {
                     colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
-                    sleep(1000);
+                    sleep(100);
                     colorJewel();
                 }
                 colorSensorArm.setPosition(upPositionPause1);
-                sleep(10000);
+                //sleep(1500);
                 return 3;
             }
         } else if (colorSensor.blue() >= blueThreshold) {
@@ -156,42 +156,42 @@ public class colorSensorArm {
             }
             else {
                 if (colorLoop == 1) {
-                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
-                    sleep(1000);
+                    colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .0075);
+                    sleep(100);
                     colorJewel();
                 }
                 else if (colorLoop == 2) {
                     colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
-                    sleep(1000);
+                    sleep(100);
                     colorJewel();
                 }
                 else if (colorLoop == 3) {
                     colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
-                    sleep(1000);
+                    sleep(100);
                     colorJewel();
                 }
                 colorSensorArm.setPosition(upPositionPause1);
-                sleep(10000);
+                //sleep(1500);
                 return 3;
             }
         } else {
             if (colorLoop == 1) {
-                colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .005);
-                sleep(1000);
+                colorSensorArmRotate.setPosition(colorSensorArmRestingPosition + .0075);
+                sleep(100);
                 colorJewel();
             }
             else if (colorLoop == 2) {
                 colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .005);
-                sleep(1000);
+                sleep(100);
                 colorJewel();
             }
             else if (colorLoop == 3) {
                 colorSensorArmRotate.setPosition(colorSensorArmRestingPosition - .01);
-                sleep(1000);
+                sleep(100);
                 colorJewel();
             }
             colorSensorArm.setPosition(upPositionPause1);
-            sleep(10000);
+            //sleep(1500);
             return 3;
         }
     }
