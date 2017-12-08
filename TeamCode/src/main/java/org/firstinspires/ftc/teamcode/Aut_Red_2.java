@@ -149,7 +149,6 @@ public class Aut_Red_2 extends LinearOpMode {
                     else {
                         telemetry.addData("VuMark", "not visible");
                     }
-
                     switch (vuMark) {
                         case LEFT:
                             cryptoboxColumn = 1;
@@ -175,7 +174,6 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
                     myColorSensorArm.colorSensorArmDownSlow();
-
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
                     telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
@@ -232,6 +230,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
                     myMechDrive.encoderDriveMat(15,3,.75);
+                    sleep(200);
                     movement ++;
                     break;
                 case 7: // gyro - am I straight?
@@ -289,7 +288,6 @@ public class Aut_Red_2 extends LinearOpMode {
             }
             telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
             telemetry.update();
-
         }
     }
 }

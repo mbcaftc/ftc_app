@@ -152,7 +152,6 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     else {
                         telemetry.addData("VuMark", "not visible");
                     }
-
                     switch (vuMark) {
                         case LEFT:
                             cryptoboxColumn = 1;
@@ -327,9 +326,6 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     requestOpModeStop();
                     break;
             }
-
-            telemetry.addData("Servo", " Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
-            telemetry.update();
         }
     }
 }
