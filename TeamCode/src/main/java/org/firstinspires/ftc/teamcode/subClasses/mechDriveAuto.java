@@ -564,6 +564,7 @@ public class mechDriveAuto {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         switch (direction) {
             case 1: // robot will move forward
                 frontLeftMotor.setPower(power);

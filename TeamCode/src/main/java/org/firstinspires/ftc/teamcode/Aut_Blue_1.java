@@ -217,7 +217,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
-                        myMechDrive.encoderDriveMat(1, 2, .6);
+                        myMechDrive.powerDrive(2, 0.25);
                         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                             distanceSensorInRange = true;
                         }
