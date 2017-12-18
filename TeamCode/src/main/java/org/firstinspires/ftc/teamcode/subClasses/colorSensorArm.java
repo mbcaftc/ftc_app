@@ -102,15 +102,11 @@ public class colorSensorArm {
         colorSensorArmRotate.setPosition(colorSensorArmRestingPosition);
     }
 
-    public void colorRotateClockwiseRed1Blue2 () {
-        colorSensorArmRotate.setPosition(0.7);
+    public void colorRotateClockwise () {
+        colorSensorArmRotate.setPosition(0.9);
     }
-    public void colorRotateClockwiseRed2Blue1 () { colorSensorArmRotate.setPosition(1); }
 
-    public void colorRotateCounterClockwiseRed2Blue1 () {
-        colorSensorArmRotate.setPosition(0.2);
-    }
-    public void colorRotateCounterClockwiseRed1Blue2 () {
+    public void colorRotateCounterClockwise () {
         colorSensorArmRotate.setPosition(0);
     }
 

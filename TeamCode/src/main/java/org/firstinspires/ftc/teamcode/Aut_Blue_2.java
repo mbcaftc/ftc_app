@@ -184,7 +184,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.blue2Jewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.blueJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
                 case 3: //rotate left

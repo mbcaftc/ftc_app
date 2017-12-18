@@ -423,17 +423,17 @@ public class mechDriveAuto {
         }
     }
 
-    public void red1Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
+    public void redJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
 
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
-            armSensor.colorRotateClockwiseRed1Blue2();
+            armSensor.colorRotateClockwise();
             sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
-            armSensor.colorRotateCounterClockwiseRed1Blue2();
+            armSensor.colorRotateCounterClockwise();
             sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
@@ -443,53 +443,15 @@ public class mechDriveAuto {
         }
     }
 
-    public void red2Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
-
-        //sleeps between movements to prevent robot from stuttering around
+    public void blueJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
-            armSensor.colorRotateClockwiseRed2Blue1();
-            sleep(100);
-            armSensor.colorRotateResting();
-            armSensor.colorSensorArmUpSlow();
-        }
-        else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
-            armSensor.colorRotateCounterClockwiseRed2Blue1();
-            sleep(100);
-            armSensor.colorRotateResting();
-            armSensor.colorSensorArmUpSlow();
-        }
-        else {
-            armSensor.colorSensorArmUpSlow();
-        }
-    }
-
-    public void blue1Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
-        if (jewelColor == 1) {
-            armSensor.colorRotateCounterClockwiseRed2Blue1();
+            armSensor.colorRotateCounterClockwise();
             sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
-            armSensor.colorRotateClockwiseRed2Blue1();
-            sleep(100);
-            armSensor.colorRotateResting();
-            armSensor.colorSensorArmUpSlow();
-        }
-        else {
-            armSensor.colorSensorArmUpSlow();
-        }
-    }
-
-    public void blue2Jewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
-        if (jewelColor == 1) {
-            armSensor.colorRotateCounterClockwiseRed1Blue2();
-            sleep(100);
-            armSensor.colorRotateResting();
-            armSensor.colorSensorArmUpSlow();
-        }
-        else if (jewelColor == 2) {
-            armSensor.colorRotateClockwiseRed1Blue2();
+            armSensor.colorRotateClockwise();
             sleep(100);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
