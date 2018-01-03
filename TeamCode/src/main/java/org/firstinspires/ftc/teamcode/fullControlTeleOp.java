@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subClasses.boardArm;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.glyphLift;
+import org.firstinspires.ftc.teamcode.subClasses.relicArm;
 
 /**
  * Created by blake_shafer on 8/23/17.
@@ -44,12 +45,18 @@ public class fullControlTeleOp extends OpMode {
     int minLiftPosition = 0;
     int maxLiftPosition = 9200;
 
+    double relicExtensionPower;
+    double relicGrabberOpenPosition = 1.0;
+    double relicGrabberClosePosition = 0.0;
+    boolean relicGrabberOpen;
+
     boolean initServos = false;
 
     glyphArms myGlyphArms;
     colorSensorArm myColorSensorArm;
     glyphLift myGlyphLift;
     boardArm myBoardArm;
+    relicArm myRelicArm;
 
     @Override
     public void init() {
@@ -58,6 +65,7 @@ public class fullControlTeleOp extends OpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
@@ -72,15 +80,7 @@ public class fullControlTeleOp extends OpMode {
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-       // frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       // frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //rearLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //rearRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        relicGrabberOpen = true;
     }
     @Override
     public void loop() {
@@ -156,12 +156,43 @@ public class fullControlTeleOp extends OpMode {
 
         // Board Arm
 
-        if (gamepad1.a || gamepad2.dpad_down) {
+        if (gamepad1.a) {
             myBoardArm.boardArmDown();
         }
 
-        else if (gamepad1.y || gamepad2.dpad_up) {
+        else if (gamepad1.y) {
             myBoardArm.boardArmUp();
+        }
+
+        // Relic Arm
+
+        if (gamepad2.dpad_up) {
+            myRelicArm.setLiftPower(1);
+        }
+
+        else if (gamepad2.dpad_down) {
+            myRelicArm.setLiftPower(0);
+        }
+
+        relicExtensionPower = -gamepad2.right_stick_y;
+        relicExtensionPower = Range.clip(liftPower, -1, 1);
+
+        myRelicArm.setExtensionPower(relicExtensionPower);
+
+        if (gamepad2.left_trigger >= 0.2) {
+            relicGrabberOpen = true;
+        }
+
+        else if (gamepad2.right_trigger >= 0.2) {
+            relicGrabberOpen = false;
+        }
+
+        if (relicGrabberOpen) {
+            myRelicArm.setGrabberPosition(relicGrabberOpenPosition);
+        }
+
+        else {
+            myRelicArm.setGrabberPosition(relicGrabberClosePosition);
         }
 
         // Telemetry

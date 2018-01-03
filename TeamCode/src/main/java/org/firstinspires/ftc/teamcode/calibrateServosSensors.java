@@ -71,11 +71,11 @@ public class calibrateServosSensors extends OpMode {
         }
 
         if(gamepad2.dpad_left) {
-            myColorSensorArm.colorRotateClockwiseRed1Blue2();
+            myColorSensorArm.colorRotateClockwise();
         }
 
         if (gamepad2.dpad_right) {
-            myColorSensorArm.colorRotateCounterClockwiseRed1Blue2();
+            myColorSensorArm.colorRotateCounterClockwise();
         }
 
         leftStickVal2 = -gamepad2.left_stick_y;
