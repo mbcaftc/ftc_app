@@ -171,6 +171,10 @@ public class fullControlTeleOp extends OpMode {
         }
 
         else if (gamepad2.dpad_down) {
+            myRelicArm.setLiftPower(-1);
+        }
+
+        else {
             myRelicArm.setLiftPower(0);
         }
 
@@ -197,17 +201,20 @@ public class fullControlTeleOp extends OpMode {
 
         // Telemetry
 
-        telemetry.addData("val", "L stck: " + leftStickVal);
-        telemetry.addData("val", "R stck: " + rightStickVal);
-        telemetry.addData("val", "L trgr: " + leftTriggerVal);
-        telemetry.addData("val", "R trgr: " + rightTriggerVal);
+        //telemetry.addData("val", "L stck: " + leftStickVal);
+        //telemetry.addData("val", "R stck: " + rightStickVal);
+        //telemetry.addData("val", "L trgr: " + leftTriggerVal);
+        //telemetry.addData("val", "R trgr: " + rightTriggerVal);
 
-        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
-        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
-        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
-        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+        //telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+        //telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+        //telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+        //telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
 
         telemetry.addData("lift", "position: " +  position);
         telemetry.addData("lift", "pwr: " + liftPower);
+
+        telemetry.addData("Arm Power: ", relicExtensionPower);
+        telemetry.update();
     }
 }
