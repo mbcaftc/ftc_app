@@ -179,7 +179,7 @@ public class fullControlTeleOp extends OpMode {
         }
 
         relicExtensionPower = -gamepad2.right_stick_y;
-        relicExtensionPower = Range.clip(liftPower, -1, 1);
+        relicExtensionPower = Range.clip(relicExtensionPower, -1, 1);
 
         myRelicArm.setExtensionPower(relicExtensionPower);
 
