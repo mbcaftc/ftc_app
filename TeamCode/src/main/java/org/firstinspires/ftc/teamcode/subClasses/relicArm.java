@@ -37,7 +37,7 @@ public class relicArm {
     }
 
     public void setExtensionPower(double extensionPower) {
-        relicArmLift.setPower(extensionPower);
+        relicArmExtension.setPower(extensionPower);
     }
 
     public void setGrabberPosition(double position) {
