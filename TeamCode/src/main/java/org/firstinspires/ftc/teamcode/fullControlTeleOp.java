@@ -46,8 +46,8 @@ public class fullControlTeleOp extends OpMode {
     int maxLiftPosition = 9200;
 
     double relicExtensionPower;
-    double relicGrabberOpenPosition = 1.0;
-    double relicGrabberClosePosition = 0.0;
+    double relicGrabberOpenPosition = 0.0;
+    double relicGrabberClosePosition = 0.92;
     boolean relicGrabberOpen;
 
     boolean initServos = false;
