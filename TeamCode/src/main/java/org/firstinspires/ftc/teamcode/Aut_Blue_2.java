@@ -27,6 +27,7 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
+import org.firstinspires.ftc.teamcode.subClasses.relicArm;
 
 import java.util.Locale;
 
@@ -46,6 +47,7 @@ public class Aut_Blue_2 extends LinearOpMode {
     glyphLift myGlyphLift;
     boardArm myBoardArm;
     revColorDistanceSensor myRevColorDistanceSensor;
+    relicArm myRelicArm;
 
     boolean distanceSensorInRange;
 
@@ -79,12 +81,10 @@ public class Aut_Blue_2 extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-
+        myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
         myColorSensorArm.colorSensorArmUpSlow();
-        myColorSensorArm.colorRotateResting();
-        myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
-        myBoardArm.boardArmUp();
+        myColorSensorArm.colorRotateReading();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -120,6 +120,10 @@ public class Aut_Blue_2 extends LinearOpMode {
                 case 0:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
+                    myRelicArm.relicGrabberOpen();
+                    myRelicArm.setLiftPower(-1);
+                    sleep(1000);
+                    myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
                     myGlyphLift.raiseGlyphLiftAutMode();

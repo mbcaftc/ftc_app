@@ -46,9 +46,7 @@ public class fullControlTeleOp extends OpMode {
     int maxLiftPosition = 9200;
 
     double relicExtensionPower;
-    double relicGrabberOpenPosition = 0.0;
-    double relicGrabberClosePosition = 0.92;
-    boolean relicGrabberOpen;
+    double relicGrabberPosition;
 
     boolean initServos = false;
 
@@ -79,8 +77,6 @@ public class fullControlTeleOp extends OpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        relicGrabberOpen = true;
     }
     @Override
     public void loop() {
@@ -90,6 +86,7 @@ public class fullControlTeleOp extends OpMode {
             myColorSensorArm.colorSensorArmUp();
             myColorSensorArm.colorRotateResting();
             myBoardArm.boardArmUp();
+            myRelicArm.relicGrabberOpen();
             initServos = true;
         }
 
@@ -184,20 +181,14 @@ public class fullControlTeleOp extends OpMode {
         myRelicArm.setExtensionPower(relicExtensionPower);
 
         if (gamepad2.left_trigger >= 0.2) {
-            relicGrabberOpen = true;
+            myRelicArm.relicGrabberOpen();
         }
 
         else if (gamepad2.right_trigger >= 0.2) {
-            relicGrabberOpen = false;
+            myRelicArm.relicGrabberClose();
         }
 
-        if (relicGrabberOpen) {
-            myRelicArm.setGrabberPosition(relicGrabberOpenPosition);
-        }
-
-        else {
-            myRelicArm.setGrabberPosition(relicGrabberClosePosition);
-        }
+        relicGrabberPosition = myRelicArm.getRelicGrabberPosition();
 
         // Telemetry
 
@@ -211,10 +202,8 @@ public class fullControlTeleOp extends OpMode {
         //telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
         //telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
 
-        telemetry.addData("lift", "position: " +  position);
-        telemetry.addData("lift", "pwr: " + liftPower);
-
-        telemetry.addData("Arm Power: ", relicExtensionPower);
+        telemetry.addData("Relic Arm Power: ", relicExtensionPower);
+        telemetry.addData("Relic Grabber Position: ", relicGrabberPosition);
         telemetry.update();
     }
 }

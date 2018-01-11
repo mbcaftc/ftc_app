@@ -16,6 +16,10 @@ public class relicArm {
     public DcMotor relicArmExtension;
     public Servo relicGrabber;
 
+    double openPosition = 0.0;
+    double closePosition = 0.92;
+    double grabberPosition;
+
     public relicArm(DcMotor rAL, DcMotor rAE, Servo rG) {
         relicArmLift = rAL;
         relicArmExtension = rAE;
@@ -40,7 +44,16 @@ public class relicArm {
         relicArmExtension.setPower(extensionPower);
     }
 
-    public void setGrabberPosition(double position) {
-        relicGrabber.setPosition(position);
+    public void relicGrabberOpen() {
+        relicGrabber.setPosition(openPosition);
+    }
+
+    public void relicGrabberClose() {
+        relicGrabber.setPosition(closePosition);
+    }
+
+    public double getRelicGrabberPosition() {
+        grabberPosition = relicGrabber.getPosition();
+        return grabberPosition;
     }
 }

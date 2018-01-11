@@ -282,7 +282,7 @@ public class mechDriveAuto {
                 rearRightMotor.setTargetPosition((int) -counts);
                 break;
         }
-        while (frontLeftMotor.isBusy() || frontRightMotor.isBusy() || rearLeftMotor.isBusy() || rearRightMotor.isBusy()) {
+        while (frontLeftMotor.isBusy() && frontRightMotor.isBusy() && rearLeftMotor.isBusy() && rearRightMotor.isBusy()) {
             frontLeftMotor.setPower(power);
             frontRightMotor.setPower(power);
             rearLeftMotor.setPower(power);

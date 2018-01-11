@@ -27,6 +27,7 @@ import org.firstinspires.ftc.teamcode.subClasses.mechDriveAuto;
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
 import org.firstinspires.ftc.teamcode.subClasses.glyphArms;
 import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
+import org.firstinspires.ftc.teamcode.subClasses.relicArm;
 
 import java.util.Locale;
 
@@ -46,6 +47,8 @@ public class Aut_Red_1 extends LinearOpMode {
     glyphLift myGlyphLift;
     boardArm myBoardArm;
     revColorDistanceSensor myRevColorDistanceSensor;
+    relicArm myRelicArm;
+
     boolean distanceSensorInRange;
 
     //info for gyro
@@ -81,12 +84,10 @@ public class Aut_Red_1 extends LinearOpMode {
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-
+        myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
         myColorSensorArm.colorSensorArmUpSlow();
-        myColorSensorArm.colorRotateResting();
-        myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
-        myBoardArm.boardArmUp();
+        myColorSensorArm.colorRotateReading();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -122,6 +123,10 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 0:
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
+                    myRelicArm.relicGrabberOpen();
+                    myRelicArm.setLiftPower(-1);
+                    sleep(1000);
+                    myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
                     myGlyphLift.raiseGlyphLiftAutMode();
@@ -215,7 +220,7 @@ public class Aut_Red_1 extends LinearOpMode {
                         telemetry.addData("Distance (INCHES)",
                                 String.format(Locale.US, "%.02f", myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH)));
                         telemetry.update();
-                        myMechDrive.powerDrive(2, 0.25);
+                        myMechDrive.powerDrive(2, 0.2);
                         if (myRevColorDistanceSensor.revDistanceSensor.getDistance(DistanceUnit.INCH) <= 4) {
                             distanceSensorInRange = true;
                         }
@@ -238,13 +243,13 @@ public class Aut_Red_1 extends LinearOpMode {
                  //sleep(1000);
                     if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle >= -89) {
-                            myMechDrive.powerDrive(6, .16);
+                            myMechDrive.powerDrive(6, .20);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle <= -91) {
-                            myMechDrive.powerDrive(5,.16);
+                            myMechDrive.powerDrive(5,.20);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -279,13 +284,13 @@ public class Aut_Red_1 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle >= -179 && angles.firstAngle < 0) {           //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle >= 179 && angles.firstAngle < 0) {     // && since goes -180 --> + 180
-                            myMechDrive.powerDrive(6, .16);
+                            myMechDrive.powerDrive(6, .20);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle <= 179 && angles.firstAngle > 0) {       //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle <= 179 && angles.firstAngle > 0) {     // && sinnce goes -180 --> +180
-                            myMechDrive.powerDrive(5,.16);
+                            myMechDrive.powerDrive(5,.20);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
