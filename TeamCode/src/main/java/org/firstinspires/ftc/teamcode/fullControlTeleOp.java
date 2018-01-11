@@ -122,8 +122,6 @@ public class fullControlTeleOp extends OpMode {
         // Glyph Arms
 
         if (gamepad2.left_bumper) {
-            //myGlyphArms.openGlyphArms();
-            //changed to make sure panels don't hit robot frame.
             myGlyphArms.openGlyphArms();
         }
         if (gamepad2.right_bumper) {
@@ -132,17 +130,9 @@ public class fullControlTeleOp extends OpMode {
         if (gamepad2.a) {
             myGlyphArms.slightlyOpenGlyphArms();
         }
-
-
         if (gamepad2.x) {
             myGlyphArms.openRaisedGlyphArms();
         }
-
-        // Color Sensor Arm
-
-//        if (gamepad2.dpad_up) {
-//            myColorSensorArm.colorSensorArmRest();
-//        }
 
         // Glyph Lift
 
