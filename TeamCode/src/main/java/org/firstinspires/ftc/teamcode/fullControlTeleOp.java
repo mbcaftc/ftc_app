@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.extras.colorSensorArmAuto;
@@ -39,6 +40,8 @@ public class fullControlTeleOp extends OpMode {
     double frontRightSpeed;
     double rearLeftSpeed;
     double rearRightSpeed;
+
+    boolean relicMode;
 
     double liftPower;
     int position;
@@ -77,20 +80,19 @@ public class fullControlTeleOp extends OpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        relicMode = false;
     }
     @Override
     public void loop() {
 
-        if (!initServos) {
-            myGlyphArms.openGlyphArms();
-            myColorSensorArm.colorSensorArmUp();
-            myColorSensorArm.colorRotateResting();
-            myBoardArm.boardArmUp();
-            myRelicArm.relicGrabberOpen();
-            initServos = true;
+        if (gamepad1.dpad_up) {
+            relicMode = false;
         }
 
-        // Mecanum Drive
+        else if (gamepad1.dpad_down) {
+            relicMode = true;
+        }
 
         leftStickVal = -gamepad1.left_stick_y;
         leftStickVal = Range.clip(leftStickVal, -1, 1);
@@ -102,22 +104,62 @@ public class fullControlTeleOp extends OpMode {
         rightTriggerVal = gamepad1.right_trigger;
         rightTriggerVal = Range.clip(rightTriggerVal, 0, 1);
 
-        frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
-        frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
+        if (relicMode) {
+            frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+            rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+            frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+            rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        frontRightSpeed = rightStickVal - rightTriggerVal + leftTriggerVal;
-        frontRightSpeed = Range.clip(frontRightSpeed, -1, 1);
+            frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
+            frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
 
-        rearLeftSpeed = leftStickVal + leftTriggerVal - rightTriggerVal;
-        rearLeftSpeed = Range.clip(rearLeftSpeed, -1, 1);
+            frontRightSpeed = rightStickVal - rightTriggerVal + leftTriggerVal;
+            frontRightSpeed = Range.clip(frontRightSpeed, -1, 1);
 
-        rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
-        rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
+            rearLeftSpeed = leftStickVal + leftTriggerVal - rightTriggerVal;
+            rearLeftSpeed = Range.clip(rearLeftSpeed, -1, 1);
 
-        frontLeftMotor.setPower(frontLeftSpeed);
-        frontRightMotor.setPower(frontRightSpeed);
-        rearLeftMotor.setPower(rearLeftSpeed);
-        rearRightMotor.setPower(rearRightSpeed);
+            rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
+            rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
+
+            frontLeftMotor.setPower(rearRightSpeed);
+            frontRightMotor.setPower(rearLeftSpeed);
+            rearLeftMotor.setPower(frontRightSpeed);
+            rearRightMotor.setPower(frontLeftSpeed);
+        }
+
+        else {
+            frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+            rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+            frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+            rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
+
+            frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
+            frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
+
+            frontRightSpeed = rightStickVal - rightTriggerVal + leftTriggerVal;
+            frontRightSpeed = Range.clip(frontRightSpeed, -1, 1);
+
+            rearLeftSpeed = leftStickVal + leftTriggerVal - rightTriggerVal;
+            rearLeftSpeed = Range.clip(rearLeftSpeed, -1, 1);
+
+            rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
+            rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
+
+            frontLeftMotor.setPower(frontLeftSpeed);
+            frontRightMotor.setPower(frontRightSpeed);
+            rearLeftMotor.setPower(rearLeftSpeed);
+            rearRightMotor.setPower(rearRightSpeed);
+        }
+
+        if (!initServos) {
+            myGlyphArms.openGlyphArms();
+            myColorSensorArm.colorSensorArmUp();
+            myColorSensorArm.colorRotateResting();
+            myBoardArm.boardArmUp();
+            myRelicArm.relicGrabberOpen();
+            initServos = true;
+        }
 
         // Glyph Arms
 
@@ -180,15 +222,25 @@ public class fullControlTeleOp extends OpMode {
 
         myRelicArm.setExtensionPower(relicExtensionPower);
 
-        if (gamepad2.left_trigger >= 0.2) {
-            myRelicArm.relicGrabberOpen();
-        }
-
-        else if (gamepad2.right_trigger >= 0.2) {
-            myRelicArm.relicGrabberClose();
-        }
-
         relicGrabberPosition = myRelicArm.getRelicGrabberPosition();
+
+        if (gamepad2.left_trigger >= 0.2) {
+            relicGrabberPosition = relicGrabberPosition - 0.007;
+        }
+
+        if (gamepad2.right_trigger >= 0.2) {
+            relicGrabberPosition = relicGrabberPosition + 0.007;
+        }
+
+        myRelicArm.setRelicGrabberPosition(relicGrabberPosition);
+
+        if (relicGrabberPosition <= 0) {
+            relicGrabberPosition = 0;
+        }
+
+        else if (relicGrabberPosition >= 0.94) {
+            relicGrabberPosition = 0.94;
+        }
 
         // Telemetry
 

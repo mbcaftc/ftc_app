@@ -101,13 +101,6 @@ public class mechDriveAuto {
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-      /*  while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile && rearLeftMotor.getCurrentPosition() < counts * countsWhile && rearRightMotor.getCurrentPosition() < counts * countsWhile) {
-            frontLeftMotor.setPower(power * powerReductionFactor);
-            frontRightMotor.setPower(power * powerReductionFactor);
-            rearLeftMotor.setPower(power * powerReductionFactor);
-            rearRightMotor.setPower(power * powerReductionFactor);
-        } */
-
         while (frontLeftMotor.getCurrentPosition() < counts * countsWhile && frontRightMotor.getCurrentPosition() < counts * countsWhile) {
             frontLeftMotor.setPower(power * powerReductionFactor);
             frontRightMotor.setPower(power * powerReductionFactor);
@@ -428,13 +421,13 @@ public class mechDriveAuto {
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
             armSensor.colorRotateClockwise();
-            sleep(100);
+            sleep(400);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
-            sleep(100);
+            sleep(400);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
@@ -446,13 +439,13 @@ public class mechDriveAuto {
     public void blueJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
             armSensor.colorRotateCounterClockwise();
-            sleep(100);
+            sleep(400);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwise();
-            sleep(100);
+            sleep(400);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
