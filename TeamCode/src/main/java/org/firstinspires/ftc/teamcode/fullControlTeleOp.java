@@ -122,10 +122,10 @@ public class fullControlTeleOp extends OpMode {
             rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
             rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
-            frontLeftMotor.setPower(rearRightSpeed);
-            frontRightMotor.setPower(rearLeftSpeed);
-            rearLeftMotor.setPower(frontRightSpeed);
-            rearRightMotor.setPower(frontLeftSpeed);
+            frontLeftMotor.setPower(rearRightSpeed * .75);
+            frontRightMotor.setPower(rearLeftSpeed * .75);
+            rearLeftMotor.setPower(frontRightSpeed * .75);
+            rearRightMotor.setPower(frontLeftSpeed * .75);
         }
 
         else {
@@ -215,11 +215,11 @@ public class fullControlTeleOp extends OpMode {
         relicGrabberPosition = myRelicArm.getRelicGrabberPosition();
 
         if (gamepad2.left_trigger >= 0.2) {
-            relicGrabberPosition = relicGrabberPosition - 0.007;
+            relicGrabberPosition = relicGrabberPosition - 0.005;
         }
 
         if (gamepad2.right_trigger >= 0.2) {
-            relicGrabberPosition = relicGrabberPosition + 0.007;
+            relicGrabberPosition = relicGrabberPosition + 0.005;
         }
 
         myRelicArm.setRelicGrabberPosition(relicGrabberPosition);
