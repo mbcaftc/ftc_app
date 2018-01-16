@@ -19,6 +19,7 @@ import java.util.Locale;
 /**
  * Created by johnduval on 10/9/17.
  */
+@Disabled
 @TeleOp (name = "Calibrate Servos + Sensors")
 
 public class calibrateServosSensors extends OpMode {

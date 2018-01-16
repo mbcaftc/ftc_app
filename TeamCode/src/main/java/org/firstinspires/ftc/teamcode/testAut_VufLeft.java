@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.subClasses.revColorDistanceSensor;
 /**
  * Created by student on 12/6/17.
  */
+@Disabled
 @Autonomous (name = "Vuf Left", group = "TESTING")
 public class testAut_VufLeft extends LinearOpMode {
     int movement = 0; //switch variable to determine movement

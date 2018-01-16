@@ -26,7 +26,7 @@ public class glyphArms {
     //with channel
     double leftClosePosition =.83;
     double leftOpenPosition = .48;
-    double leftOpenLoweredPosition = .64;
+    double leftOpenLoweredPosition = .65;
 
     double rightClosePosition = .32;
     double rightOpenPosition = .68;

@@ -36,6 +36,7 @@ import android.view.View;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -52,8 +53,8 @@ import java.util.Locale;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  */
-@Autonomous(name = "Sensor: REVColorDistance", group = "Sensor")
-@Disabled                           // Comment this out to add to the opmode list
+@TeleOp(name = "Sensor: REVColorDistanceARM", group = "Sensor")
+//@Disabled                           // Comment this out to add to the opmode list
 public class SensorREVColorDistance extends LinearOpMode {
 
     /**
@@ -73,6 +74,26 @@ public class SensorREVColorDistance extends LinearOpMode {
      * to the target object.  Note that the distance sensor saturates at around 2" (5 cm).
      *
      */
+
+    /*
+    TESTING RED BALL:
+    If sensor right on ball:
+        RED > 400
+        Blue > 100 < 150
+    Inch or so away:
+        RED = 45
+        Blue = 12
+
+     TESTING BLUE BALL:
+     Sensor right on ball:
+        RED > 100 < 150
+        BLUE > 400
+     Sensor inch or so away:
+        RED  = 27
+        BLUE  = 33
+     */
+
+
     ColorSensor revSensorColor;
     DistanceSensor revSensorDistance;
 
@@ -80,10 +101,17 @@ public class SensorREVColorDistance extends LinearOpMode {
     public void runOpMode() {
 
         // get a reference to the color sensor.
-        revSensorColor= hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance");
+        //sensor in back of robot
+        //revSensorColor= hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance");
+        //color arm sensor
+        revSensorColor= hardwareMap.get(ColorSensor.class, "rev_color_arm");
+
 
         // get a reference to the distance sensor that shares the same name.
-        revSensorDistance = hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance");
+        //sensor in back of robot
+        //revSensorDistance = hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance");
+        //color arm sensor
+        revSensorDistance = hardwareMap.get(DistanceSensor.class, "rev_color_arm");
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};

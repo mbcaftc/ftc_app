@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subClasses.colorSensorArm;
  * Created by student on 12/7/17.
  */
 @Autonomous(name = "test color sensor")
+@Disabled
 public class autColorSensor extends LinearOpMode {
     colorSensorArm myColorSensorArm;
     @Override

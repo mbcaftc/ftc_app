@@ -25,7 +25,7 @@ import java.util.Locale;
  * Created by student on 12/5/17.
  */
 @Autonomous(name = "Test - Platform + Sensor + gyro", group = "TESTING")
-//@Disabled
+@Disabled
 public class testPlatform extends LinearOpMode {
     mechDriveAuto myMechDrive;
     int movement = 1;
