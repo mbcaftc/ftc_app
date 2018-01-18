@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -36,6 +37,12 @@ public class colorSensorArm {
     public Servo colorSensorArm;
     public ColorSensor colorSensor;
     public Servo colorSensorArmRotate;
+
+    // sometimes it helps to multiply the raw RGB values with a scale factor
+    // to amplify/attentuate the measured values.
+    final double SCALE_FACTOR = 255;
+    float hsvValues[] = {0F, 0F, 0F};
+
     //mechDriveAuto myMechDrive;
 
     public colorSensorArm(Servo cSA, ColorSensor cS, Servo cSAR) {
@@ -45,10 +52,12 @@ public class colorSensorArm {
 
         //  MODERN ROBOTICS COLOR SENSOR CODE
         // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F, 0F, 0F};
+        //float hsvValues[] = {0F, 0F, 0F};
 
         // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
+
+
 
         // bPrevState and bCurrState represent the previous and current state of the button.
         boolean bPrevState = false;
@@ -117,10 +126,23 @@ public class colorSensorArm {
 
     public int colorJewel() throws InterruptedException {
         colorLoop++;
+        Color.RGBToHSV((int) (colorSensor.red() * SCALE_FACTOR),
+                (int) (colorSensor.green() * SCALE_FACTOR),
+                (int) (colorSensor.blue() * SCALE_FACTOR), hsvValues);
         //gives sensor time to be accurate
         //1 == red
         //2 == blue
         //3 = none detected
+        if (colorSensor.red() > colorSensor.blue()) {
+            return 1;
+        }
+        else if (colorSensor.blue() > colorSensor.red()) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+      /*
         if (colorSensor.red() >= redThreshold) {
             if (colorSensor.red() > colorSensor.blue()) {
                 return 1;
@@ -195,5 +217,6 @@ public class colorSensorArm {
             //sleep(1500);
             return 3;
         }
+        */
     }
 }
