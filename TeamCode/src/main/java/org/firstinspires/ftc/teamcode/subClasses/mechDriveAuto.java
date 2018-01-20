@@ -423,13 +423,13 @@ public class mechDriveAuto {
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
             armSensor.colorRotateClockwise();
-            sleep(400);
+            sleep(250);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
-            sleep(400);
+            sleep(250);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
@@ -441,13 +441,13 @@ public class mechDriveAuto {
     public void blueJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
             armSensor.colorRotateCounterClockwise();
-            sleep(400);
+            sleep(250);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwise();
-            sleep(400);
+            sleep(250);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
@@ -458,7 +458,7 @@ public class mechDriveAuto {
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,3,0.80); //strafe left to column
+        encoderDriveMat(10,3,0.80); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(100);
@@ -490,7 +490,7 @@ public class mechDriveAuto {
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,4,0.80); //strafe right to column
+        encoderDriveMat(10,4,0.80); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
         sleep(100);

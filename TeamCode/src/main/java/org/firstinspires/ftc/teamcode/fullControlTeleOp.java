@@ -56,7 +56,7 @@ public class fullControlTeleOp extends OpMode {
     glyphArms myGlyphArms;
     colorSensorArm myColorSensorArm;
     glyphLift myGlyphLift;
-    boardArm myBoardArm;
+    //boardArm myBoardArm;
     relicArm myRelicArm;
 
     @Override
@@ -64,8 +64,8 @@ public class fullControlTeleOp extends OpMode {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
-        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
+        //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
@@ -85,6 +85,14 @@ public class fullControlTeleOp extends OpMode {
     }
     @Override
     public void loop() {
+
+        if (!initServos) {
+            myGlyphArms.openGlyphArms();
+            myColorSensorArm.colorSensorArmUp();
+            myColorSensorArm.colorRotateResting();
+            myRelicArm.relicGrabberOpen();
+            initServos = true;
+        }
 
         if (gamepad1.dpad_up) {
             relicMode = false;
@@ -122,10 +130,10 @@ public class fullControlTeleOp extends OpMode {
             rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
             rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
-            frontLeftMotor.setPower(rearRightSpeed * .75);
-            frontRightMotor.setPower(rearLeftSpeed * .75);
-            rearLeftMotor.setPower(frontRightSpeed * .75);
-            rearRightMotor.setPower(frontLeftSpeed * .75);
+            frontLeftMotor.setPower(rearRightSpeed);
+            frontRightMotor.setPower(rearLeftSpeed);
+            rearLeftMotor.setPower(frontRightSpeed);
+            rearRightMotor.setPower(frontLeftSpeed);
         }
 
         else {
@@ -152,15 +160,6 @@ public class fullControlTeleOp extends OpMode {
             rearRightMotor.setPower(rearRightSpeed);
         }
 
-        if (!initServos) {
-            myGlyphArms.openGlyphArms();
-            myColorSensorArm.colorSensorArmUp();
-            myColorSensorArm.colorRotateResting();
-            myBoardArm.boardArmUp();
-            myRelicArm.relicGrabberOpen();
-            initServos = true;
-        }
-
         // Glyph Arms
 
         if (gamepad2.left_bumper) {
@@ -185,13 +184,13 @@ public class fullControlTeleOp extends OpMode {
 
         // Board Arm
 
-        if (gamepad1.a) {
-            myBoardArm.boardArmDown();
-        }
+        //if (gamepad1.a) {
+        //    myBoardArm.boardArmDown();
+        //}
 
-        else if (gamepad1.y) {
-            myBoardArm.boardArmUp();
-        }
+        //else if (gamepad1.y) {
+        //    myBoardArm.boardArmUp();
+        //}
 
         // Relic Arm
 

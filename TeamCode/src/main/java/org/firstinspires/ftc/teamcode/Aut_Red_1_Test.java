@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -36,7 +37,7 @@ import java.util.Locale;
  */
 
 @Autonomous (name = "Red - 1 - TEST", group = "RED")
-
+@Disabled
 public class Aut_Red_1_Test extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement
@@ -80,10 +81,10 @@ public class Aut_Red_1_Test extends LinearOpMode {
         //we know nothing will be in range to start.  Distance sensor returns "NaN" if objects too far away.
         distanceSensorInRange = false;
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
@@ -196,10 +197,37 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement ++;
                     break;
                 case 3: //Rotate right on platform
-                    telemetry.addData("CASE: ", movement);
+                    /*telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     myMechDrive.encoderDrive(21, 6, 0.5);
-                    sleep(200);
+                    sleep(200);*/
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                    telemetry.addData("CASE gyro: ", movement);
+                    telemetry.addData("MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    //sleep(1000);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .18);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.18);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        }
+                    }
+                    myMechDrive.stopMotors();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    telemetry.addData("DONE MOVING","");
+                    telemetry.addData("Gyro Heading: ", angles.firstAngle);
+                    telemetry.update();
+                    sleep(250);
+
+
                     movement ++;
                     break;
                 case 4: //Go forward off platform
@@ -269,9 +297,9 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     movement ++;
                     break;
                 case 7: //Rotate right to orient with cryptobox
-                    telemetry.addData("CASE: ", movement);
+                    /*telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);
+                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);*/
                     sleep(200);
                     movement++;
                     break;

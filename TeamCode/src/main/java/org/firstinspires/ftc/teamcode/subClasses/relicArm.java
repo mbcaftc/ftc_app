@@ -25,7 +25,7 @@ public class relicArm {
         relicArmExtension = rAE;
         relicGrabber = rG;
 
-        relicArmLift.setDirection(DcMotor.Direction.REVERSE);
+        relicArmLift.setDirection(DcMotor.Direction.FORWARD);
         relicArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         relicArmLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         relicArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

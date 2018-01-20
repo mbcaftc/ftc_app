@@ -77,15 +77,15 @@ public class Aut_Red_2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
+        myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
-        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
         myColorSensorArm.colorSensorArmUpSlow();
-        myColorSensorArm.colorRotateReading();
+        myColorSensorArm.colorRotateResting();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -123,7 +123,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.update();
                     myRelicArm.relicGrabberOpen();
                     myRelicArm.setLiftPower(-1);
-                    sleep(1000);
+                    sleep(2000);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
@@ -214,13 +214,13 @@ public class Aut_Red_2 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle >= -89) {
-                            myMechDrive.powerDrive(6, .18);
+                            myMechDrive.powerDrive(6, .16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle <= -91) {
-                            myMechDrive.powerDrive(5,.18);
+                            myMechDrive.powerDrive(5,.16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -247,13 +247,13 @@ public class Aut_Red_2 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle >= -89) {
-                            myMechDrive.powerDrive(6, .18);
+                            myMechDrive.powerDrive(6, .16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle <= -91) {
-                            myMechDrive.powerDrive(5,.18);
+                            myMechDrive.powerDrive(5,.16);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }

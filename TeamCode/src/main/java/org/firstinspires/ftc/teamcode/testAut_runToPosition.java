@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by johnduval on 11/21/17.
  */
 @Autonomous(name = "Test - Run To Position", group = "TESTING")
-@Disabled
+//@Disabled
 public class testAut_runToPosition extends LinearOpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
