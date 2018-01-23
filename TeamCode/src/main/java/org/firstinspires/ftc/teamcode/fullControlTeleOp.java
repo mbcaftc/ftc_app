@@ -182,16 +182,6 @@ public class fullControlTeleOp extends OpMode {
 
         myGlyphLift.setPower(liftPower);
 
-        // Board Arm
-
-        //if (gamepad1.a) {
-        //    myBoardArm.boardArmDown();
-        //}
-
-        //else if (gamepad1.y) {
-        //    myBoardArm.boardArmUp();
-        //}
-
         // Relic Arm
 
         if (gamepad2.dpad_up) {
@@ -229,6 +219,10 @@ public class fullControlTeleOp extends OpMode {
 
         else if (relicGrabberPosition >= 0.94) {
             relicGrabberPosition = 0.94;
+        }
+
+        if (gamepad2.right_stick_button) {
+            myRelicArm.relicGrabberAlmostClose();
         }
 
         // Telemetry

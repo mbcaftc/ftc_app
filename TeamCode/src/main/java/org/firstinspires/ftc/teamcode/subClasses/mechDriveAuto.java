@@ -507,7 +507,7 @@ public class mechDriveAuto {
 
     public void vuforiaLeft2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,3,0.80); //strafe left to column
+        encoderDriveMat(10,3,0.80); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
         sleep(100);
@@ -539,7 +539,7 @@ public class mechDriveAuto {
 
     public void vuforiaRight2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(9,4,0.80); //strafe right to column
+        encoderDriveMat(10,4,0.80); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
         sleep(100);
