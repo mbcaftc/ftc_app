@@ -38,7 +38,7 @@ import java.util.Locale;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-//@Disabled
+@Disabled
 
 @Autonomous(name="Rev_GyroIMU_test", group="TESTING")
 public class testRevGyroIMU extends LinearOpMode {
