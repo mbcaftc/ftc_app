@@ -31,8 +31,10 @@ public class mechDriveAuto {
         rearLeftMotor = rearLM;
         rearRightMotor = rearRM;
 
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -77,7 +79,10 @@ public class mechDriveAuto {
 
     public void encoderDrivePlatform (double distance, double power) {
 
-        final double ENCODER_CPR = 1120;
+        //NeveRest 40 encoder Counts
+        //final double ENCODER_CPR = 1120;
+        //NeveRest 20 Encoder Counts
+        final double ENCODER_CPR = 537.6;
         final double GEAR_RATIO = 1;
         final double WHEEL_DIAMETER = 4;
         final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
@@ -138,7 +143,10 @@ public class mechDriveAuto {
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        final double ENCODER_CPR = 1120;
+    //NeveRest 40 encoder Counts
+        //final double ENCODER_CPR = 1120;
+        //NeveRest 20 Encoder Counts
+        final double ENCODER_CPR = 537.6;
         final double GEAR_RATIO = 1;
         final double WHEEL_DIAMETER = 4;
         final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
@@ -232,7 +240,10 @@ public class mechDriveAuto {
         rearLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rearRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        final double ENCODER_CPR = 1120;
+        //NeveRest 40 encoder Counts
+        //final double ENCODER_CPR = 1120;
+        //NeveRest 20 Encoder Counts
+        final double ENCODER_CPR = 537.6;
         final double GEAR_RATIO = 1;
         final double WHEEL_DIAMETER = 4;
         final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
@@ -458,9 +469,9 @@ public class mechDriveAuto {
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,3,0.80); //strafe left to column
+        encoderDriveMat(10,3,.4); //strafe left to column
         sleep(100);
-        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -470,12 +481,12 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1); //forward
         sleep(100);
-        encoderDrive(7,2,.5); //slow back
+        encoderDrive(7,2,.4); //slow back
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
 
-        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -485,14 +496,14 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1);
         sleep(100);
-        encoderDrive(7,2,.5);
+        encoderDrive(7,2,.4);
     }
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,4,0.80); //strafe right to column
+        encoderDriveMat(10,4,.4); //strafe right to column
         sleep(100);
-        encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -502,14 +513,14 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1);
         sleep(100);
-        encoderDrive(7,2,.5);
+        encoderDrive(7,2,.4);
     }
 
     public void vuforiaLeft2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,3,0.80); //strafe left to column
+        encoderDriveMat(10,3,.4); //strafe left to column
         sleep(100);
-        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -519,12 +530,12 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1); //forward
         sleep(100);
-        encoderDrive(7,2,.5); //slow back
+        encoderDrive(7,2,.4); //slow back
     }
 
     public void vuforiaCenter2 (glyphArms arms) throws InterruptedException {
 
-        encoderDrive(cryptoboxDistanceForward,1,0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -534,14 +545,14 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1);
         sleep(100);
-        encoderDrive(7,2,.5);
+        encoderDrive(7,2,.4);
     }
 
     public void vuforiaRight2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,4,0.80); //strafe right to column
+        encoderDriveMat(10,4,.4); //strafe right to column
         sleep(100);
-        encoderDrive(cryptoboxDistanceForward, 1, 0.8); //go forward to cryptoBox
+        encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
         sleep(100);
         arms.openGlyphArms();
         sleep(200);
@@ -551,7 +562,7 @@ public class mechDriveAuto {
         sleep(100);
         encoderDrive(3.5,1,1);
         sleep(100);
-        encoderDrive(7,2,.5);
+        encoderDrive(7,2,.4);
     }
 
     public void powerDrive (int direction, double power) throws InterruptedException {

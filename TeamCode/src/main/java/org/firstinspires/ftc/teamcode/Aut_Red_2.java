@@ -233,7 +233,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(15,3,.8);
+                    myMechDrive.encoderDriveMat(16,3,.8);
                     sleep(200);
                     movement ++;
                     break;

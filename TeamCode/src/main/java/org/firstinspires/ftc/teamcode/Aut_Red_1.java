@@ -125,7 +125,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     telemetry.update();
                     myRelicArm.relicGrabberOpen();
                     myRelicArm.setLiftPower(-1);
-                    sleep(2000);
+                    sleep(1600);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
@@ -197,12 +197,12 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 3: //Rotate right on platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 6, 0.5);
+                    myMechDrive.encoderDrive(21, 6, 0.3);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(21.1,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    myMechDrive.encoderDrivePlatform(21.1,.35); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(250);
                     movement ++;
                     break;
@@ -288,14 +288,14 @@ public class Aut_Red_1 extends LinearOpMode {
                     break;
                 case 8: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(13.5,1,.6);
+                    myMechDrive.encoderDriveMat(13.5,1,.35);
                     sleep(200);
                     movement ++;
                     break;
                 case 9: //Rotate right to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(21.5, 6, 0.6);
+                    myMechDrive.encoderDriveMat(21.5, 6, 0.35);
                     sleep(200);
                     movement++;
                     break;

@@ -24,16 +24,16 @@ public class glyphArms {
     //double rightOpenPosition = 0.705;
 
     //with channel
-    double leftClosePosition =.83;
-    double leftOpenPosition = .48;
-    double leftOpenLoweredPosition = .65;
+    double leftClosePosition =.63;
+    double leftOpenPosition = .24;
+    double leftOpenLoweredPosition = .42;
 
-    double rightClosePosition = .32;
-    double rightOpenPosition = .68;
-    double rightOpenLoweredPosition = .5;
+    double rightClosePosition = .18;
+    double rightOpenPosition = .56;
+    double rightOpenLoweredPosition = .4;
 
-    double leftSlightlyOpenPosition = .74;
-    double rightSlightlyOpenPosition = .4;
+    double leftSlightlyOpenPosition = .56;
+    double rightSlightlyOpenPosition = .25;
 
     public Servo leftGlyphArm, rightGlyphArm;
     public glyphArms(Servo lGA, Servo rGA) {

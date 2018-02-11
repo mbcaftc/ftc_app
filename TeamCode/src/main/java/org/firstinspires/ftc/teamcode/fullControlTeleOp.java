@@ -73,9 +73,6 @@ public class fullControlTeleOp extends OpMode {
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
 
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -113,10 +110,10 @@ public class fullControlTeleOp extends OpMode {
         rightTriggerVal = Range.clip(rightTriggerVal, 0, 1);
 
         if (relicMode) {
-            frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-            rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-            frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-            rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
+            frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+            rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+            frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+            rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
             frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
             frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
@@ -137,10 +134,10 @@ public class fullControlTeleOp extends OpMode {
         }
 
         else {
-            frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-            rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-            frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
-            rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
+            frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+            rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+            frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+            rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
             frontLeftSpeed = leftStickVal - leftTriggerVal + rightTriggerVal;
             frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
