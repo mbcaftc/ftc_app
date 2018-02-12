@@ -126,7 +126,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     telemetry.update();
                     myRelicArm.relicGrabberOpen();
                     myRelicArm.setLiftPower(-1);
-                    sleep(2000);
+                    sleep(1300);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
@@ -198,12 +198,12 @@ public class Aut_Blue_1 extends LinearOpMode {
                 case 3: //Rotate left on platform
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 5, 0.5);
+                    myMechDrive.encoderDrive(21, 5, 0.3);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //Go forward off platform
-                    myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    myMechDrive.encoderDrivePlatform(21.5,.35); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(250);
                 case 5: //orient self after driving off platform
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -287,14 +287,14 @@ public class Aut_Blue_1 extends LinearOpMode {
                     break;
                 case 8: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(14,1,.6);
+                    myMechDrive.encoderDriveMat(14,1,.35);
                     sleep(200);
                     movement ++;
                     break;
                 case 9: //Rotate left to orient with cryptobox
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDriveMat(21, 5, 0.6);
+                    myMechDrive.encoderDriveMat(21, 5, 0.35);
                     movement++;
                     break;
                 case 10: //orient again with gyro

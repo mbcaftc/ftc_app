@@ -125,7 +125,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     telemetry.update();
                     myRelicArm.relicGrabberOpen();
                     myRelicArm.setLiftPower(-1);
-                    sleep(1600);
+                    sleep(1300);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);

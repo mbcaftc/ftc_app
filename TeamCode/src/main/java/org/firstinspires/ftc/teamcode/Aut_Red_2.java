@@ -123,7 +123,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.update();
                     myRelicArm.relicGrabberOpen();
                     myRelicArm.setLiftPower(-1);
-                    sleep(2000);
+                    sleep(1300);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.closeGlyphArms();
                     sleep(250);
@@ -195,12 +195,12 @@ public class Aut_Red_2 extends LinearOpMode {
                 case 3: //rotate right
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 6, 0.5);
+                    myMechDrive.encoderDrive(21, 6, 0.25);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //FORWARD Off Platform
-                    myMechDrive.encoderDrivePlatform(21.5,.8); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    myMechDrive.encoderDrivePlatform(21.5,.4); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(200);
                     movement++;
                     break;
@@ -233,7 +233,7 @@ public class Aut_Red_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(16,3,.8);
+                    myMechDrive.encoderDriveMat(16,3,.4);
                     sleep(200);
                     movement ++;
                     break;
