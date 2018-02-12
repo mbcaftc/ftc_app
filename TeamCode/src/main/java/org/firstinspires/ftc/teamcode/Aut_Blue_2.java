@@ -194,12 +194,12 @@ public class Aut_Blue_2 extends LinearOpMode {
                 case 3: //rotate left
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 5, 0.25);
+                    myMechDrive.encoderDrive(21, 5, 0.30);
                     sleep(200);
                     movement ++;
                     break;
                 case 4: //FORWARD Off Platform
-                    myMechDrive.encoderDrivePlatform(21.5,.4); // drives off platform using RUN_USING_ENCODERS - distance will vary!
+                    myMechDrive.encoderDrivePlatform(21.5,.35); // drives off platform using RUN_USING_ENCODERS - distance will vary!
                     sleep(200);
                     movement++;
                     break;
@@ -213,13 +213,13 @@ public class Aut_Blue_2 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .16);
+                            myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.16);
+                            myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -232,7 +232,7 @@ public class Aut_Blue_2 extends LinearOpMode {
                     movement++;
                     break;
                 case 6: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(15,4,.4);
+                    myMechDrive.encoderDriveMat(15,4,.35);
                     sleep(200);
                     movement ++;
                     break;
@@ -246,13 +246,13 @@ public class Aut_Blue_2 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .16);
+                            myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.16);
+                            myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }

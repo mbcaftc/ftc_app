@@ -215,13 +215,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     //sleep(1000);
                     if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .16);
+                            myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.16);
+                            myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -267,13 +267,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     //sleep(1000);
                     if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .16);
+                            myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.16);
+                            myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -307,13 +307,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     sleep(1000);
                     if (angles.firstAngle <= 179 && angles.firstAngle > 0) {           //robot did NOT rotate enough coming off platform
                         while (angles.firstAngle <= 179 && angles.firstAngle > 0) {     // && since goes -180 --> + 180
-                            myMechDrive.powerDrive(5, .16);
+                            myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
                     else if (angles.firstAngle >= -179 && angles.firstAngle < 0) {       //robot rotated TOO MUCH coming off platform
                         while (angles.firstAngle >= -179 && angles.firstAngle < 0) {     // && sinnce goes -180 --> +180
-                            myMechDrive.powerDrive(6,.16);
+                            myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
