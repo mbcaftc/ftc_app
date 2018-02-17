@@ -434,13 +434,13 @@ public class mechDriveAuto {
         //sleeps between movements to prevent robot from stuttering around
         if (jewelColor == 1) {
             armSensor.colorRotateClockwise();
-            sleep(250);
+            sleep(300);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) { // red alliance seeing blue jewel -- strafe left
             armSensor.colorRotateCounterClockwise();
-            sleep(250);
+            sleep(300);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
@@ -452,13 +452,13 @@ public class mechDriveAuto {
     public void blueJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
         if (jewelColor == 1) {
             armSensor.colorRotateCounterClockwise();
-            sleep(250);
+            sleep(300);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
         else if (jewelColor == 2) {
             armSensor.colorRotateClockwise();
-            sleep(250);
+            sleep(300);
             armSensor.colorRotateResting();
             armSensor.colorSensorArmUpSlow();
         }
@@ -469,11 +469,11 @@ public class mechDriveAuto {
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,3,.4); //strafe left to column
+        encoderDriveMat(10,3,.25); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
         //encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(100);
@@ -488,7 +488,7 @@ public class mechDriveAuto {
 
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
         //encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(100);
@@ -501,11 +501,11 @@ public class mechDriveAuto {
 
     public void vuforiaRight (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,4,.4); //strafe right to column
+        encoderDriveMat(10,4,.25); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
         //encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
         sleep(100);
@@ -518,17 +518,17 @@ public class mechDriveAuto {
 
     public void vuforiaLeft2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,3,.4); //strafe left to column
+        encoderDriveMat(10,3,.25); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
-        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(100);
         encoderDrive(2.5,2,1); //back
         sleep(100);
-        encoderDrive(3.5,1,1); //forward
+        encoderDrive(3.25,1,1); //forward
         sleep(100);
         encoderDrive(7,2,.4); //slow back
     }
@@ -537,30 +537,30 @@ public class mechDriveAuto {
 
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
-        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(100);
         encoderDrive(2.5,2,1);
         sleep(100);
-        encoderDrive(3.5,1,1);
+        encoderDrive(3.25,1,1);
         sleep(100);
         encoderDrive(7,2,.4);
     }
 
     public void vuforiaRight2 (glyphArms arms) throws InterruptedException {
 
-        encoderDriveMat(10,4,.4); //strafe right to column
+        encoderDriveMat(10,4,.25); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
         sleep(100);
-        arms.openGlyphArms();
+        arms.openLoweredGlyphArms();
         sleep(200);
-        encoderDrive(1.5, 1, 1); //go forward to make sure glyph in column
+        encoderDrive(1, 1, 1); //go forward to make sure glyph in column
         sleep(100);
         encoderDrive(2.5,2,1);
         sleep(100);
-        encoderDrive(3.5,1,1);
+        encoderDrive(3.25,1,1);
         sleep(100);
         encoderDrive(7,2,.4);
     }

@@ -61,7 +61,7 @@ public class testDrive_Strafe extends OpMode {
     public void init() {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
 
@@ -88,7 +88,7 @@ public class testDrive_Strafe extends OpMode {
     public void loop() {
 
         if (!initServos) {
-            myGlyphArms.openGlyphArms();
+            myGlyphArms.openLoweredGlyphArms();
             myColorSensorArm.colorSensorArmUp();
             myColorSensorArm.colorRotateResting();
             myBoardArm.boardArmUp();
@@ -124,7 +124,7 @@ public class testDrive_Strafe extends OpMode {
         if (gamepad2.left_bumper) {
             //myGlyphArms.openGlyphArms();
             //changed to make sure panels don't hit robot frame.
-            myGlyphArms.openGlyphArms();
+            myGlyphArms.openLoweredGlyphArms();
         }
         if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();

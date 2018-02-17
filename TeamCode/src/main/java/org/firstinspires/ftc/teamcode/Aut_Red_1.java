@@ -81,7 +81,7 @@ public class Aut_Red_1 extends LinearOpMode {
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_right_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
@@ -127,8 +127,10 @@ public class Aut_Red_1 extends LinearOpMode {
                     myRelicArm.setLiftPower(-1);
                     sleep(1300);
                     myRelicArm.setLiftPower(0);
+                    myGlyphArms.openLoweredGlyphArms();
+                    sleep(350);
                     myGlyphArms.closeGlyphArms();
-                    sleep(250);
+                    sleep(200);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
@@ -288,7 +290,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     break;
                 case 8: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(13.5,1,.35);
+                    myMechDrive.encoderDriveMat(13.5,1,.3);
                     sleep(200);
                     movement ++;
                     break;

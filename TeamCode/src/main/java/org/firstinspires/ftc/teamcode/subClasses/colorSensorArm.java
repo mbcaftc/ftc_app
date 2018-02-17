@@ -25,7 +25,7 @@ public class colorSensorArm {
     double upPosition = 0.16;
     double downPositionPause1 = 0.70;
     double downPositionPause2 = 0.88;
-    double downPositionFinal = 0.94;
+    double downPositionFinal = 0.96;
     int colorArmPause = 1000;
     double colorArmIncrementAmount = .01;
     int colorArmIncrementTimeMSdown = 12; //will take aprox. 1 second to lower color sensor arm .
@@ -115,7 +115,7 @@ public class colorSensorArm {
     }
 
     public void colorRotateClockwise () {
-        colorSensorArmRotate.setPosition(0.9);
+        colorSensorArmRotate.setPosition(0.95);
     }
 
     public void colorRotateCounterClockwise () {

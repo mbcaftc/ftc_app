@@ -24,40 +24,61 @@ public class glyphArms {
     //double rightOpenPosition = 0.705;
 
     //with channel
-    double leftClosePosition =.63;
-    double leftOpenPosition = .24;
-    double leftOpenLoweredPosition = .42;
+    double topLeftClosePosition =.42; //closed to grab glyphs
+    double topLeftSlightlyOpenPosition = .37;  //sightly open for exiting CryptoBox and picking up Glyphs
+    double topLeftOpenLoweredPosition = .32; //fully open when glyph lift is lowered - to the frame
+    double topLeftOpenPosition = .08; //fully open when raised
 
-    double rightClosePosition = .18;
-    double rightOpenPosition = .56;
-    double rightOpenLoweredPosition = .4;
+    double bottomLeftClosePosition =.41;
+    double bottomLeftSlightlyOpenPosition = .47;
+    double bottomLeftOpenLoweredPosition = .52;
+    double bottomLeftOpenPosition = .80;
+
+    double topRightClosePosition = .48;
+    double topRightSlightlyOpenPosition = .56;
+    double topRightOpenLoweredPosition = .65;
+    double topRightOpenPosition = .88;
+
+    double bottomRightClosePosition = .62;
+    double bottomRightSlightlyOpenPosition = .54;
+    double bottomRightOpenLoweredPosition = .44;
+    double bottomRightOpenPosition = .22;
 
     double leftSlightlyOpenPosition = .56;
     double rightSlightlyOpenPosition = .25;
 
-    public Servo leftGlyphArm, rightGlyphArm;
-    public glyphArms(Servo lGA, Servo rGA) {
-        leftGlyphArm = lGA;
-        rightGlyphArm = rGA;
+    public Servo topLeftGlyphArm, bottomLeftGlyphArm, topRightGlyphArm, bottomRightGlyphArm;
+    public glyphArms(Servo tLGA, Servo bLGA, Servo tRGA, Servo bRGA) {
+        topLeftGlyphArm = tLGA;
+        bottomLeftGlyphArm = bLGA;
+        topRightGlyphArm = tRGA;
+        bottomRightGlyphArm = bRGA;
     }
 
     public void closeGlyphArms () {
-        leftGlyphArm.setPosition(leftClosePosition);
-        rightGlyphArm.setPosition(rightClosePosition);
-    }
-
-    public void openGlyphArms () {
-        leftGlyphArm.setPosition(leftOpenLoweredPosition);
-        rightGlyphArm.setPosition(rightOpenLoweredPosition);
-    }
-
-    public void openRaisedGlyphArms () {
-        leftGlyphArm.setPosition(leftOpenPosition);
-        rightGlyphArm.setPosition(rightOpenPosition);
+        topLeftGlyphArm.setPosition(topLeftClosePosition);
+        bottomLeftGlyphArm.setPosition(bottomLeftClosePosition);
+        topRightGlyphArm.setPosition(topRightClosePosition);
+        bottomRightGlyphArm.setPosition(bottomRightClosePosition);
     }
 
     public void slightlyOpenGlyphArms () {
-        leftGlyphArm.setPosition(leftSlightlyOpenPosition);
-        rightGlyphArm.setPosition(rightSlightlyOpenPosition);
+        topLeftGlyphArm.setPosition(topLeftSlightlyOpenPosition);
+        bottomLeftGlyphArm.setPosition(bottomLeftSlightlyOpenPosition);
+        topRightGlyphArm.setPosition(topRightSlightlyOpenPosition);
+        bottomRightGlyphArm.setPosition(bottomRightSlightlyOpenPosition);
+    }
+    public void openLoweredGlyphArms () {
+        topLeftGlyphArm.setPosition(topLeftOpenLoweredPosition);
+        bottomLeftGlyphArm.setPosition(bottomLeftOpenLoweredPosition);
+        topRightGlyphArm.setPosition(topRightOpenLoweredPosition);
+        bottomRightGlyphArm.setPosition(bottomRightOpenLoweredPosition);
+    }
+
+    public void openRaisedGlyphArms () {
+        topLeftGlyphArm.setPosition(topLeftOpenPosition);
+        bottomLeftGlyphArm.setPosition(bottomLeftOpenPosition);
+        topRightGlyphArm.setPosition(topRightOpenPosition);
+        bottomRightGlyphArm.setPosition(bottomRightOpenPosition);
     }
 }

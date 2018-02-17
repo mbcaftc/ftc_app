@@ -39,7 +39,7 @@ public class testAut_VufRight extends LinearOpMode {
 
         //we know nothing will be in range to start.  Distance sensor returns "NaN" if objects too far away.
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         //myGlyphArms.openRaisedGlyphArms(); //ensures robot is wihin 18" by 18" parameters
         waitForStart();
 

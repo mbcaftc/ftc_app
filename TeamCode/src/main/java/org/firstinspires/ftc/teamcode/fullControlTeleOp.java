@@ -63,7 +63,7 @@ public class fullControlTeleOp extends OpMode {
     public void init() {
 
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_right_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
@@ -84,7 +84,7 @@ public class fullControlTeleOp extends OpMode {
     public void loop() {
 
         if (!initServos) {
-            myGlyphArms.openGlyphArms();
+            myGlyphArms.openLoweredGlyphArms();
             myColorSensorArm.colorSensorArmUp();
             myColorSensorArm.colorRotateResting();
             myRelicArm.relicGrabberOpen();
@@ -160,7 +160,7 @@ public class fullControlTeleOp extends OpMode {
         // Glyph Arms
 
         if (gamepad2.left_bumper) {
-            myGlyphArms.openGlyphArms();
+            myGlyphArms.openLoweredGlyphArms();
         }
         if (gamepad2.right_bumper) {
             myGlyphArms.closeGlyphArms();

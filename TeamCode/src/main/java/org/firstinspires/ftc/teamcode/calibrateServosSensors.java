@@ -33,7 +33,7 @@ public class calibrateServosSensors extends OpMode {
 
     @Override
     public void init() {
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("left_glyph_arm"), hardwareMap.servo.get("right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         //myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
@@ -45,7 +45,7 @@ public class calibrateServosSensors extends OpMode {
             myGlyphArms.closeGlyphArms();
         }
         if (gamepad2.a) {
-            myGlyphArms.openGlyphArms();
+            myGlyphArms.openLoweredGlyphArms();
         }
         if (gamepad2.y) {
             myGlyphArms.openRaisedGlyphArms();
@@ -106,8 +106,8 @@ public class calibrateServosSensors extends OpMode {
         telemetry.addData("BLUE: ", myColorSensorArm.colorSensor.blue());
         telemetry.addData("RED: ", myColorSensorArm.colorSensor.red());
         telemetry.addData("Color Servo pos:", myColorSensorArm.colorSensorArm.getPosition());
-        telemetry.addData("Left glyph arm pos: ", myGlyphArms.leftGlyphArm.getPosition());
-        telemetry.addData("Right glyph arm pos: ", myGlyphArms.rightGlyphArm.getPosition());
+        //telemetry.addData("Left glyph arm pos: ", myGlyphArms.leftGlyphArm.getPosition());
+        //telemetry.addData("Right glyph arm pos: ", myGlyphArms.rightGlyphArm.getPosition());
         telemetry.update();
     }
 }

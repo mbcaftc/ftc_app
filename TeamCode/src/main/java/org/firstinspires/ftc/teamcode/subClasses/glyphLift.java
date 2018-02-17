@@ -14,7 +14,7 @@ public class glyphLift {
     public DcMotor glyphLift;
     private double autRaisePower = 1.0;
     private int autRaiseTime = 500;
-    private int autLowerTime = 300;
+    private int autLowerTime = 200;
     int position;
 
     public glyphLift(DcMotor gL) {
