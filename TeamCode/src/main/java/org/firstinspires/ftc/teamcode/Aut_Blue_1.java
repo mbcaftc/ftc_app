@@ -337,13 +337,13 @@ public class Aut_Blue_1 extends LinearOpMode {
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeft(myGlyphArms);
+                            myMechDrive.vuforiaLeftPower(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter(myGlyphArms);
+                            myMechDrive.vuforiaCenterPower(myGlyphArms);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRight(myGlyphArms);
+                            myMechDrive.vuforiaRightPower(myGlyphArms);
                             break;
                     }
                     sleep(250);

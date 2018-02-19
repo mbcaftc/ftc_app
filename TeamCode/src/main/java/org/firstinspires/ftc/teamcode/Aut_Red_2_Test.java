@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -36,9 +37,10 @@ import java.util.Locale;
  * Created by johnduval on 10/7/17.
  */
 
-@Autonomous (name = "Blue - 2", group = "BLUE")
+@Autonomous (name = "Red - 2 TEST", group = "RED")
+@Disabled
 
-public class Aut_Blue_2 extends LinearOpMode {
+public class Aut_Red_2_Test extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
 
     colorSensorArm myColorSensorArm;
@@ -57,6 +59,7 @@ public class Aut_Blue_2 extends LinearOpMode {
     Orientation angles;
     Acceleration gravity;
     //float heading;
+
 
     // 1 == LEFT
     // 2 == CENTER & DEFAULT
@@ -190,13 +193,13 @@ public class Aut_Blue_2 extends LinearOpMode {
                     //1 = red jewel on left and strafe right
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
-                    myMechDrive.blueJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myMechDrive.redJewel(myColorSensorArm, myColorSensorArm.colorJewel());
                     movement ++;
                     break;
-                case 3: //rotate left
+                case 3: //rotate right
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
-                    myMechDrive.encoderDrive(21, 5, 0.30);
+                    myMechDrive.encoderDrive(21, 6, 0.30);
                     sleep(200);
                     movement ++;
                     break;
@@ -213,15 +216,15 @@ public class Aut_Blue_2 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .15);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.15);
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -233,8 +236,8 @@ public class Aut_Blue_2 extends LinearOpMode {
                     sleep(250);
                     movement++;
                     break;
-                case 6: //STRAFE RIGHT IN ORIENTATION WITH CRYPTOBOX
-                    myMechDrive.encoderDriveMat(15,4,.3);
+                case 6: //STRAFE LEFT IN ORIENTATION WITH CRYPTOBOX
+                    myMechDrive.encoderDriveMat(16,3,.3);
                     sleep(200);
                     movement ++;
                     break;
@@ -246,15 +249,15 @@ public class Aut_Blue_2 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle <= 89) {
-                            myMechDrive.powerDrive(5, .15);
+                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89) {
+                            myMechDrive.powerDrive(6, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle >= 91) {
-                            myMechDrive.powerDrive(6,.15);
+                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -91) {
+                            myMechDrive.powerDrive(5,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
@@ -268,19 +271,21 @@ public class Aut_Blue_2 extends LinearOpMode {
                     break;
                 case 8: //GO FORWARD TO CRYPTOBOX
                     myGlyphLift.lowerGlyphLiftAutMode();
+                    telemetry.addData("CASE Vuforia move: ", movement);
+                    telemetry.update();
                     //from case 1 where we get the vuforia code
                     // 1 == LEFT
                     // 2 == CENTER & DEFAULT
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeftPower2(myGlyphArms);
+                            myMechDrive.vuforiaLeft2(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenterPower2(myGlyphArms);
+                            myMechDrive.vuforiaCenter2(myGlyphArms);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRightPower2(myGlyphArms);
+                            myMechDrive.vuforiaRight2(myGlyphArms);
                             break;
                     }
                     movement ++;

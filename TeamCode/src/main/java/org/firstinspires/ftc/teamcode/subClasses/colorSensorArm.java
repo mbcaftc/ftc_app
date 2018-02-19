@@ -25,7 +25,7 @@ public class colorSensorArm {
     double upPosition = 0.16;
     double downPositionPause1 = 0.70;
     double downPositionPause2 = 0.88;
-    double downPositionFinal = 0.96;
+    double downPositionFinal = 0.94;
     int colorArmPause = 1000;
     double colorArmIncrementAmount = .01;
     int colorArmIncrementTimeMSdown = 12; //will take aprox. 1 second to lower color sensor arm .

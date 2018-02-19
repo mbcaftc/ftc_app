@@ -8,6 +8,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by johnduval on 10/7/17.
@@ -23,6 +24,7 @@ public class mechDriveAuto {
 
     int heading;
     int xVal, yVal, zVal;
+
 
     public mechDriveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
 
@@ -468,7 +470,6 @@ public class mechDriveAuto {
     }
 
     public void vuforiaLeft (glyphArms arms) throws InterruptedException {
-
         encoderDriveMat(10,3,.25); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
@@ -482,6 +483,27 @@ public class mechDriveAuto {
         encoderDrive(3.5,1,1); //forward
         sleep(100);
         encoderDrive(7,2,.4); //slow back
+    }
+
+    public void vuforiaLeftPower (glyphArms arms) throws InterruptedException {
+        encoderDriveMat(10,3,.25); //strafe left to column
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(900);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(350);
     }
 
     public void vuforiaCenter (glyphArms arms) throws InterruptedException {
@@ -499,8 +521,26 @@ public class mechDriveAuto {
         encoderDrive(7,2,.4);
     }
 
-    public void vuforiaRight (glyphArms arms) throws InterruptedException {
+    public void vuforiaCenterPower (glyphArms arms) throws InterruptedException {
+        powerDrive(1, .3);
+        sleep(900);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(350);
+    }
 
+    public void vuforiaRight (glyphArms arms) throws InterruptedException {
         encoderDriveMat(10,4,.25); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
@@ -516,8 +556,28 @@ public class mechDriveAuto {
         encoderDrive(7,2,.4);
     }
 
-    public void vuforiaLeft2 (glyphArms arms) throws InterruptedException {
+    public void vuforiaRightPower (glyphArms arms) throws InterruptedException {
+        encoderDriveMat(10,4,.25); //strafe right to column
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(900);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(350);
+    }
 
+    public void vuforiaLeft2 (glyphArms arms) throws InterruptedException {
         encoderDriveMat(10,3,.25); //strafe left to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
@@ -533,8 +593,28 @@ public class mechDriveAuto {
         encoderDrive(7,2,.4); //slow back
     }
 
-    public void vuforiaCenter2 (glyphArms arms) throws InterruptedException {
+    public void vuforiaLeftPower2 (glyphArms arms) throws InterruptedException {
+        encoderDriveMat(10,3,.25); //strafe left to column
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(1000);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+    }
 
+    public void vuforiaCenter2 (glyphArms arms) throws InterruptedException {
         encoderDrive(cryptoboxDistanceForward,1,.4); //go forward to cryptoBox
         sleep(100);
         arms.openLoweredGlyphArms();
@@ -548,8 +628,26 @@ public class mechDriveAuto {
         encoderDrive(7,2,.4);
     }
 
-    public void vuforiaRight2 (glyphArms arms) throws InterruptedException {
+    public void vuforiaCenterPower2 (glyphArms arms) throws InterruptedException {
+        powerDrive(1, .3);
+        sleep(1000);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(350);
+    }
 
+    public void vuforiaRight2 (glyphArms arms) throws InterruptedException {
         encoderDriveMat(10,4,.25); //strafe right to column
         sleep(100);
         encoderDrive(cryptoboxDistanceForward, 1, .4); //go forward to cryptoBox
@@ -563,6 +661,27 @@ public class mechDriveAuto {
         encoderDrive(3.25,1,1);
         sleep(100);
         encoderDrive(7,2,.4);
+    }
+
+    public void vuforiaRightPower2 (glyphArms arms) throws InterruptedException {
+        encoderDriveMat(10,4,.25); //strafe right to column
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(900);
+        stopMotors();
+        sleep(250);
+        arms.openLoweredGlyphArms();
+        sleep(250);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(250);
+        powerDrive(1, .3);
+        sleep(400);
+        powerDrive(2, .3);
+        sleep(300);
+        stopMotors();
+        sleep(350);
     }
 
     public void powerDrive (int direction, double power) throws InterruptedException {

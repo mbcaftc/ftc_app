@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -38,7 +39,6 @@ import java.util.Locale;
 
 @Autonomous (name = "Red - 1 TEST", group = "RED")
 @Disabled
-
 public class Aut_Red_1_Test extends LinearOpMode {
 
     int movement = 0; //switch variable to determine movement
@@ -50,6 +50,8 @@ public class Aut_Red_1_Test extends LinearOpMode {
     boardArm myBoardArm;
     revColorDistanceSensor myRevColorDistanceSensor;
     relicArm myRelicArm;
+
+    ElapsedTime elapsedTime;
 
     boolean distanceSensorInRange;
 
@@ -83,7 +85,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
+        myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_right_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
@@ -91,6 +93,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
         myColorSensorArm.colorSensorArmUpSlow();
         myColorSensorArm.colorRotateResting();
 
+        elapsedTime = new ElapsedTime();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "ASmjss3/////AAAAGQGMjs1d6UMZvrjQPX7J14B0s7kN+rWOyxwitoTy9i0qV7D+YGPfPeeoe/RgJjgMLabjIyRXYmDFLlJYTJvG9ez4GQSI4L8BgkCZkUWpAguRsP8Ah/i6dXIz/vVR/VZxVTR5ItyCovcRY+SPz3CP1tNag253qwl7E900NaEfFh6v/DalkEDppFevUDOB/WuLZmHu53M+xx7E3x35VW86glGKnxDLzcd9wS1wK5QhfbPOExe97azxVOVER8zNNF7LP7B+Qeticfs3O9pGXzI8lj3zClut/7aDVwZ10IPVk4oma6CO8FM5UtNLSb3sicoKV5QGiNmxbbOlnPxz9qD38UAHshq2/y0ZjI/a8oT+doCr";
@@ -129,8 +132,10 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     myRelicArm.setLiftPower(-1);
                     sleep(1300);
                     myRelicArm.setLiftPower(0);
+                    myGlyphArms.openLoweredGlyphArms();
+                    sleep(350);
                     myGlyphArms.closeGlyphArms();
-                    sleep(250);
+                    sleep(200);
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement ++; //move on to next movement
                     break;
@@ -290,7 +295,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                     break;
                 case 8: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(13.5,1,.35);
+                    myMechDrive.encoderDriveMat(13.5,1,.3);
                     sleep(200);
                     movement ++;
                     break;
@@ -342,7 +347,7 @@ public class Aut_Red_1_Test extends LinearOpMode {
                             myMechDrive.vuforiaLeft(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter(myGlyphArms);
+                            myMechDrive.vuforiaCenterPower(myGlyphArms);
                             break;
                         case 3:
                             myMechDrive.vuforiaRight(myGlyphArms);
