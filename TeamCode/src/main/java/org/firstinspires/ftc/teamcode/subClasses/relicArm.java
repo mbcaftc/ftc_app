@@ -16,9 +16,9 @@ public class relicArm {
     public DcMotor relicArmExtension;
     public Servo relicGrabber;
 
-    double openPosition = 0.0;
-    double closePosition = 0.94;
-    double almostClosePosition = 0.91;
+    double openPosition = 0.02;
+    double closePosition = 0.935;
+    double almostClosePosition = 0.86;
     double grabberPosition;
 
     public relicArm(DcMotor rAL, DcMotor rAE, Servo rG) {

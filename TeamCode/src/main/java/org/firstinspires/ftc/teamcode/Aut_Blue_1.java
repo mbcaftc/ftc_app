@@ -215,14 +215,14 @@ public class Aut_Blue_1 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     //sleep(1000);
-                    if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle <= 89) {
+                    if (angles.firstAngle <= 89.5) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle <= 89.5) {
                             myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle >= 91) {
+                    else if (angles.firstAngle >= 90.5) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle >= 90.5) {
                             myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
@@ -253,7 +253,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                             myMechDrive.stopMotors();
                         }
                         else {
-                            myMechDrive.powerDrive(2, .1);
+                            myMechDrive.powerDrive(2, .14);
                         }
                     }
                     sleep(250);
@@ -267,14 +267,14 @@ public class Aut_Blue_1 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     //sleep(1000);
-                    if (angles.firstAngle <= 89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle <= 89) {
+                    if (angles.firstAngle <= 89.5) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle <= 89.5) {
                             myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle >= 91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle >= 91) {
+                    else if (angles.firstAngle >= 90.5) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle >= 90.5) {
                             myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
@@ -289,7 +289,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     break;
                 case 8: // drive forward after sensor detects correct distance from balance stone
                     telemetry.addData("CASE: ", movement);
-                    myMechDrive.encoderDriveMat(14,1,.3);
+                    myMechDrive.encoderDriveMat(15,1,.3);
                     sleep(200);
                     movement ++;
                     break;
@@ -307,14 +307,14 @@ public class Aut_Blue_1 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (angles.firstAngle <= 179 && angles.firstAngle > 0) {           //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle <= 179 && angles.firstAngle > 0) {     // && since goes -180 --> + 180
+                    if (angles.firstAngle <= 179.5 && angles.firstAngle > 0) {           //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle <= 179.5 && angles.firstAngle > 0) {     // && since goes -180 --> + 180
                             myMechDrive.powerDrive(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle >= -179 && angles.firstAngle < 0) {       //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle >= -179 && angles.firstAngle < 0) {     // && sinnce goes -180 --> +180
+                    else if (angles.firstAngle >= -179.5 && angles.firstAngle < 0) {       //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle >= -179.5 && angles.firstAngle < 0) {     // && sinnce goes -180 --> +180
                             myMechDrive.powerDrive(6,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }

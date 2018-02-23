@@ -214,14 +214,14 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle >= -89) {
+                    if (angles.firstAngle >= -89.5) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89.5) {
                             myMechDrive.powerDrive(6, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle <= -91) {
+                    else if (angles.firstAngle <= -90.5) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -90.5) {
                             myMechDrive.powerDrive(5,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
@@ -247,14 +247,14 @@ public class Aut_Red_2 extends LinearOpMode {
                     telemetry.addData("Gyro Heading: ", angles.firstAngle);
                     telemetry.update();
                     sleep(1000);
-                    if (angles.firstAngle >= -89) {  //robot did NOT rotate enough coming off platform
-                        while (angles.firstAngle >= -89) {
+                    if (angles.firstAngle >= -89.5) {  //robot did NOT rotate enough coming off platform
+                        while (angles.firstAngle >= -89.5) {
                             myMechDrive.powerDrive(6, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
                     }
-                    else if (angles.firstAngle <= -91) {    //robot rotated TOO MUCH coming off platform
-                        while (angles.firstAngle <= -91) {
+                    else if (angles.firstAngle <= -90.5) {    //robot rotated TOO MUCH coming off platform
+                        while (angles.firstAngle <= -90.5) {
                             myMechDrive.powerDrive(5,.15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         }
@@ -277,13 +277,13 @@ public class Aut_Red_2 extends LinearOpMode {
                     // 3 == RIGHT
                     switch (cryptoboxColumn) {
                         case 1:
-                            myMechDrive.vuforiaLeft2(myGlyphArms);
+                            myMechDrive.vuforiaLeftPower2(myGlyphArms);
                             break;
                         case 2:
-                            myMechDrive.vuforiaCenter2(myGlyphArms);
+                            myMechDrive.vuforiaCenterPower2(myGlyphArms);
                             break;
                         case 3:
-                            myMechDrive.vuforiaRight2(myGlyphArms);
+                            myMechDrive.vuforiaRightPower2(myGlyphArms);
                             break;
                     }
                     movement ++;
