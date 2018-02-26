@@ -32,7 +32,7 @@ public class colorSensorArm {
     int colorArmIncrementTimeMSup = 16; //will take aprox. 1 second to lower color sensor arm .
 
     double colorSensorArmReadingPosition = 0.452; //rotate arm
-    double colorSensorArmRestingPosition = 0.57;  //rotate arm
+    double colorSensorArmRestingPosition = 0.45;  //rotate arm
 
     public Servo colorSensorArm;
     public ColorSensor colorSensor;

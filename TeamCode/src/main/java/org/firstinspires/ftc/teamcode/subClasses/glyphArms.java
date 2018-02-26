@@ -29,10 +29,10 @@ public class glyphArms {
     double topLeftOpenLoweredPosition = .29; //fully open when glyph lift is lowered - to the frame
     double topLeftOpenPosition = .05; //fully open when raised
 
-    double bottomLeftClosePosition =.4;
-    double bottomLeftSlightlyOpenPosition = .46;
-    double bottomLeftOpenLoweredPosition = .51;
-    double bottomLeftOpenPosition = .79;
+    double bottomLeftClosePosition =.32;
+    double bottomLeftSlightlyOpenPosition = .38;
+    double bottomLeftOpenLoweredPosition = .43;
+    double bottomLeftOpenPosition = .71;
 
     double topRightClosePosition = .48;
     double topRightSlightlyOpenPosition = .54;
