@@ -24,28 +24,26 @@ public class glyphArms {
     //double rightOpenPosition = 0.705;
 
     //with channel
-    double topLeftClosePosition =.39; //closed to grab glyphs
-    double topLeftSlightlyOpenPosition = .33;  //sightly open for exiting CryptoBox and picking up Glyphs
-    double topLeftOpenLoweredPosition = .29; //fully open when glyph lift is lowered - to the frame
-    double topLeftOpenPosition = .05; //fully open when raised
+    double topLeftClosePosition =.385; //closed to grab glyphs
+    double topLeftSlightlyOpenPosition = .34;  //sightly open for exiting CryptoBox and picking up Glyphs
+    double topLeftOpenLoweredPosition = .27; //fully open when glyph lift is lowered - to the frame
+    double topLeftOpenPosition = .06; //fully open when raised
+    double topLeftRelicPosition = .01;
 
-    double bottomLeftClosePosition =.32;
-    double bottomLeftSlightlyOpenPosition = .38;
-    double bottomLeftOpenLoweredPosition = .43;
-    double bottomLeftOpenPosition = .71;
+    double bottomLeftClosePosition =.345;
+    double bottomLeftSlightlyOpenPosition = .39;
+    double bottomLeftOpenLoweredPosition = .46;
+    double bottomLeftOpenPosition = .63;
 
-    double topRightClosePosition = .48;
-    double topRightSlightlyOpenPosition = .54;
-    double topRightOpenLoweredPosition = .65;
-    double topRightOpenPosition = .88;
+    double topRightClosePosition = .495;
+    double topRightSlightlyOpenPosition = .56;
+    double topRightOpenLoweredPosition = .63;
+    double topRightOpenPosition = .78;
 
-    double bottomRightClosePosition = .69;
-    double bottomRightSlightlyOpenPosition = .62;
-    double bottomRightOpenLoweredPosition = .51;
-    double bottomRightOpenPosition = .29;
-
-    double leftSlightlyOpenPosition = .56;
-    double rightSlightlyOpenPosition = .25;
+    double bottomRightClosePosition = .695;
+    double bottomRightSlightlyOpenPosition = .65;
+    double bottomRightOpenLoweredPosition = .58;
+    double bottomRightOpenPosition = .41;
 
     public Servo topLeftGlyphArm, bottomLeftGlyphArm, topRightGlyphArm, bottomRightGlyphArm;
     public glyphArms(Servo tLGA, Servo bLGA, Servo tRGA, Servo bRGA) {
@@ -80,5 +78,12 @@ public class glyphArms {
         bottomLeftGlyphArm.setPosition(bottomLeftOpenPosition);
         topRightGlyphArm.setPosition(topRightOpenPosition);
         bottomRightGlyphArm.setPosition(bottomRightOpenPosition);
+    }
+
+    public void relicGlyphArms () {
+        topLeftGlyphArm.setPosition(topLeftRelicPosition);
+        bottomLeftGlyphArm.setPosition(bottomLeftOpenLoweredPosition);
+        topRightGlyphArm.setPosition(topRightOpenLoweredPosition);
+        bottomRightGlyphArm.setPosition(bottomRightOpenLoweredPosition);
     }
 }

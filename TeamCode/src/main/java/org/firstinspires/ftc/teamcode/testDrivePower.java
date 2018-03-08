@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by johnduval on 11/21/17.
  */
 @TeleOp(name = "test drive POWER - 2 seconds forward")
-//@Disabled
+@Disabled
 public class testDrivePower extends OpMode {
 
     DcMotor frontLeftMotor;

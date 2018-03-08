@@ -132,7 +132,7 @@ public class fullControlTeleOp extends OpMode {
             rearLeftMotor.setPower(frontRightSpeed);
             rearRightMotor.setPower(frontLeftSpeed);
 
-            myGlyphArms.openLoweredGlyphArms();
+            myGlyphArms.relicGlyphArms();
         }
 
         else {

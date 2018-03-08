@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -36,10 +37,10 @@ import java.util.Locale;
  */
 
 @Autonomous (name = "1 Test Glyph", group = "RED")
-
+@Disabled
 public class testAutGlyphPickUp extends LinearOpMode {
 
-    int movement = 0; //switch variable to determine movement
+    int movement = 12; //switch variable to determine movement
 
     colorSensorArm myColorSensorArm;
     mechDriveAuto myMechDrive;
@@ -120,7 +121,7 @@ public class testAutGlyphPickUp extends LinearOpMode {
         while (opModeIsActive()) {
 
             switch (movement) {
-                case 0:
+                /*case 0:
                     sleep(200);
                     telemetry.addData("CASE: ", movement);
                     RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -349,8 +350,9 @@ public class testAutGlyphPickUp extends LinearOpMode {
                             break;
                     }
                     movement++;
-                    break;
+                    break;*/
                 case 12: //Turn around and pick up glyph
+                    myGlyphArms.openLoweredGlyphArms();
                     myMechDrive.encoderDriveMat(42.5, 6, 0.35);
                     sleep(100);
                     movement++;
@@ -364,13 +366,18 @@ public class testAutGlyphPickUp extends LinearOpMode {
                     myGlyphLift.raiseGlyphLiftAutMode();
                     movement++;
                     break;
-                case 14: //Turn back around and move toward cryptobox
-                    myMechDrive.encoderDriveMat(42.5, 5, 0.35);
+                case 14: // back up before turning around - otherwise arm or glyph gets caught in pile
+                    myMechDrive.encoderDriveMat(9,2,.3);
                     sleep(100);
-                    myMechDrive.encoderDriveMat(19, 1, 0.3);
                     movement++;
                     break;
-                case 15: //STOP
+                case 15: //Turn back around and move toward cryptobox
+                    myMechDrive.encoderDriveMat(42.5, 5, 0.35);
+                    sleep(100);
+                    myMechDrive.encoderDriveMat(10, 1, 0.3);
+                    movement++;
+                    break;
+                case 16: //STOP
                     telemetry.addData("CASE: ", movement);
                     telemetry.update();
                     requestOpModeStop();

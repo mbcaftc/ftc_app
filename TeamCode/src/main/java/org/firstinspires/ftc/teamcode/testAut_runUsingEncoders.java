@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by johnduval on 11/21/17.
  */
 @Autonomous(name = "Test - Run Using Encoders", group = "TESTING")
-//@Disabled
+@Disabled
 public class testAut_runUsingEncoders extends LinearOpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
