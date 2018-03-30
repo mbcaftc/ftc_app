@@ -63,7 +63,7 @@ public class testDrive_Strafe extends OpMode {
         myGlyphLift = new glyphLift(hardwareMap.dcMotor.get("glyph_lift"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("sensor_color"), hardwareMap.servo.get("color_sensor_arm_rotate"));
-        myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        myBoardArm = new boardArm(hardwareMap.dcMotor.get("board_arm"));
 
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");

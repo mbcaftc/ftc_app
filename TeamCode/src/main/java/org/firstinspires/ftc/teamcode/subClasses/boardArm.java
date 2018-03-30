@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -9,20 +11,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class boardArm {
 
-    public Servo boardArm;
+    public DcMotor boardArm;
 
-    double servoArmUpPosition = 1.0;
-    double servoArmDownPosition = 0.15;
-
-    public boardArm(Servo bA) {
+    public boardArm(DcMotor bA) {
         boardArm = bA;
+        boardArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        boardArm.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void boardArmUp() {
-        boardArm.setPosition(servoArmUpPosition);
+        boardArm.setPower(0.8);
     }
 
     public void boardArmDown() {
-        boardArm.setPosition(servoArmDownPosition);
+        boardArm.setPower(-0.8);
+    }
+
+    public void boardArmStop() {
+        boardArm.setPower(0);
     }
 }

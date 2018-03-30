@@ -24,11 +24,11 @@ public class glyphArms {
     //double rightOpenPosition = 0.705;
 
     //with channel
-    double topLeftClosePosition =.385; //closed to grab glyphs
-    double topLeftSlightlyOpenPosition = .34;  //sightly open for exiting CryptoBox and picking up Glyphs
-    double topLeftOpenLoweredPosition = .27; //fully open when glyph lift is lowered - to the frame
-    double topLeftOpenPosition = .06; //fully open when raised
-    double topLeftRelicPosition = .01;
+    double topLeftClosePosition =.375; //closed to grab glyphs
+    double topLeftSlightlyOpenPosition = .33;  //sightly open for exiting CryptoBox and picking up Glyphs
+    double topLeftOpenLoweredPosition = .26; //fully open when glyph lift is lowered - to the frame
+    double topLeftOpenPosition = .05; //fully open when raised
+    double topLeftRelicPosition = 0;
 
     double bottomLeftClosePosition =.345;
     double bottomLeftSlightlyOpenPosition = .39;

@@ -82,7 +82,7 @@ public class Aut_Red_1 extends LinearOpMode {
         myColorSensorArm = new colorSensorArm(hardwareMap.servo.get("color_sensor_arm"),hardwareMap.colorSensor.get("rev_color_sensor_arm"), hardwareMap.servo.get("color_sensor_arm_rotate"));
         myMechDrive = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myGlyphArms = new glyphArms(hardwareMap.servo.get("top_left_glyph_arm"), hardwareMap.servo.get("bottom_left_glyph_arm"), hardwareMap.servo.get("top_right_glyph_arm"), hardwareMap.servo.get("bottom_right_glyph_arm"));
-        //myBoardArm = new boardArm(hardwareMap.servo.get("board_arm"));
+        myBoardArm = new boardArm(hardwareMap.dcMotor.get("board_arm"));
         myRevColorDistanceSensor =  new revColorDistanceSensor(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRelicArm = new relicArm(hardwareMap.dcMotor.get("relic_arm_lift"), hardwareMap.dcMotor.get("relic_arm_extension"), hardwareMap.servo.get("relic_arm_grabber"));
 
@@ -181,6 +181,7 @@ public class Aut_Red_1 extends LinearOpMode {
                 case 2: //detecting jewel and knocking off & centering
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
+                    myBoardArm.boardArmDown();
                     myColorSensorArm.colorSensorArmDownSlow();
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
@@ -194,6 +195,7 @@ public class Aut_Red_1 extends LinearOpMode {
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.redJewel(myColorSensorArm, myColorSensorArm.colorJewel());
+                    myBoardArm.boardArmUp();
                     movement ++;
                     break;
                 case 3: //Rotate right on platform
