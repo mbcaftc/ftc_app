@@ -20,7 +20,7 @@ public class boardArm {
     }
 
     public void boardArmUp() {
-        boardArm.setPower(0.8);
+        boardArm.setPower(0.80);
     }
 
     public void boardArmDown() {
