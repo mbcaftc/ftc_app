@@ -129,7 +129,7 @@ public class Aut_Blue_1 extends LinearOpMode {
                     sleep(1300);
                     myRelicArm.setLiftPower(0);
                     myGlyphArms.openLoweredGlyphArms();
-                    sleep(350);
+                    sleep(450);
                     myGlyphArms.closeGlyphArms();
                     sleep(200);
                     myGlyphLift.raiseGlyphLiftAutMode();
@@ -182,7 +182,6 @@ public class Aut_Blue_1 extends LinearOpMode {
                 case 2: //detecting jewel and knocking off & centering
                     telemetry.addLine("MOVING SERVO ARM DOWN");
                     telemetry.update();
-                    myBoardArm.boardArmDown();
                     myColorSensorArm.colorSensorArmDownSlow();
                     telemetry.addData("CASE: ", movement);
                     telemetry.addData("Servo", "Position: " + String.format("%.3f", myColorSensorArm.colorSensorArm.getPosition()));
@@ -196,7 +195,6 @@ public class Aut_Blue_1 extends LinearOpMode {
                     //2 = blue jewel on leeft and strafe left
                     //3 = no color detected and do no strafe at all
                     myMechDrive.blueJewel(myColorSensorArm, myColorSensorArm.colorJewel());
-                    myBoardArm.boardArmUp();
                     movement ++;
                     break;
                 case 3: //Rotate left on platform

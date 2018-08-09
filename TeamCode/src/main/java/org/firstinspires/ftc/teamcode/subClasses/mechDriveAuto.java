@@ -434,7 +434,7 @@ public class mechDriveAuto {
     public void redJewel (colorSensorArm armSensor, int jewelColor) throws InterruptedException {
 
         //sleeps between movements to prevent robot from stuttering around
-        if (jewelColor == 1) {
+        if (jewelColor == 1) { // 1 = red
             armSensor.colorRotateClockwise();
             sleep(300);
             armSensor.colorRotateResting();
